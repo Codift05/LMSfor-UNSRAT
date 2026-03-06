@@ -1,6 +1,9 @@
 # EduDesk LMS — UNSRAT Edition
 
-![EduDesk Logo](assets/logo.png)
+[![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-4285F4?style=for-the-badge&logo=android&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Exposed](https://img.shields.io/badge/Exposed_ORM-7F52FF?style=for-the-badge&logo=jetbrains&logoColor=white)](https://github.com/JetBrains/Exposed)
 
 EduDesk LMS is a native desktop Learning Management System specifically designed for the UNSRAT (Sam Ratulangi University) academic community. This application provides a modern, high-performance interface for students and educators to manage courses, assignments, and academic tracking with an offline-first approach.
 
