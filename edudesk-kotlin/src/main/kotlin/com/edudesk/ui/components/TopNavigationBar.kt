@@ -38,7 +38,7 @@ fun TopNavigationBar() {
             // Logo
             TextButton(onClick = { NavController.navigateTo(Screen.Home) }) {
                 Text(
-                    "LearnSphere",
+                    "EduDesk UNSRAT",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
@@ -126,7 +126,7 @@ fun TopNavigationBar() {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Column {
                                         Text("Miftahuddin", fontWeight = FontWeight.Bold)
-                                        Text("Student", fontSize = 12.sp, color = Color.Gray)
+                                        Text("Mahasiswa", fontSize = 12.sp, color = Color.Gray)
                                     }
                                 }
                             }
@@ -153,7 +153,7 @@ fun TopNavigationBar() {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Column {
                                         Text("Miftahuddin", fontWeight = FontWeight.Bold)
-                                        Text("Instruktur", fontSize = 12.sp, color = Color.Gray)
+                                        Text("Dosen", fontSize = 12.sp, color = Color.Gray)
                                     }
                                 }
                             }
@@ -180,7 +180,7 @@ fun TopNavigationBar() {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Column {
                                         Text("Miftahuddin", fontWeight = FontWeight.Bold)
-                                        Text("Admin Utama", fontSize = 12.sp, color = Color.Gray)
+                                        Text("Admin Prodi", fontSize = 12.sp, color = Color.Gray)
                                     }
                                 }
                             }

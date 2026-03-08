@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HeroBanner(userName: String, rolePrefix: String = "Siswa") {
+fun HeroBanner(userName: String, rolePrefix: String = "Mahasiswa") {
     Column(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 24.dp)
     ) {
@@ -47,7 +47,7 @@ fun HeroBanner(userName: String, rolePrefix: String = "Siswa") {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Daftar Kelas dan\nAkses Materi",
+                        "Program Studi\nTeknik Informatika",
                         fontSize = 36.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
@@ -55,7 +55,7 @@ fun HeroBanner(userName: String, rolePrefix: String = "Siswa") {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Subscribe to a collection of our top courses\nin and more hieso Plan.",
+                        "Fakultas Teknik,\nUniversitas Sam Ratulangi",
                         fontSize = 16.sp,
                         color = Color.White.copy(alpha = 0.8f)
                     )
