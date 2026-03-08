@@ -81,14 +81,14 @@ fun InstructorDashboardScreen() {
             // LazyVerticalGrid inside verticalScroll requires fixed height
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
-                    InstructorClassCard("Matematika Tingkat Lanjut", 392, Modifier.weight(1f))
-                    InstructorClassCard("Matematika Tingkat Lanjut", 252, Modifier.weight(1f))
-                    InstructorClassCard("Matematika Tingkat Lanjut", 364, Modifier.weight(1f))
+                    InstructorClassCard("Pemrograman Berorientasi Objek", 392, Modifier.weight(1f))
+                    InstructorClassCard("Struktur Data", 252, Modifier.weight(1f))
+                    InstructorClassCard("Kecerdasan Buatan", 364, Modifier.weight(1f))
                     Spacer(modifier = Modifier.weight(1f)) // Empty spot to align left
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
-                    InstructorClassCard("Python Ton Data Projects", 198, Modifier.weight(1f))
-                    InstructorClassCard("From Pro-koro to Daks Materi", 196, Modifier.weight(1f))
+                    InstructorClassCard("Pengembangan Aplikasi Web", 198, Modifier.weight(1f))
+                    InstructorClassCard("Jaringan Komputer Lanjut", 196, Modifier.weight(1f))
                     Spacer(modifier = Modifier.weight(1f))
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -151,40 +151,40 @@ fun InstructorDashboardScreen() {
                             .background(Color(0xFFF1F5F9))
                     ) {
                         TabItem("Kelas", true)
-                        TabItem("Masteri", false)
-                        TabItem("Pemajaman Bulat", false)
+                        TabItem("Materi", false)
+                        TabItem("Pemahaman Bab", false)
                         TabItem("Evaluasi", false)
                     }
                     
                     // Right Form
                     Column(modifier = Modifier.weight(1f).padding(24.dp)) {
-                        Text("Norm", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                        Text("Nama Evaluasi", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(4.dp))
                         OutlinedTextField(
                             value = "", onValueChange = {},
-                            placeholder = { Text("Buat quizas", color = Color.Gray, fontSize = 14.sp) },
+                            placeholder = { Text("Kuis Pemrograman...", color = Color.Gray, fontSize = 14.sp) },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
                             shape = RoundedCornerShape(8.dp)
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
                         
-                        Text("Evaluasi", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                        Text("Topik Evaluasi", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(4.dp))
                         OutlinedTextField(
                             value = "", onValueChange = {},
-                            placeholder = { Text("Buat seignnns:", color = Color.Gray, fontSize = 14.sp) },
+                            placeholder = { Text("Misal: Inheritance & Polymorphism...", color = Color.Gray, fontSize = 14.sp) },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
                             shape = RoundedCornerShape(8.dp)
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
                         
-                        Text("Evaluasi", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                        Text("Deskripsi", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(4.dp))
                         OutlinedTextField(
                             value = "", onValueChange = {},
-                            placeholder = { Text("DeBoassi liasiel betezzahan...", color = Color.Gray, fontSize = 14.sp) },
+                            placeholder = { Text("Tuliskan deskripsi lengkap...", color = Color.Gray, fontSize = 14.sp) },
                             modifier = Modifier.fillMaxWidth().height(80.dp),
                             shape = RoundedCornerShape(8.dp),
                             maxLines = 3
@@ -197,7 +197,7 @@ fun InstructorDashboardScreen() {
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text("Pembuat")
+                            Text("Buat Evaluasi")
                         }
                     }
                 }
@@ -226,11 +226,11 @@ fun InstructorDashboardScreen() {
                     Divider(color = Color(0xFFE2E8F0))
                     
                     // Rows
-                    GradingRow("Nama Nama 1", "Av1", "10", true)
-                    GradingRow("Nama Nama 2", "In4", "8", true)
-                    GradingRow("Nama Nama 3", "Av1", "", false)
-                    GradingRow("Nama Nama 4", "In4", "", false)
-                    GradingRow("Nama Nama 5", "In4", "8", true, true)
+                    GradingRow("Jovanka Angelina", "Av1", "10", true)
+                    GradingRow("Rizky Mahendra", "In4", "8", true)
+                    GradingRow("Sarah Toding", "Av1", "", false)
+                    GradingRow("Miftahuddin", "In4", "", false)
+                    GradingRow("Adolf Paath", "In4", "8", true, true)
                 }
             }
             
