@@ -9,11 +9,13 @@ enum class Screen {
     Home,
     MyLearning,
     Assignments,
-    Profile
+    Profile,
+    InstructorDashboard,
+    AdminDashboard
 }
 
 object NavController {
-    var currentScreen by mutableStateOf(Screen.Login)
+    var currentScreen by mutableStateOf(Screen.Home) // start at home directly for dev
     
     fun navigateTo(screen: Screen) {
         currentScreen = screen

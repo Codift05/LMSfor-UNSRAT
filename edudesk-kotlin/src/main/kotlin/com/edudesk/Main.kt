@@ -10,6 +10,8 @@ import com.edudesk.ui.screens.HomeScreen
 import com.edudesk.ui.screens.MyLearningScreen
 import com.edudesk.ui.screens.AssignmentsScreen
 import com.edudesk.ui.screens.LoginScreen
+import com.edudesk.ui.screens.InstructorDashboardScreen
+import com.edudesk.ui.screens.AdminDashboardScreen
 import com.edudesk.ui.navigation.NavController
 import com.edudesk.ui.navigation.Screen
 import com.edudesk.database.DatabaseSetup
@@ -31,6 +33,8 @@ fun main() = application {
             when (NavController.currentScreen) {
                 Screen.Login -> LoginScreen()
                 Screen.Home -> HomeScreen()
+                Screen.InstructorDashboard -> InstructorDashboardScreen()
+                Screen.AdminDashboard -> AdminDashboardScreen()
                 Screen.MyLearning -> MyLearningScreen()
                 Screen.Assignments -> AssignmentsScreen()
                 Screen.Profile -> {
