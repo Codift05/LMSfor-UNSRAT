@@ -32,7 +32,7 @@ fun AdminDashboardScreen() {
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
             Text(
-                "Selamat Datang Kembali,\nAdmin Utama",
+                "Selamat Datang Kembali,\nAdmin Prodi",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF1E293B),
@@ -65,18 +65,18 @@ fun AdminDashboardScreen() {
                         Column(modifier = Modifier.padding(24.dp)) {
                             // Header Tab style
                             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
-                                Text("Siswa Aktif", fontWeight = FontWeight.Bold, color = Color(0xFF6366F1), modifier = Modifier.padding(end = 24.dp))
-                                Text("Instruktur", fontWeight = FontWeight.Medium, color = Color.Gray)
+                                Text("Mahasiswa Aktif", fontWeight = FontWeight.Bold, color = Color(0xFF6366F1), modifier = Modifier.padding(end = 24.dp))
+                                Text("Dosen", fontWeight = FontWeight.Medium, color = Color.Gray)
                                 Spacer(modifier = Modifier.weight(1f))
                                 Text("Kelola", fontWeight = FontWeight.Medium, color = Color(0xFF8B5CF6))
                             }
                             Divider(color = Color(0xFFE2E8F0))
                             
                             // Rows
-                            UserRow("Budi Santoso", "Siswa", "Aktif", true)
-                            UserRow("Rina Melati", "Siswa", "Aktif", true)
-                            UserRow("Andi Darmawan", "Siswa", "Nonaktif", false)
-                            UserRow("Siti Nurhaliza", "Siswa", "Aktif", true)
+                            UserRow("Budi Santoso", "Mahasiswa", "Aktif", true)
+                            UserRow("Rina Melati", "Mahasiswa", "Aktif", true)
+                            UserRow("Andi Darmawan", "Mahasiswa", "Nonaktif", false)
+                            UserRow("Dr. Eng. Rizal, S.T., M.T.", "Dosen", "Aktif", true)
                         }
                     }
                 }
@@ -93,9 +93,9 @@ fun AdminDashboardScreen() {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            PendingClassRow("Advanced UI/UX", "Dimas Suprap")
-                            PendingClassRow("Pengantar Cyber Security", "Aris Setiawan")
-                            PendingClassRow("Data Science 101", "Prof. Lin")
+                            PendingClassRow("Sistem Operasi", "Dr. Eng. Rizal, S.T., M.T.")
+                            PendingClassRow("Basis Data Lanjut", "Prof. Dr. Ir. Budi, M.Sc.")
+                            PendingClassRow("Manajemen Proyek TI", "Ir. Maria, S.Kom., M.Kom.")
                         }
                     }
                 }
