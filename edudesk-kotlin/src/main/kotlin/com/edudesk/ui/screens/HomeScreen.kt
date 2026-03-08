@@ -52,8 +52,8 @@ fun HomeScreen() {
                 // Horizontal Row of Courses
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     CourseCard(
-                        title = "Matematika Tingkat Lanjut",
-                        instructor = "Novsalam Siaoun",
+                        title = "Pemrograman Berorientasi Objek",
+                        instructor = "Dr. Eng. Rizal, S.T., M.T.",
                         rating = 5f,
                         reviewsCount = 244,
                         price = "Rp9,000",
@@ -61,16 +61,16 @@ fun HomeScreen() {
                         modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Matematika Tingkat Lanjut",
-                        instructor = "Novsalam Siaoun",
+                        title = "Struktur Data",
+                        instructor = "Prof. Dr. Ir. Budi, M.Sc.",
                         rating = 5f,
                         reviewsCount = 299,
                         price = "Rp9,000",
                         modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Matematika Tingkat Lanjut",
-                        instructor = "Sielkosh ai Al",
+                        title = "Kecerdasan Buatan",
+                        instructor = "Prof. Dr. Ir. Budi, M.Sc.",
                         rating = 5f,
                         reviewsCount = 398,
                         price = "Rp9,000",
@@ -78,8 +78,8 @@ fun HomeScreen() {
                         modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Python Python Projects",
-                        instructor = "Kialimatari Sonin",
+                        title = "Pengembangan Aplikasi Web",
+                        instructor = "Ir. Maria, S.Kom., M.Kom.",
                         rating = 5f,
                         reviewsCount = 396,
                         price = "Rp9,000",
@@ -99,10 +99,10 @@ fun HomeScreen() {
                         // My Courses List (Vertical CourseCards with progress)
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             // Helper to render wide horizontal course cards
-                            MyCourseListItem("Matematika Tingkat Lanjut", 0.8f)
-                            MyCourseListItem("Matematika Tingkat Lanjut", 0.4f)
-                            MyCourseListItem("Matematika Tingkat Lanjut", 0.2f)
-                            MyCourseListItem("Matematika Tiruman Ung Data Senshat", 0.6f)
+                            MyCourseListItem("Pemrograman Berorientasi Objek", 0.8f)
+                            MyCourseListItem("Struktur Data", 0.4f)
+                            MyCourseListItem("Kecerdasan Buatan", 0.2f)
+                            MyCourseListItem("Jaringan Komputer Lanjut", 0.6f)
                         }
                         
                         Spacer(modifier = Modifier.height(32.dp))
