@@ -24,6 +24,9 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:0.48.0")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.48.0")
     implementation("org.jetbrains.exposed:exposed-java-time:0.48.0")
+
+    // Bcrypt for password hashing
+    implementation("org.mindrot:jbcrypt:0.4")
 }
 
 compose.desktop {

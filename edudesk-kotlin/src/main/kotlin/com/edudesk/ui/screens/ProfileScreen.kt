@@ -22,7 +22,7 @@ import com.edudesk.services.UserService
 import com.edudesk.ui.components.TopNavigationBar
 import com.edudesk.ui.navigation.NavController
 import com.edudesk.ui.navigation.Screen
-import com.edudesk.ui.theme.UdemyPurple
+import com.edudesk.ui.theme.IelsMagenta
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,12 +83,12 @@ fun ProfileScreen() {
                     Surface(
                             modifier = Modifier.size(100.dp),
                             shape = CircleShape,
-                            color = UdemyPurple.copy(alpha = 0.1f)
+                            color = IelsMagenta.copy(alpha = 0.1f)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
                                     currentUser?.name?.take(2)?.uppercase() ?: "US",
-                                    color = UdemyPurple,
+                                    color = IelsMagenta,
                                     fontSize = 36.sp,
                                     fontWeight = FontWeight.Bold
                             )
@@ -98,7 +98,7 @@ fun ProfileScreen() {
                     TextButton(onClick = { /* TODO: Implement photo upload */}) {
                         Text(
                                 "Ubah Foto Profil",
-                                color = UdemyPurple,
+                                color = IelsMagenta,
                                 fontWeight = FontWeight.Medium
                         )
                     }
@@ -193,7 +193,7 @@ fun ProfileScreen() {
                             },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
                             shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = UdemyPurple)
+                            colors = ButtonDefaults.buttonColors(containerColor = IelsMagenta)
                     ) { Text("Simpan Perubahan", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
                 }
             }

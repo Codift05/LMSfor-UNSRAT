@@ -2,7 +2,6 @@ package com.edudesk.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.edudesk.ui.components.CourseCard
@@ -25,77 +23,73 @@ import com.edudesk.ui.components.TopNavigationBar
 
 @Composable
 fun HomeScreen() {
-    Scaffold(
-        topBar = { TopNavigationBar() }
-    ) { padding ->
+    Scaffold(topBar = { TopNavigationBar() }) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(Color(0xFFF8FAFC)) // Slate 50
-                .verticalScroll(rememberScrollState())
+                modifier =
+                        Modifier.fillMaxSize()
+                                .padding(padding)
+                                .background(Color(0xFFF8FAFC)) // Slate 50
+                                .verticalScroll(rememberScrollState())
         ) {
             HeroBanner(userName = "Miftahuddin")
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Column(modifier = Modifier.padding(horizontal = 24.dp)) {
                 Text(
-                    "Pendaftaran Kelas",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1E293B)
+                        "Pendaftaran Kelas",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF1E293B)
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Horizontal Row of Courses
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     CourseCard(
-                        title = "Pemrograman Berorientasi Objek",
-                        instructor = "Dr. Eng. Rizal, S.T., M.T.",
-                        rating = 5f,
-                        reviewsCount = 244,
-                        price = "Rp9,000",
-                        originalPrice = "Rp49,000",
-                        modifier = Modifier.weight(1f)
+                            title = "Pemrograman Berorientasi Objek",
+                            instructor = "Dr. Eng. Rizal, S.T., M.T.",
+                            rating = 5f,
+                            reviewsCount = 244,
+                            modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Struktur Data",
-                        instructor = "Prof. Dr. Ir. Budi, M.Sc.",
-                        rating = 5f,
-                        reviewsCount = 299,
-                        price = "Rp9,000",
-                        modifier = Modifier.weight(1f)
+                            title = "Struktur Data",
+                            instructor = "Prof. Dr. Ir. Budi, M.Sc.",
+                            rating = 5f,
+                            reviewsCount = 299,
+                            modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Kecerdasan Buatan",
-                        instructor = "Prof. Dr. Ir. Budi, M.Sc.",
-                        rating = 5f,
-                        reviewsCount = 398,
-                        price = "Rp9,000",
-                        isPremium = true,
-                        modifier = Modifier.weight(1f)
+                            title = "Kecerdasan Buatan",
+                            instructor = "Prof. Dr. Ir. Budi, M.Sc.",
+                            rating = 5f,
+                            reviewsCount = 398,
+                            isPremium = true,
+                            modifier = Modifier.weight(1f)
                     )
                     CourseCard(
-                        title = "Pengembangan Aplikasi Web",
-                        instructor = "Ir. Maria, S.Kom., M.Kom.",
-                        rating = 5f,
-                        reviewsCount = 396,
-                        price = "Rp9,000",
-                        modifier = Modifier.weight(1f)
+                            title = "Pengembangan Aplikasi Web",
+                            instructor = "Ir. Maria, S.Kom., M.Kom.",
+                            rating = 5f,
+                            reviewsCount = 396,
+                            modifier = Modifier.weight(1f)
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(32.dp))
-                
+
                 // Two Column Layout
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(32.dp)) {
+                Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(32.dp)
+                ) {
                     // Left Column
                     Column(modifier = Modifier.weight(1f)) {
                         Text("Mata Kuliah Saya", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // My Courses List (Vertical CourseCards with progress)
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             // Helper to render wide horizontal course cards
@@ -104,37 +98,46 @@ fun HomeScreen() {
                             MyCourseListItem("Kecerdasan Buatan", 0.2f)
                             MyCourseListItem("Jaringan Komputer Lanjut", 0.6f)
                         }
-                        
+
                         Spacer(modifier = Modifier.height(32.dp))
-                        
-                        Text("Tugas Selesai & Tertunda", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+                        Text(
+                                "Tugas Selesai & Tertunda",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Task Accordion / Dropdowns
                         Card(
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            shape = RoundedCornerShape(12.dp),
-                            elevation = CardDefaults.cardElevation(2.dp)
+                                colors = CardDefaults.cardColors(containerColor = Color.White),
+                                shape = RoundedCornerShape(12.dp),
+                                elevation = CardDefaults.cardElevation(2.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text("Status", fontWeight = FontWeight.SemiBold)
                                     Button(
-                                        onClick = {},
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
-                                        shape = RoundedCornerShape(8.dp),
-                                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                                    ) {
-                                        Text("Upload")
-                                    }
+                                            onClick = {},
+                                            colors =
+                                                    ButtonDefaults.buttonColors(
+                                                            containerColor = Color(0xFF0033FF)
+                                                    ), // IELS Blue
+                                            shape = RoundedCornerShape(8.dp),
+                                            contentPadding =
+                                                    PaddingValues(
+                                                            horizontal = 16.dp,
+                                                            vertical = 8.dp
+                                                    )
+                                    ) { Text("Upload") }
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(16.dp))
-                                
+
                                 TaskStatusDropdown("Tugas Selesai")
                                 TaskStatusDropdown("Tugas Seminggu")
                                 TaskStatusDropdown("Tugas Selesai & Tertunda")
@@ -143,30 +146,30 @@ fun HomeScreen() {
                             }
                         }
                     }
-                    
+
                     // Right Column
                     Column(modifier = Modifier.weight(1f)) {
                         Text("Ujian Mandatang", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Upcoming Exams Cards
                         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                             ExamCard("Kerjakan Ujian/Kuis")
                             ExamCard("Kerjakan Ujian/Kuis\nQuizze 2")
                             ExamCard("Kerjakan Ujian/Kuis\nQuizze 3")
                         }
-                        
+
                         Spacer(modifier = Modifier.height(32.dp))
-                        
+
                         Text("Rapor Saya", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         // Report Card
                         Card(
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            shape = RoundedCornerShape(12.dp),
-                            elevation = CardDefaults.cardElevation(2.dp),
-                            modifier = Modifier.fillMaxWidth()
+                                colors = CardDefaults.cardColors(containerColor = Color.White),
+                                shape = RoundedCornerShape(12.dp),
+                                elevation = CardDefaults.cardElevation(2.dp),
+                                modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text("Summary", fontWeight = FontWeight.SemiBold)
@@ -176,26 +179,27 @@ fun HomeScreen() {
                                     SummaryBadge("Grade\n8+")
                                     SummaryBadge("Grade\n7+")
                                 }
-                                
+
                                 Spacer(modifier = Modifier.height(24.dp))
                                 Text("Performance", fontWeight = FontWeight.SemiBold)
                                 Spacer(modifier = Modifier.height(8.dp))
-                                
+
                                 // Placeholder for Chart
                                 Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(150.dp)
-                                        .background(Color(0xFFF1F5F9), RoundedCornerShape(8.dp)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text("Line Chart Canvas Placeholder", color = Color.Gray)
-                                }
+                                        modifier =
+                                                Modifier.fillMaxWidth()
+                                                        .height(150.dp)
+                                                        .background(
+                                                                Color(0xFFF1F5F9),
+                                                                RoundedCornerShape(8.dp)
+                                                        ),
+                                        contentAlignment = Alignment.Center
+                                ) { Text("Line Chart Canvas Placeholder", color = Color.Gray) }
                             }
                         }
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(48.dp))
             }
         }
@@ -206,32 +210,37 @@ fun HomeScreen() {
 @Composable
 fun MyCourseListItem(title: String, progress: Float) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(1.dp),
-        modifier = Modifier.fillMaxWidth()
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(1.dp),
+            modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
-                modifier = Modifier.size(60.dp, 40.dp).background(Color(0xFFE2E8F0), RoundedCornerShape(4.dp))
+                    modifier =
+                            Modifier.size(60.dp, 40.dp)
+                                    .background(Color(0xFFE2E8F0), RoundedCornerShape(4.dp))
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(title, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 Row {
                     repeat(5) {
-                        Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFBBF24), modifier = Modifier.size(12.dp))
+                        Icon(
+                                Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFFBBF24),
+                                modifier = Modifier.size(12.dp)
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 LinearProgressIndicator(
-                    progress = progress,
-                    modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)),
-                    color = Color(0xFF8B5CF6),
-                    trackColor = Color(0xFFE2E8F0)
+                        progress = progress,
+                        modifier =
+                                Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)),
+                        color = Color(0xFFF000FF), // IELS Magenta
+                        trackColor = Color(0xFFE2E8F0)
                 )
             }
         }
@@ -241,14 +250,14 @@ fun MyCourseListItem(title: String, progress: Float) {
 @Composable
 fun TaskStatusDropdown(text: String) {
     Surface(
-        color = Color(0xFFF8FAFC),
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            color = Color(0xFFF8FAFC),
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text, fontSize = 14.sp, fontWeight = FontWeight.Medium)
             Icon(Icons.Default.KeyboardArrowDown, contentDescription = null, tint = Color.Gray)
@@ -259,30 +268,36 @@ fun TaskStatusDropdown(text: String) {
 @Composable
 fun ExamCard(title: String) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(2.dp),
-        modifier = Modifier.fillMaxWidth()
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(title, fontSize = 16.sp, fontWeight = FontWeight.Bold, lineHeight = 22.sp)
             Row(modifier = Modifier.padding(vertical = 4.dp)) {
                 repeat(5) {
-                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFBBF24), modifier = Modifier.size(12.dp))
+                    Icon(
+                            Icons.Default.Star,
+                            contentDescription = null,
+                            tint = Color(0xFFFBBF24),
+                            modifier = Modifier.size(12.dp)
+                    )
                 }
             }
             Text("Mulai quiz/eas", fontSize = 12.sp, color = Color.Gray)
-            
+
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Mulai Ujian", color = Color.White, fontWeight = FontWeight.SemiBold)
-            }
+                    onClick = {},
+                    colors =
+                            ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF0033FF)
+                            ), // IELS Blue
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+            ) { Text("Mulai Ujian", color = Color.White, fontWeight = FontWeight.SemiBold) }
         }
     }
 }
@@ -290,16 +305,16 @@ fun ExamCard(title: String) {
 @Composable
 fun SummaryBadge(text: String) {
     Surface(
-        color = Color(0xFFF1F5F9), // Slate 100
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.size(70.dp, 80.dp)
+            color = Color(0xFFF1F5F9), // Slate 100
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.size(70.dp, 80.dp)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Text(
-                text,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp
+                    text,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
             )
         }
     }

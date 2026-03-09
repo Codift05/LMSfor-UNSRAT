@@ -18,7 +18,7 @@ import com.edudesk.services.AuthService
 import com.edudesk.services.SessionManager
 import com.edudesk.ui.navigation.NavController
 import com.edudesk.ui.navigation.Screen
-import com.edudesk.ui.theme.UdemyPurple
+import com.edudesk.ui.theme.IelsMagenta
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,12 +87,12 @@ fun LoginScreen() {
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(4.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = UdemyPurple)
+                    colors = ButtonDefaults.buttonColors(containerColor = IelsMagenta)
             ) { Text("Login", fontWeight = FontWeight.Bold) }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TextButton(onClick = {}) { Text("Lupa password?", color = UdemyPurple) }
+            TextButton(onClick = {}) { Text("Lupa password?", color = IelsMagenta) }
         }
     }
 }
