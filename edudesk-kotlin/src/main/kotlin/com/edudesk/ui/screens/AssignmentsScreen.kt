@@ -40,8 +40,12 @@ fun AssignmentsScreen() {
                     color = Color(0xFF2D2F31)
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Button(onClick = {}, shape = RoundedCornerShape(4.dp)) {
-                    Text("Tambah Tugas")
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(contentColor = Color.White),
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    Text("Tambah Tugas", color = Color.White)
                 }
             }
             
