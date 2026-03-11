@@ -36,7 +36,7 @@ fun HeroBanner(userName: String, rolePrefix: String = "Mahasiswa") {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp)
+                .aspectRatio(5f)
                 .clip(RoundedCornerShape(16.dp))
         ) {
             Image(
@@ -48,25 +48,25 @@ fun HeroBanner(userName: String, rolePrefix: String = "Mahasiswa") {
             
             // Overlaying branding text
             Column(
-                modifier = Modifier.fillMaxSize().padding(48.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 64.dp),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     "Universitas Sam Ratulangi",
                     color = Color.White,
-                    fontSize = 32.sp,
+                    fontSize = 42.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     "Fakultas Teknik",
                     color = Color.White,
-                    fontSize = 24.sp,
+                    fontSize = 32.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     "Program Studi Teknik Informatika",
                     color = Color.White,
-                    fontSize = 20.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.Medium
                 )
             }

@@ -35,9 +35,9 @@ fun DashboardBanner(
             contentDescription = "IELS Banner",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
+                .aspectRatio(5f)
                 .clip(RoundedCornerShape(16.dp)),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillWidth
         )
     }
 }
