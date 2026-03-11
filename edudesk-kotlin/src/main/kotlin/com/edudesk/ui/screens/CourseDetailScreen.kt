@@ -63,11 +63,14 @@ fun CourseDetailScreen() {
                         .align(Alignment.BottomStart)
                         .padding(horizontal = 48.dp, vertical = 32.dp)
                 ) {
-                    IconButton(
+                    TextButton(
                         onClick = { NavController.navigateTo(Screen.CourseRegistration) },
-                        colors = IconButtonDefaults.iconButtonColors(containerColor = Color.White.copy(alpha = 0.2f))
+                        contentPadding = PaddingValues(start = 0.dp, end = 16.dp),
+                        colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
                     ) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.Default.ArrowBack, contentDescription = null, modifier = Modifier.size(24.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Kembali", fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Color.White)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
@@ -165,22 +168,24 @@ fun CourseDetailScreen() {
 
                             Spacer(modifier = Modifier.height(32.dp))
                             
-                            Button(
-                                onClick = { isEnrolled = true },
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (isEnrolled) Color(0xFF22C55E) else Color(0xFF496E96)
-                                ),
-                                contentPadding = PaddingValues(vertical = 16.dp),
-                                enabled = !isEnrolled
-                            ) {
-                                Text(
-                                    if (isEnrolled) "Sudah Terdaftar" else "Daftar Sekarang",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp
-                                )
-                            }
+                                Button(
+                                    onClick = { isEnrolled = true },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    shape = RoundedCornerShape(12.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = if (isEnrolled) Color(0xFF22C55E) else Color(0xFF496E96),
+                                        contentColor = Color.White
+                                    ),
+                                    contentPadding = PaddingValues(vertical = 16.dp),
+                                    enabled = !isEnrolled
+                                ) {
+                                    Text(
+                                        if (isEnrolled) "Sudah Terdaftar" else "Daftar Sekarang",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = Color.White
+                                    )
+                                }
                             
                             if (isEnrolled) {
                                 Spacer(modifier = Modifier.height(16.dp))
