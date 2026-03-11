@@ -15,6 +15,8 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    implementation(compose.materialIconsExtended)
+
     
     // SQLite JDBC
     implementation("org.xerial:sqlite-jdbc:3.45.1.0")
