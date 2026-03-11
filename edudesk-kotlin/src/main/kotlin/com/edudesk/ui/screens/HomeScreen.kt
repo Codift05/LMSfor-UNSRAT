@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.edudesk.ui.components.CourseCard
-import com.edudesk.ui.components.HeroBanner
+import com.edudesk.ui.components.DashboardBanner
 import com.edudesk.ui.components.TopNavigationBar
 
 @Composable
@@ -36,7 +36,7 @@ fun HomeScreen() {
                                 .background(Color(0xFFF8FAFC)) // Slate 50
                                 .verticalScroll(rememberScrollState())
         ) {
-            HeroBanner(userName = "Miftahuddin")
+            DashboardBanner("Welcome back, Mahasiswa Miftahuddin")
 
             Spacer(modifier = Modifier.height(16.dp))
 
