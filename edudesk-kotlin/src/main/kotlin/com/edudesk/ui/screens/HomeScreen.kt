@@ -237,7 +237,7 @@ fun MyCourseListItem(title: String, progress: Float) {
                     contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource("banner matkul.png"),
+                    painter = painterResource("banner matkul 2.png"),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
