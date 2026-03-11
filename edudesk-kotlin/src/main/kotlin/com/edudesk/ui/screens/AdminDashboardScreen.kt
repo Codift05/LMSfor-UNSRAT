@@ -32,7 +32,7 @@ fun AdminDashboardScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            DashboardBanner("Welcome back, Admin Prodi")
+            DashboardBanner("Selamat Datang Kembali, Admin Prodi")
             
             Spacer(modifier = Modifier.height(32.dp))
             

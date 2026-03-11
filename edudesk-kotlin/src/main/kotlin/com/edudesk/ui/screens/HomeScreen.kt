@@ -37,7 +37,7 @@ fun HomeScreen() {
                                 .verticalScroll(rememberScrollState())
                                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            DashboardBanner("Welcome back, Mahasiswa Miftahuddin")
+            DashboardBanner("Selamat Datang Kembali, Miftahuddin S. Arsyad")
 
             Spacer(modifier = Modifier.height(16.dp))
 

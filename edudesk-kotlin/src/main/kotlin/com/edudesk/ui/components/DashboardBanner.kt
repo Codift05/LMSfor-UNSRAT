@@ -29,6 +29,7 @@ fun DashboardBanner(
     modifier: Modifier = Modifier
 ) {
     val name = title.replace("Selamat Datang Kembali,\n", "")
+        .replace("Selamat Datang Kembali, ", "")
         .replace("Welcome back, ", "")
         .replace("\n", " ").trim()
     
@@ -63,7 +64,7 @@ fun DashboardBanner(
             
             Column {
                 Text(
-                    text = "Welcome back, $name",
+                    text = "Selamat Datang Kembali, $name",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary
@@ -98,7 +99,7 @@ fun DashboardBanner(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    "Department of Engineering",
+                    "Department Of Engineering",
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold
