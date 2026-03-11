@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -53,24 +54,16 @@ fun CourseCard(
                     modifier =
                             Modifier.fillMaxWidth()
                                     .height(140.dp)
-                                    .background(Color(0xFFE2E8F0)), // Fallback Slate 200
+                                    .background(
+                                        Brush.linearGradient(
+                                            colors = listOf(
+                                                Color(0xFF0033FF), // IELS Blue
+                                                Color(0xFF0066FF)  // Lighter Blue
+                                            )
+                                        )
+                                    ),
                     contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource("banner matkul 2.png"),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                    alignment = BiasAlignment(0f, -0.7f)
-                )
-                
-                // Semi-transparent overlay for better icon visibility
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.2f))
-                )
-
                 Icon(
                     imageVector = courseIcon,
                     contentDescription = null,
@@ -120,7 +113,7 @@ fun CourseCard(
                                     Modifier.fillMaxWidth()
                                             .height(6.dp)
                                             .clip(RoundedCornerShape(3.dp)),
-                            color = Color(0xFFF000FF), // IELS Magenta
+                            color = Color(0xFF0033FF), // IELS Blue
                             trackColor = Color(0xFFE2E8F0)
                     )
                 }

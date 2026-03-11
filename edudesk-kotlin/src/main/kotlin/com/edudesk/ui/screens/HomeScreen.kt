@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -234,17 +235,16 @@ fun MyCourseListItem(title: String, progress: Float) {
                     modifier =
                             Modifier.size(80.dp, 54.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Color(0xFFE2E8F0)),
+                                    .background(
+                                        Brush.linearGradient(
+                                            colors = listOf(
+                                                Color(0xFF0033FF), // IELS Blue
+                                                Color(0xFF0066FF)  // Lighter Blue
+                                            )
+                                        )
+                                    ),
                     contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource("banner matkul 2.png"),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                    alignment = BiasAlignment(0f, -0.7f)
-                )
-                Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f)))
                 Icon(courseIcon, contentDescription = null, tint = Color.White, modifier = Modifier.size(24.dp))
             }
             Spacer(modifier = Modifier.width(16.dp))
