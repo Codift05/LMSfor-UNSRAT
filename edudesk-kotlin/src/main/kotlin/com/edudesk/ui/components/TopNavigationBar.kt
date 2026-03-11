@@ -71,11 +71,18 @@ fun TopNavigationBar() {
             // Navigation Links removed (Commercial elements not needed for University LMS)
 
             IconButton(onClick = {}) {
-                BadgedBox(badge = { Badge { Text("") } }) {
+                BadgedBox(
+                        badge = {
+                            Badge(
+                                    containerColor = Color(0xFFE53935),
+                                    modifier = Modifier.size(6.dp)
+                            )
+                        }
+                ) {
                     Icon(
                             Icons.Default.Notifications,
                             contentDescription = "Notifications",
-                            tint = Color(0xFF2D2F31)
+                            tint = Color(0xFF4B5563) // Refined gray for better look
                     )
                 }
             }
