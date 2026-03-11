@@ -1,6 +1,7 @@
 package com.edudesk.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -73,9 +74,11 @@ fun TopNavigationBar() {
             IconButton(onClick = {}) {
                 BadgedBox(
                         badge = {
-                            Badge(
-                                    containerColor = Color(0xFFE53935),
-                                    modifier = Modifier.size(6.dp)
+                            Box(
+                                    modifier = Modifier
+                                            .size(8.dp)
+                                            .offset(x = (-4).dp, y = 4.dp)
+                                            .background(Color(0xFFE53935), CircleShape)
                             )
                         }
                 ) {
@@ -98,7 +101,7 @@ fun TopNavigationBar() {
                     Surface(
                             modifier = Modifier.size(36.dp),
                             shape = CircleShape,
-                            color = Color(0xFF374151)
+                            color = Color(0xFF1C1D1F)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Text(
@@ -127,7 +130,7 @@ fun TopNavigationBar() {
                                         Surface(
                                                 modifier = Modifier.size(36.dp),
                                                 shape = CircleShape,
-                                                color = Color(0xFF374151)
+                                                color = Color(0xFF1C1D1F)
                                         ) {
                                             Box(contentAlignment = Alignment.Center) {
                                                 Text(
