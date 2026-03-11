@@ -121,7 +121,7 @@ fun CourseCard(
                                     Modifier.fillMaxWidth()
                                             .height(6.dp)
                                             .clip(RoundedCornerShape(3.dp)),
-                            color = Color(0xFF0033FF), // IELS Blue
+                            color = Color(0xFF496E96), // Theme Blue
                             trackColor = Color(0xFFE2E8F0)
                     )
                 }

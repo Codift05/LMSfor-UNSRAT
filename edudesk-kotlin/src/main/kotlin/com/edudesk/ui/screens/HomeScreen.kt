@@ -131,7 +131,7 @@ fun HomeScreen() {
                                             onClick = {},
                                             colors =
                                                     ButtonDefaults.buttonColors(
-                                                            containerColor = Color(0xFF0033FF),
+                                                            containerColor = Color(0xFF496E96),
                                                             contentColor = Color.White
                                                     ), // IELS Blue
                                             shape = RoundedCornerShape(10.dp),
@@ -182,8 +182,8 @@ fun HomeScreen() {
                                 Text("Summary", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                                 Spacer(modifier = Modifier.height(16.dp))
                                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                    SummaryBadge("Grade\n6+", Color(0xFF0033FF)) // Blue tint
-                                    SummaryBadge("Grade\n8+", Color(0xFF0033FF)) // Blue tint
+                                    SummaryBadge("Grade\n6+", Color(0xFF496E96)) // Blue tint
+                                    SummaryBadge("Grade\n8+", Color(0xFF496E96)) // Blue tint
                                     SummaryBadge("Grade\n7+", Color(0xFF1E293B)) // Dark Slate tint
                                 }
 
@@ -238,7 +238,7 @@ fun MyCourseListItem(title: String, progress: Float) {
                                     .background(
                                         Brush.linearGradient(
                                             colors = listOf(
-                                                Color(0xFF0033FF), // IELS Blue
+                                                Color(0xFF496E96), // IELS Blue
                                                 Color(0xFF0066FF)  // Lighter Blue
                                             )
                                         )
@@ -267,7 +267,7 @@ fun MyCourseListItem(title: String, progress: Float) {
                         progress = progress,
                         modifier =
                                 Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
-                        color = Color(0xFF0033FF), // IELS Blue
+                        color = Color(0xFF496E96), // IELS Blue
                         trackColor = Color(0xFFF1F5F9)
                 )
             }
@@ -323,7 +323,7 @@ fun ExamCard(title: String) {
                     onClick = {},
                     colors =
                             ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF0033FF),
+                                    containerColor = Color(0xFF496E96),
                                     contentColor = Color.White
                             ), // IELS Blue
                     shape = RoundedCornerShape(10.dp),

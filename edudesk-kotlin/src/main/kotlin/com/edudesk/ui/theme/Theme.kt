@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 
 // IELS Brand colors
 val IelsMagenta = Color(0xFFF000FF)
-val IelsBlue = Color(0xFF0033FF)
+val IelsBlue = Color(0xFF496E96)
 val UdemyDarkPurple = Color(0xFF6A1B9A) // Keeping for subtle dark variants if needed
 val BackgroundLight = Color(0xFFF7F9FA)
 val SurfaceLight = Color.White
