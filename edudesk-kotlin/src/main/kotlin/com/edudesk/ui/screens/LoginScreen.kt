@@ -87,8 +87,11 @@ fun LoginScreen() {
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(4.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = IelsMagenta)
-            ) { Text("Login", fontWeight = FontWeight.Bold) }
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = IelsMagenta,
+                        contentColor = Color.White
+                    )
+            ) { Text("Login", fontWeight = FontWeight.Bold, color = Color.White) }
 
             Spacer(modifier = Modifier.height(16.dp))
 
