@@ -54,16 +54,24 @@ fun CourseCard(
                     modifier =
                             Modifier.fillMaxWidth()
                                     .height(140.dp)
-                                    .background(
-                                        Brush.linearGradient(
-                                            colors = listOf(
-                                                Color(0xFF0033FF), // IELS Blue
-                                                Color(0xFF0066FF)  // Lighter Blue
-                                            )
-                                        )
-                                    ),
+                                    .background(Color(0xFFF1F5F9)),
                     contentAlignment = Alignment.Center
             ) {
+                Image(
+                    painter = painterResource("banner matkul 2.png"),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    alignment = BiasAlignment(0f, -0.7f)
+                )
+
+                // Semi-transparent overlay
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.1f))
+                )
+
                 Icon(
                     imageVector = courseIcon,
                     contentDescription = null,
