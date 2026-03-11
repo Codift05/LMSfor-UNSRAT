@@ -52,10 +52,22 @@ fun CourseRegistrationScreen() {
                 .background(Color(0xFFF8FAFC))
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { NavController.navigateTo(Screen.Home) }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                TextButton(
+                    onClick = { NavController.navigateTo(Screen.Home) },
+                    contentPadding = PaddingValues(start = 0.dp, end = 12.dp),
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color(0xFF496E96))
+                ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = null, modifier = Modifier.size(20.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Kembali", fontSize = 16.sp, fontWeight = FontWeight.Medium)
                 }
+                
+                Spacer(modifier = Modifier.width(8.dp))
+
                 Text(
                     "Pendaftaran Kelas",
                     fontSize = 24.sp,
