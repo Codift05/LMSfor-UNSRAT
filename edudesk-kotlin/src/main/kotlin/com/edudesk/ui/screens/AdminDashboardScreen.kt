@@ -173,12 +173,15 @@ fun PendingClassRow(title: String, instructor: String) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(
                 onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF16A34A)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF16A34A),
+                    contentColor = Color.White
+                ),
                 shape = RoundedCornerShape(4.dp),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
                 modifier = Modifier.height(32.dp)
             ) {
-                Text("Setujui", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text("Setujui", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
             }
             OutlinedButton(
                 onClick = {},
