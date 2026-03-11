@@ -77,7 +77,7 @@ fun DashboardBanner(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(5f)
-                .clip(RoundedCornerShape(0.dp))
+                .clip(RoundedCornerShape(16.dp))
         ) {
             Image(
                 painter = painterResource("Banner Web IELS 2.png"),
@@ -94,19 +94,19 @@ fun DashboardBanner(
                 Text(
                     "Sam Ratulangi University",
                     color = Color.White,
-                    fontSize = 32.sp,
+                    fontSize = 38.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     "Department of Engineering",
                     color = Color.White,
-                    fontSize = 24.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     "Informatics Engineering Major",
                     color = Color.White,
-                    fontSize = 20.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
