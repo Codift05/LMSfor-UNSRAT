@@ -41,11 +41,11 @@ fun DashboardBanner(
     Column(modifier = modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = 12.dp)
         ) {
             // Circle Avatar
             Surface(
-                modifier = Modifier.size(64.dp),
+                modifier = Modifier.size(48.dp),
                 shape = CircleShape,
                 color = Color(0xFF1C1D1F) // Udemy dark avatar background
             ) {
@@ -53,42 +53,63 @@ fun DashboardBanner(
                     Text(
                         initials,
                         color = Color.White,
-                        fontSize = 20.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
             
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(12.dp))
             
             Column {
                 Text(
                     text = "Welcome back, $name",
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary
-                )
-                Text(
-                    text = "Add occupation and interests",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = UdemyPurple,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { /* TODO */ }
                 )
             }
         }
         
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         
-        Image(
-            painter = painterResource("Banner Web IELS 2.png"),
-            contentDescription = "IELS Banner",
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(5f)
-                .clip(RoundedCornerShape(0.dp)), // Udemy banners are usually flat
-            contentScale = ContentScale.FillWidth
-        )
+                .clip(RoundedCornerShape(0.dp))
+        ) {
+            Image(
+                painter = painterResource("Banner Web IELS 2.png"),
+                contentDescription = "IELS Banner",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            
+            // Overlaying branding text
+            Column(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 48.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Sam Ratulangi University",
+                    color = Color.White,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    "Department of Engineering",
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    "Informatics Engineering Major",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
     }
 }

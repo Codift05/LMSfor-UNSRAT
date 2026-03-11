@@ -35,6 +35,7 @@ fun HomeScreen() {
                                 .padding(padding)
                                 .background(Color(0xFFF8FAFC)) // Slate 50
                                 .verticalScroll(rememberScrollState())
+                                .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
             DashboardBanner("Welcome back, Mahasiswa Miftahuddin")
 
