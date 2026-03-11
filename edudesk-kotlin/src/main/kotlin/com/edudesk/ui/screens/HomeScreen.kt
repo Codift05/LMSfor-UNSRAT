@@ -240,7 +240,8 @@ fun MyCourseListItem(title: String, progress: Float) {
                     painter = painterResource("banner matkul 2.png"),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.TopCenter
                 )
                 Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f)))
                 Icon(courseIcon, contentDescription = null, tint = Color.White, modifier = Modifier.size(24.dp))

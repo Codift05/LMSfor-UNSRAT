@@ -59,7 +59,8 @@ fun CourseCard(
                     painter = painterResource("banner matkul 2.png"),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.TopCenter
                 )
                 
                 // Semi-transparent overlay for better icon visibility
