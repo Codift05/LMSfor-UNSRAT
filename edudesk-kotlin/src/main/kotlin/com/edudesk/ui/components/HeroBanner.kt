@@ -40,7 +40,7 @@ fun HeroBanner(userName: String, rolePrefix: String = "Mahasiswa") {
                 .clip(RoundedCornerShape(16.dp))
         ) {
             Image(
-                painter = painterResource("Banner Web IELS.png"),
+                painter = painterResource("Banner Web IELS 2.png"),
                 contentDescription = "IELS Banner",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop

@@ -31,7 +31,7 @@ fun DashboardBanner(
         Spacer(modifier = Modifier.height(24.dp))
         
         Image(
-            painter = painterResource("Banner Web IELS.png"),
+            painter = painterResource("Banner Web IELS 2.png"),
             contentDescription = "IELS Banner",
             modifier = Modifier
                 .fillMaxWidth()
