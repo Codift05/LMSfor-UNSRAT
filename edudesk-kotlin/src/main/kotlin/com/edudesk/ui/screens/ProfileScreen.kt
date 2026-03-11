@@ -193,8 +193,11 @@ fun ProfileScreen() {
                             },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
                             shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = IelsMagenta)
-                    ) { Text("Simpan Perubahan", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = IelsMagenta,
+                                contentColor = Color.White
+                            )
+                    ) { Text("Simpan Perubahan", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.White) }
                 }
             }
 
