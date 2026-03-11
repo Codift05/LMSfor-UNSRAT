@@ -236,14 +236,7 @@ fun MyCourseListItem(title: String, progress: Float) {
                     modifier =
                             Modifier.size(80.dp, 54.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(
-                                        Brush.linearGradient(
-                                            colors = listOf(
-                                                Color(0xFF496E96), // IELS Blue
-                                                Color(0xFF0066FF)  // Lighter Blue
-                                            )
-                                        )
-                                    ),
+                                    .background(Color(0xFF496E96)),
                     contentAlignment = Alignment.Center
             ) {
                 Icon(courseIcon, contentDescription = null, tint = Color.White, modifier = Modifier.size(24.dp))
