@@ -62,7 +62,10 @@ fun InstructorDashboardScreen() {
                 Text("Kelas Saya", fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Button(
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF8B5CF6),
+                        contentColor = Color.White
+                    ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Kelola Kelas", color = Color.White, fontWeight = FontWeight.Bold)
@@ -100,7 +103,10 @@ fun InstructorDashboardScreen() {
                 Text("Manajemen Materi", fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Button(
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF8B5CF6),
+                        contentColor = Color.White
+                    ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Unggah Materi", color = Color.White, fontWeight = FontWeight.Bold)
@@ -189,10 +195,13 @@ fun InstructorDashboardScreen() {
                         
                         Button(
                             onClick = {},
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF8B5CF6),
+                                contentColor = Color.White
+                            ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Text("Buat Evaluasi")
+                            Text("Buat Evaluasi", color = Color.White)
                         }
                     }
                 }
@@ -443,11 +452,14 @@ fun GradingRow(name: String, status: String, grade: String, hasInput: Boolean, h
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B5CF6)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF8B5CF6),
+                        contentColor = Color.White
+                    ),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.height(40.dp)
                 ) {
-                    Text("Submit", fontSize = 12.sp)
+                    Text("Submit", fontSize = 12.sp, color = Color.White)
                 }
             }
         }
