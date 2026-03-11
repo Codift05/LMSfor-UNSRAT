@@ -38,7 +38,7 @@ fun LoginScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                    painter = painterResource("IELS Logo.png"),
+                    painter = painterResource("IELS Logo 3.png"),
                     contentDescription = "EduDesk Logo",
                     modifier = Modifier.width(200.dp)
             )

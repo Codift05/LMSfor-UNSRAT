@@ -40,7 +40,7 @@ fun TopNavigationBar() {
             // Logo
             TextButton(onClick = { NavController.navigateTo(Screen.Home) }) {
                 Image(
-                        painter = painterResource("IELS Logo 2.png"),
+                        painter = painterResource("IELS Logo 4.png"),
                         contentDescription = "EduDesk Logo",
                         modifier = Modifier.height(32.dp)
                 )
