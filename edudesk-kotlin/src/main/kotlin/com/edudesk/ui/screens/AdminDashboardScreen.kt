@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.edudesk.ui.components.DashboardBanner
 import com.edudesk.ui.components.TopNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,13 +32,7 @@ fun AdminDashboardScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            Text(
-                "Selamat Datang Kembali,\nAdmin Prodi",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B),
-                lineHeight = 40.sp
-            )
+            DashboardBanner("Selamat Datang Kembali,\nAdmin Prodi")
             
             Spacer(modifier = Modifier.height(32.dp))
             

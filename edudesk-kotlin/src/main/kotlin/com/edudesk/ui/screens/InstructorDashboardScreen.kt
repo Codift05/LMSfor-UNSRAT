@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.edudesk.ui.components.DashboardBanner
 import com.edudesk.ui.components.TopNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,13 +40,7 @@ fun InstructorDashboardScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            Text(
-                "Selamat Datang Kembali,\nInstruktur",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B),
-                lineHeight = 40.sp
-            )
+            DashboardBanner("Selamat Datang Kembali,\nInstruktur")
             
             Spacer(modifier = Modifier.height(32.dp))
             
