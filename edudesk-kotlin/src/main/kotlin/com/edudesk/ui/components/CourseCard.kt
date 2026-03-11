@@ -1,16 +1,20 @@
 package com.edudesk.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,6 +31,14 @@ fun CourseCard(
         progress: Float? = null,
         modifier: Modifier = Modifier
 ) {
+    val courseIcon: ImageVector = when {
+        title.contains("Pemrograman", ignoreCase = true) -> Icons.Default.Code
+        title.contains("Data", ignoreCase = true) -> Icons.Default.Storage
+        title.contains("Kecerdasan", ignoreCase = true) || title.contains("AI", ignoreCase = true) -> Icons.Default.Psychology
+        title.contains("Web", ignoreCase = true) -> Icons.Default.Language
+        else -> Icons.Default.Book
+    }
+
     Card(
             modifier = modifier.width(260.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -35,13 +47,35 @@ fun CourseCard(
             onClick = {}
     ) {
         Column {
-            // Thumbnail Placeholder
+            // Thumbnail with Background Image and Centered Icon
             Box(
                     modifier =
                             Modifier.fillMaxWidth()
                                     .height(140.dp)
-                                    .background(Color(0xFFE2E8F0)) // Slate 200
-            )
+                                    .background(Color(0xFFE2E8F0)), // Fallback Slate 200
+                    contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource("banner matkul.png"),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                
+                // Semi-transparent overlay for better icon visibility
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.2f))
+                )
+
+                Icon(
+                    imageVector = courseIcon,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(48.dp)
+                )
+            }
 
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
@@ -74,24 +108,9 @@ fun CourseCard(
                 Text(text = instructor, fontSize = 12.sp, color = Color.Gray)
 
                 Spacer(modifier = Modifier.height(8.dp))
-                if (isPremium) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Surface(
-                            color = Color(0xFF0033FF), // IELS Blue
-                            shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text(
-                                "Premium",
-                                color = Color.White,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                        )
-                    }
-                }
-
                 // For 'My Courses' view showing progress instead of price
                 if (progress != null) {
+
                     Spacer(modifier = Modifier.height(12.dp))
                     LinearProgressIndicator(
                             progress = progress,
