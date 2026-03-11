@@ -31,7 +31,8 @@ fun CourseCard(
         reviewsCount: Int = 0,
         isPremium: Boolean = false,
         progress: Float? = null,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        onClick: () -> Unit = {}
 ) {
     val courseIcon: ImageVector = when {
         title.contains("Pemrograman", ignoreCase = true) -> Icons.Default.Code
@@ -46,7 +47,7 @@ fun CourseCard(
             colors = CardDefaults.cardColors(containerColor = Color.White),
             shape = RoundedCornerShape(12.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            onClick = {}
+            onClick = onClick
     ) {
         Column {
             // Thumbnail with Background Image and Centered Icon

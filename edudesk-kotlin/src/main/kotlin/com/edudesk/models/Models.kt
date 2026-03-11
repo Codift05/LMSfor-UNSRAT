@@ -61,3 +61,17 @@ class Assignment(id: EntityID<Int>) : IntEntity(id) {
     var course by Course referencedOn Assignments.courseId
     var user by User referencedOn Assignments.userId
 }
+
+// Enrollments Table
+object Enrollments : IntIdTable("enrollments") {
+    val userId = reference("user_id", Users)
+    val courseId = reference("course_id", Courses)
+    val enrolledAt = varchar("enrolled_at", 100) // Timestamp string
+}
+
+class Enrollment(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<Enrollment>(Enrollments)
+    var user by User referencedOn Enrollments.userId
+    var course by Course referencedOn Enrollments.courseId
+    var enrolledAt by Enrollments.enrolledAt
+}

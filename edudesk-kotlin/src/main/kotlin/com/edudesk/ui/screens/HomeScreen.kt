@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.sp
 import com.edudesk.ui.components.CourseCard
 import com.edudesk.ui.components.DashboardBanner
 import com.edudesk.ui.components.TopNavigationBar
+import com.edudesk.ui.navigation.NavController
+import com.edudesk.ui.navigation.Screen
 
 @Composable
 fun HomeScreen() {
@@ -42,12 +44,21 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-                Text(
-                        "Pendaftaran Kelas",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1E293B)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                            "Pendaftaran Kelas",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF1E293B)
+                    )
+                    TextButton(onClick = { NavController.navigateTo(Screen.CourseRegistration) }) {
+                        Text("Lihat Semua", color = Color(0xFF496E96), fontWeight = FontWeight.Bold)
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -58,14 +69,16 @@ fun HomeScreen() {
                             instructor = "Dr. Eng. Rizal, S.T., M.T.",
                             rating = 5f,
                             reviewsCount = 244,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            onClick = { NavController.navigateTo(Screen.CourseDetail) }
                     )
                     CourseCard(
                             title = "Struktur Data",
                             instructor = "Prof. Dr. Ir. Budi, M.Sc.",
                             rating = 5f,
                             reviewsCount = 299,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            onClick = { NavController.navigateTo(Screen.CourseDetail) }
                     )
                     CourseCard(
                             title = "Kecerdasan Buatan",
@@ -73,14 +86,16 @@ fun HomeScreen() {
                             rating = 5f,
                             reviewsCount = 398,
                             isPremium = true,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            onClick = { NavController.navigateTo(Screen.CourseDetail) }
                     )
                     CourseCard(
                             title = "Pengembangan Aplikasi Web",
                             instructor = "Ir. Maria, S.Kom., M.Kom.",
                             rating = 5f,
                             reviewsCount = 396,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            onClick = { NavController.navigateTo(Screen.CourseDetail) }
                     )
                 }
 

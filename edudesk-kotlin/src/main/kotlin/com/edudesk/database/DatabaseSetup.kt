@@ -15,7 +15,12 @@ object DatabaseSetup {
 
         transaction {
             // We will create tables if they don't exist, though the Go app likely made them.
-            // SchemaUtils.createMissingTablesAndColumns(Users, Courses, Assignments)
+            SchemaUtils.createMissingTablesAndColumns(
+                com.edudesk.models.Users,
+                com.edudesk.models.Courses,
+                com.edudesk.models.Assignments,
+                com.edudesk.models.Enrollments
+            )
         }
     }
 }

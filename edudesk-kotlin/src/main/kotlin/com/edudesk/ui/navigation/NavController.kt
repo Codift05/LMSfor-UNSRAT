@@ -11,7 +11,9 @@ enum class Screen {
     Assignments,
     Profile,
     InstructorDashboard,
-    AdminDashboard
+    AdminDashboard,
+    CourseRegistration,
+    CourseDetail
 }
 
 object NavController {
