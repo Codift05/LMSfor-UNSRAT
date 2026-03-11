@@ -121,55 +121,106 @@ fun TopNavigationBar() {
 
                 DropdownMenu(
                         expanded = profileMenuExpanded,
-                        onDismissRequest = { profileMenuExpanded = false }
+                        onDismissRequest = { profileMenuExpanded = false },
+                        modifier = Modifier.width(280.dp).padding(vertical = 8.dp)
                 ) {
+                    // Header Section
+                    Column(
+                            modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Surface(
+                                    modifier = Modifier.size(64.dp),
+                                    shape = CircleShape,
+                                    color = Color(0xFF1C1D1F)
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Text(
+                                            currentUser?.name?.split(" ")?.filter { it.isNotEmpty() }?.take(2)?.map { it.first().uppercaseChar() }?.joinToString("") ?: "US",
+                                            color = Color.White,
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                        currentUser?.name ?: "User",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF2D2F31)
+                                )
+                                Text(
+                                        currentUser?.email ?: (currentUser?.nim ?: ""),
+                                        fontSize = 12.sp,
+                                        color = Color.Gray
+                                )
+                            }
+                        }
+                    }
+
+                    Divider(modifier = Modifier.padding(vertical = 4.dp))
+
                     DropdownMenuItem(
-                            text = {
-                                Column {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Surface(
-                                                modifier = Modifier.size(36.dp),
-                                                shape = CircleShape,
-                                                color = Color(0xFF1C1D1F)
-                                        ) {
-                                            Box(contentAlignment = Alignment.Center) {
-                                                Text(
-                                                        currentUser?.name?.take(2)?.uppercase()
-                                                                ?: "US",
-                                                        color = Color.White,
-                                                        fontSize = 14.sp,
-                                                        fontWeight = FontWeight.Bold
-                                                )
-                                            }
-                                        }
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Column {
-                                            Text(
-                                                    currentUser?.name ?: "User",
-                                                    fontWeight = FontWeight.Bold
-                                            )
-                                            Text(
-                                                    currentUser?.role ?: "Student",
-                                                    fontSize = 12.sp,
-                                                    color = Color.Gray
-                                            )
-                                        }
+                            text = { Text("Mata Kuliah Saya", fontWeight = FontWeight.Normal) },
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.Home)
+                            }
+                    )
+                    
+                    DropdownMenuItem(
+                            text = { 
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text("Pesan", fontWeight = FontWeight.Normal)
+                                    Surface(
+                                        color = Color(0xFF1C1D1F),
+                                        shape = CircleShape
+                                    ) {
+                                        Text(
+                                            "1",
+                                            color = Color.White,
+                                            fontSize = 12.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                        )
                                     }
                                 }
                             },
                             onClick = { profileMenuExpanded = false }
                     )
-                    Divider()
+
+                    Divider(modifier = Modifier.padding(vertical = 4.dp))
+
                     DropdownMenuItem(
-                            text = { Text("Edit Profile") },
+                            text = { Text("Pengaturan Akun", fontWeight = FontWeight.Normal) },
+                            onClick = { profileMenuExpanded = false }
+                    )
+
+                    DropdownMenuItem(
+                            text = { Text("Edit Profil", fontWeight = FontWeight.Normal) },
                             onClick = {
                                 profileMenuExpanded = false
                                 NavController.navigateTo(Screen.Profile)
                             }
                     )
-                    Divider()
+
+                    Divider(modifier = Modifier.padding(vertical = 4.dp))
+
                     DropdownMenuItem(
-                            text = { Text("Logout") },
+                            text = { Text("Bantuan dan Dukungan", fontWeight = FontWeight.Normal) },
+                            onClick = { profileMenuExpanded = false }
+                    )
+
+                    DropdownMenuItem(
+                            text = { Text("Keluar", fontWeight = FontWeight.Bold) },
                             onClick = {
                                 profileMenuExpanded = false
                                 SessionManager.currentUser = null
