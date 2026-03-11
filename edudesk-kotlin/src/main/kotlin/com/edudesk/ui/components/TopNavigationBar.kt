@@ -68,23 +68,7 @@ fun TopNavigationBar() {
 
             Spacer(modifier = Modifier.width(32.dp))
 
-            // Navigation Links
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {}) {
-                Text("Eksplorasi", color = Color(0xFF2D2F31), fontWeight = FontWeight.Medium)
-                Icon(
-                        Icons.Default.KeyboardArrowDown,
-                        contentDescription = null,
-                        tint = Color(0xFF2D2F31)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(24.dp))
-
-            TextButton(onClick = {}) {
-                Text("Berlangganan", color = Color(0xFF2D2F31), fontWeight = FontWeight.Medium)
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
+            // Navigation Links removed (Commercial elements not needed for University LMS)
 
             IconButton(onClick = {}) {
                 BadgedBox(badge = { Badge { Text("") } }) {
