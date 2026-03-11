@@ -17,6 +17,8 @@ val BackgroundLight = Color(0xFFF7F9FA)
 val SurfaceLight = Color.White
 val TextPrimary = Color(0xFF2D2F31)
 val TextSecondary = Color(0xFF6A6F73)
+val UdemyPurple = Color(0xFF5624D0)
+val UdemyLightPurple = Color(0xFFC0C4FC)
 
 private val LightColorScheme =
         lightColorScheme(

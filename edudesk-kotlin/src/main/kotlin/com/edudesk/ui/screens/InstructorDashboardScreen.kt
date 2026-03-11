@@ -40,7 +40,7 @@ fun InstructorDashboardScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
-            DashboardBanner("Selamat Datang Kembali,\nInstruktur")
+            DashboardBanner("Welcome back, Instruktur")
             
             Spacer(modifier = Modifier.height(32.dp))
             
