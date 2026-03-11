@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.sp
 
 // IELS Brand colors
@@ -45,41 +46,77 @@ private val DarkColorScheme =
                 onSurface = Color.White
         )
 
+// Load Inter font family
+val InterFontFamily = FontFamily(
+    Font("fonts/Inter-Regular.otf", FontWeight.Normal),
+    Font("fonts/Inter-Medium.otf", FontWeight.Medium),
+    Font("fonts/Inter-SemiBold.otf", FontWeight.SemiBold),
+    Font("fonts/Inter-Bold.otf", FontWeight.Bold)
+)
+
 val Typography =
         Typography(
                 displayLarge =
                         TextStyle(
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 32.sp,
                                 color = TextPrimary
                         ),
                 headlineMedium =
                         TextStyle(
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 24.sp,
                                 color = TextPrimary
                         ),
+                headlineSmall =
+                        TextStyle(
+                                fontFamily = InterFontFamily,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 20.sp,
+                                color = TextPrimary
+                        ),
                 titleLarge =
                         TextStyle(
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 19.sp,
                                 color = TextPrimary
                         ),
+                titleMedium =
+                        TextStyle(
+                                fontFamily = InterFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 16.sp,
+                                color = TextPrimary
+                        ),
                 bodyLarge =
                         TextStyle(
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 16.sp,
                                 color = TextPrimary
                         ),
                 bodyMedium =
                         TextStyle(
-                                fontFamily = FontFamily.SansSerif,
+                                fontFamily = InterFontFamily,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp,
+                                color = TextSecondary
+                        ),
+                labelLarge =
+                        TextStyle(
+                                fontFamily = InterFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp,
+                                color = TextPrimary
+                        ),
+                labelMedium =
+                        TextStyle(
+                                fontFamily = InterFontFamily,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 12.sp,
                                 color = TextSecondary
                         )
         )
