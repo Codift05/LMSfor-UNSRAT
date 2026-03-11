@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -119,114 +117,124 @@ fun TopNavigationBar() {
                     )
                 }
 
-                MaterialTheme(colorScheme = MaterialTheme.colorScheme.copy(surface = Color.White)) {
+                MaterialTheme(
+                    colorScheme = MaterialTheme.colorScheme.copy(
+                        surface = Color.White,
+                        surfaceVariant = Color.White
+                    )
+                ) {
                     DropdownMenu(
-                            expanded = profileMenuExpanded,
-                            onDismissRequest = { profileMenuExpanded = false },
-                            modifier = Modifier.width(280.dp).padding(vertical = 8.dp)
+                        expanded = profileMenuExpanded,
+                        onDismissRequest = { profileMenuExpanded = false },
+                        modifier = Modifier.width(260.dp).background(Color.White)
                     ) {
                         // Header Section
                         Column(
-                                modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Surface(
-                                        modifier = Modifier.size(64.dp),
-                                        shape = CircleShape,
-                                        color = Color(0xFF1C1D1F)
+                                    modifier = Modifier.size(56.dp),
+                                    shape = CircleShape,
+                                    color = Color(0xFF1C1D1F)
                                 ) {
                                     Box(contentAlignment = Alignment.Center) {
                                         Text(
-                                                currentUser?.name?.split(" ")?.filter { it.isNotEmpty() }?.take(2)?.map { it.first().uppercaseChar() }?.joinToString("") ?: "US",
-                                                color = Color.White,
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.Bold
+                                            currentUser?.name?.split(" ")?.filter { it.isNotEmpty() }?.take(2)?.map { it.first().uppercaseChar() }?.joinToString("") ?: "US",
+                                            color = Color.White,
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold
                                         )
                                     }
                                 }
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(16.dp))
                                 Column {
                                     Text(
-                                            currentUser?.name ?: "User",
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 16.sp,
-                                            color = Color(0xFF2D2F31)
+                                        currentUser?.name ?: "User",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF1C1D1F)
                                     )
                                     Text(
-                                            currentUser?.email ?: (currentUser?.nim ?: ""),
-                                            fontSize = 12.sp,
-                                            color = Color.Gray
+                                        currentUser?.email ?: (currentUser?.nim ?: ""),
+                                        fontSize = 12.sp,
+                                        color = Color(0xFF6A6F73)
                                     )
                                 }
                             }
                         }
 
-                        Divider(modifier = Modifier.padding(vertical = 4.dp))
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = Color(0xFFD1D7DC))
 
                         DropdownMenuItem(
-                                text = { Text("Mata Kuliah Saya", fontWeight = FontWeight.Normal, color = Color(0xFF2D2F31)) },
-                                onClick = {
-                                    profileMenuExpanded = false
-                                    NavController.navigateTo(Screen.Home)
-                                }
+                            text = { Text("Mata Kuliah Saya", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
+                            leadingIcon = { Icon(Icons.Default.List, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.Home)
+                            }
                         )
                         
                         DropdownMenuItem(
-                                text = { 
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically
+                            text = { 
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text("Pesan", fontSize = 14.sp, color = Color(0xFF1C1D1F))
+                                    Surface(
+                                        color = Color(0xFF1C1D1F),
+                                        shape = CircleShape
                                     ) {
-                                        Text("Pesan", fontWeight = FontWeight.Normal, color = Color(0xFF2D2F31))
-                                        Surface(
-                                            color = Color(0xFF1C1D1F),
-                                            shape = CircleShape
-                                        ) {
-                                            Text(
-                                                "1",
-                                                color = Color.White,
-                                                fontSize = 12.sp,
-                                                fontWeight = FontWeight.Bold,
-                                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                            )
-                                        }
+                                        Text(
+                                            "1",
+                                            color = Color.White,
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                        )
                                     }
-                                },
-                                onClick = { profileMenuExpanded = false }
-                        )
-
-                        Divider(modifier = Modifier.padding(vertical = 4.dp))
-
-                        DropdownMenuItem(
-                                text = { Text("Pengaturan Akun", fontWeight = FontWeight.Normal, color = Color(0xFF2D2F31)) },
-                                onClick = { profileMenuExpanded = false }
-                        )
-
-                        DropdownMenuItem(
-                                text = { Text("Edit Profil", fontWeight = FontWeight.Normal, color = Color(0xFF2D2F31)) },
-                                onClick = {
-                                    profileMenuExpanded = false
-                                    NavController.navigateTo(Screen.Profile)
                                 }
+                            },
+                            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                            onClick = { profileMenuExpanded = false }
                         )
 
-                        Divider(modifier = Modifier.padding(vertical = 4.dp))
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = Color(0xFFD1D7DC))
 
                         DropdownMenuItem(
-                                text = { Text("Bantuan dan Dukungan", fontWeight = FontWeight.Normal, color = Color(0xFF2D2F31)) },
-                                onClick = { profileMenuExpanded = false }
+                            text = { Text("Pengaturan Akun", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
+                            leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                            onClick = { profileMenuExpanded = false }
                         )
 
                         DropdownMenuItem(
-                                text = { Text("Keluar", fontWeight = FontWeight.Bold, color = Color(0xFF2D2F31)) },
-                                onClick = {
-                                    profileMenuExpanded = false
-                                    SessionManager.currentUser = null
-                                    NavController.navigateTo(Screen.Login)
-                                }
+                            text = { Text("Edit Profil", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
+                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.Profile)
+                            }
+                        )
+
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = Color(0xFFD1D7DC))
+
+                        DropdownMenuItem(
+                            text = { Text("Bantuan dan Dukungan", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
+                            leadingIcon = { Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                            onClick = { profileMenuExpanded = false }
+                        )
+
+                        DropdownMenuItem(
+                            text = { Text("Keluar", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFFB3261E)) },
+                            onClick = {
+                                profileMenuExpanded = false
+                                SessionManager.currentUser = null
+                                NavController.navigateTo(Screen.Login)
+                            }
                         )
                     }
                 }
