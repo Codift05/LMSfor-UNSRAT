@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 val IelsMagenta = Color(0xFFF000FF)
 val IelsBlue = Color(0xFF496E96)
 val UdemyDarkPurple = Color(0xFF6A1B9A) // Keeping for subtle dark variants if needed
-val BackgroundLight = Color(0xFFF7F9FA)
+val BackgroundLight = Color(0xFFE2E8EF)
 val SurfaceLight = Color.White
 val TextPrimary = Color(0xFF2D2F31)
 val TextSecondary = Color(0xFF6A6F73)
@@ -23,14 +23,15 @@ val UdemyLightPurple = Color(0xFFC0C4FC)
 
 private val LightColorScheme =
         lightColorScheme(
-                primary = IelsMagenta,
+                primary = IelsBlue,
                 onPrimary = Color.White,
-                primaryContainer = Color(0xFFFFD9FF),
-                onPrimaryContainer = Color(0xFF660066),
+                primaryContainer = Color(0xFFD6E4F7),
+                onPrimaryContainer = Color(0xFF1A3A5C),
                 secondary = IelsBlue,
                 onSecondary = Color.White,
                 background = BackgroundLight,
                 surface = SurfaceLight,
+                surfaceTint = Color.Transparent,
                 onBackground = TextPrimary,
                 onSurface = TextPrimary
         )

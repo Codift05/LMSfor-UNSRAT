@@ -35,7 +35,7 @@ fun HomeScreen() {
                 modifier =
                         Modifier.fillMaxSize()
                                 .padding(padding)
-                                .background(Color(0xFFF8FAFC)) // Slate 50
+                                .background(Color(0xFFE2E8EF)) // Slightly deeper slate for white card contrast
                                 .verticalScroll(rememberScrollState())
                                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {

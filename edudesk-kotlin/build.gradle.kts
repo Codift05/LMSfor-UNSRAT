@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "1.9.22"
-    id("org.jetbrains.compose") version "1.6.0"
+    kotlin("jvm") version "2.0.0"
+    id("org.jetbrains.compose") version "1.6.11"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 group = "com.edudesk"
@@ -10,6 +11,10 @@ repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 dependencies {
