@@ -1,5 +1,6 @@
 package com.edudesk.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -132,7 +133,8 @@ fun HomeScreen() {
                         Card(
                                 colors = CardDefaults.cardColors(containerColor = Color.White),
                                 shape = RoundedCornerShape(16.dp),
-                                elevation = CardDefaults.cardElevation(2.dp),
+                                elevation = CardDefaults.cardElevation(0.dp),
+                                border = BorderStroke(1.dp, Color(0xFFDDE3EA)),
                                 modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(20.dp)) {
@@ -190,7 +192,8 @@ fun HomeScreen() {
                         Card(
                                 colors = CardDefaults.cardColors(containerColor = Color.White),
                                 shape = RoundedCornerShape(16.dp),
-                                elevation = CardDefaults.cardElevation(2.dp),
+                                elevation = CardDefaults.cardElevation(0.dp),
+                                border = BorderStroke(1.dp, Color(0xFFDDE3EA)),
                                 modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.padding(20.dp)) {
@@ -242,7 +245,8 @@ fun MyCourseListItem(title: String, progress: Float) {
     Card(
             colors = CardDefaults.cardColors(containerColor = Color.White),
             shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(2.dp),
+            elevation = CardDefaults.cardElevation(0.dp),
+            border = BorderStroke(1.dp, Color(0xFFDDE3EA)),
             modifier = Modifier.fillMaxWidth()
     ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -307,7 +311,8 @@ fun ExamCard(title: String) {
     Card(
             colors = CardDefaults.cardColors(containerColor = Color.White),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(2.dp),
+            elevation = CardDefaults.cardElevation(0.dp),
+            border = BorderStroke(1.dp, Color(0xFFDDE3EA)),
             modifier = Modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(20.dp)) {

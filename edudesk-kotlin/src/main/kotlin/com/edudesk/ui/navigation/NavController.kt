@@ -13,7 +13,10 @@ enum class Screen {
     InstructorDashboard,
     AdminDashboard,
     CourseRegistration,
-    CourseDetail
+    CourseDetail,
+    Messages,
+    AccountSettings,
+    Help
 }
 
 object NavController {

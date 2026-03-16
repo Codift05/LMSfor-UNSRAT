@@ -49,7 +49,7 @@ fun CourseRegistrationScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF8FAFC))
+                .background(Color(0xFFE2E8EF))
                 .padding(horizontal = 48.dp, vertical = 24.dp)
         ) {
             Row(

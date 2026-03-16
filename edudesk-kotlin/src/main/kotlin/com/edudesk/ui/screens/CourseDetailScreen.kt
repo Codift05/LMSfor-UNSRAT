@@ -37,7 +37,7 @@ fun CourseDetailScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF8FAFC))
+                .background(Color(0xFFE2E8EF))
                 .verticalScroll(scrollState)
         ) {
             // Course Banner/Header
@@ -154,7 +154,8 @@ fun CourseDetailScreen() {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = Color.White),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFDDE3EA)),
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Column(modifier = Modifier.padding(24.dp)) {

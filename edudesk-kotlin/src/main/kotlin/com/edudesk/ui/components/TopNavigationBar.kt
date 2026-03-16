@@ -173,7 +173,7 @@ fun TopNavigationBar() {
                             leadingIcon = { Icon(Icons.Default.List, contentDescription = null, modifier = Modifier.size(20.dp)) },
                             onClick = {
                                 profileMenuExpanded = false
-                                NavController.navigateTo(Screen.Home)
+                                NavController.navigateTo(Screen.MyLearning)
                             }
                         )
                         
@@ -200,7 +200,10 @@ fun TopNavigationBar() {
                                 }
                             },
                             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, modifier = Modifier.size(20.dp)) },
-                            onClick = { profileMenuExpanded = false }
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.Messages)
+                            }
                         )
 
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = Color(0xFFD1D7DC))
@@ -208,7 +211,10 @@ fun TopNavigationBar() {
                         DropdownMenuItem(
                             text = { Text("Pengaturan Akun", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
                             leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null, modifier = Modifier.size(20.dp)) },
-                            onClick = { profileMenuExpanded = false }
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.AccountSettings)
+                            }
                         )
 
                         DropdownMenuItem(
@@ -225,7 +231,10 @@ fun TopNavigationBar() {
                         DropdownMenuItem(
                             text = { Text("Bantuan dan Dukungan", fontSize = 14.sp, color = Color(0xFF1C1D1F)) },
                             leadingIcon = { Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(20.dp)) },
-                            onClick = { profileMenuExpanded = false }
+                            onClick = {
+                                profileMenuExpanded = false
+                                NavController.navigateTo(Screen.Help)
+                            }
                         )
 
                         DropdownMenuItem(

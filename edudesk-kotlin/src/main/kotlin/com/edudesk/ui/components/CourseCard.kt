@@ -1,5 +1,6 @@
 package com.edudesk.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -44,9 +45,13 @@ fun CourseCard(
 
     Card(
             modifier = modifier.width(260.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+                disabledContainerColor = Color.White
+            ),
             shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            border = BorderStroke(1.dp, Color(0xFFDDE3EA)),
             onClick = onClick
     ) {
         Column {
