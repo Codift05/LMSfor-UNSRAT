@@ -38,28 +38,30 @@ fun MyLearningScreen() {
             
             Spacer(modifier = Modifier.height(24.dp))
             
-            // Grid of Enrolled Courses
+            // Sinkronisasi dengan daftar kelas
+            // Import CourseData dan allCourses dari CourseRegistrationScreen
+            val allCourses = listOf(
+                CourseData("Pemrograman Berorientasi Objek", "Dr. Eng. Rizal, S.T., M.T.", 244),
+                CourseData("Struktur Data", "Prof. Dr. Ir. Budi, M.Sc.", 299),
+                CourseData("Kecerdasan Buatan", "Prof. Dr. Ir. Budi, M.Sc.", 398, true),
+                CourseData("Pengembangan Aplikasi Web", "Ir. Maria, S.Kom., M.Kom.", 396),
+                CourseData("Jaringan Komputer", "Alexander S. M. Lumenta, S.T., M.T.", 150),
+                CourseData("Sistem Operasi", "Dr. Eng. Rizal, S.T., M.T.", 180),
+                CourseData("Basis Data", "Prof. Dr. Ir. Budi, M.Sc.", 210),
+                CourseData("Etika Profesi", "Ir. Maria, S.Kom., M.Kom.", 90)
+            )
+
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 220.dp),
                 contentPadding = PaddingValues(bottom = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // Mock data for demonstration
-                val enrolledCourses = listOf(
-                    "Artificial Intelligence (AI) for Beginners" to 0.45f,
-                    "Advanced Kotlin Development" to 0.10f,
-                    "Modern Desktop UI Design with Compose" to 0.85f,
-                    "SQLite & Exposed ORM Masterclass" to 0.0f,
-                    "Data Structure & Algorithm" to 0.25f,
-                    "Web Development Bootcamp" to 0.60f
-                )
-                
-                items(enrolledCourses) { (title, progress) ->
+                items(allCourses) { course ->
                     CourseCard(
-                        title = title,
-                        instructor = "EduDesk Academy",
-                        progress = progress,
+                        title = course.title,
+                        instructor = course.instructor,
+                        progress = 0.0f, // Progress dummy, bisa di-update sesuai data
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
