@@ -2,6 +2,7 @@ package com.edudesk.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -132,17 +133,28 @@ fun CourseDetailScreen() {
 
                     syllabus.forEachIndexed { index, item ->
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
+                                .clickable { NavController.navigateToLesson(index) },
                             colors = CardDefaults.cardColors(containerColor = Color.White),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp, hoveredElevation = 4.dp),
                             border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
                         ) {
                             Row(
                                 modifier = Modifier.padding(16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("${index + 1}", fontWeight = FontWeight.Bold, color = Color(0xFF496E96), modifier = Modifier.width(32.dp))
-                                Text(item, color = Color(0xFF1E293B))
-                                Spacer(modifier = Modifier.weight(1f))
+                                Box(
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .background(Color(0xFFEFF4FB), RoundedCornerShape(8.dp)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text("${index + 1}", fontWeight = FontWeight.Bold, color = Color(0xFF496E96), fontSize = 14.sp)
+                                }
+                                Spacer(modifier = Modifier.width(14.dp))
+                                Text(item, color = Color(0xFF1E293B), modifier = Modifier.weight(1f))
                                 Icon(Icons.Default.PlayCircle, contentDescription = null, tint = Color(0xFF496E96))
                             }
                         }

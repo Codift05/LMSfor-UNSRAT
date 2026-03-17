@@ -14,15 +14,22 @@ enum class Screen {
     AdminDashboard,
     CourseRegistration,
     CourseDetail,
+    Lesson,
     Messages,
     AccountSettings,
     Help
 }
 
 object NavController {
-    var currentScreen by mutableStateOf(Screen.Home) // start at home directly for dev
-    
+    var currentScreen by mutableStateOf(Screen.Home)
+    var currentLessonIndex by mutableStateOf(0)
+
     fun navigateTo(screen: Screen) {
         currentScreen = screen
+    }
+
+    fun navigateToLesson(index: Int) {
+        currentLessonIndex = index
+        currentScreen = Screen.Lesson
     }
 }

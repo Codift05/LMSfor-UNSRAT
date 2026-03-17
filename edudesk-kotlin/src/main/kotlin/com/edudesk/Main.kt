@@ -19,6 +19,7 @@ import com.edudesk.ui.screens.CourseDetailScreen
 import com.edudesk.ui.screens.MessagesScreen
 import com.edudesk.ui.screens.AccountSettingsScreen
 import com.edudesk.ui.screens.HelpScreen
+import com.edudesk.ui.screens.LessonScreen
 import com.edudesk.ui.theme.EduDeskTheme
 
 fun main() = application {
@@ -44,6 +45,7 @@ fun main() = application {
                 Screen.Messages -> MessagesScreen()
                 Screen.AccountSettings -> AccountSettingsScreen()
                 Screen.Help -> HelpScreen()
+                Screen.Lesson -> LessonScreen()
             }
         }
     }
