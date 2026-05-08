@@ -10,16 +10,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.sp
 
-// IELS Brand colors
-val IelsMagenta = Color(0xFFF000FF)
-val IelsBlue = Color(0xFF496E96)
-val UdemyDarkPurple = Color(0xFF6A1B9A) // Keeping for subtle dark variants if needed
-val BackgroundLight = Color(0xFFE2E8EF)
-val SurfaceLight = Color.White
+// --- WARNA PALING ATAS ---
 val TextPrimary = Color(0xFF2D2F31)
 val TextSecondary = Color(0xFF6A6F73)
+val BackgroundLight = Color(0xFFE2E8EF)
+val SurfaceLight = Color.White
+val IelsMagenta = Color(0xFFF000FF)
+val IelsBlue = Color(0xFF496E96)
+val UdemyDarkPurple = Color(0xFF6A1B9A)
 val UdemyPurple = Color(0xFF5624D0)
 val UdemyLightPurple = Color(0xFFC0C4FC)
+
+// Untuk ProfileScreen
+val BackgroundPage = BackgroundLight
+val TextDark = TextPrimary
+val TextMuted = TextSecondary
+val BorderColor = Color(0xFFE0E0E0)
 
 private val LightColorScheme =
         lightColorScheme(
@@ -48,12 +54,13 @@ private val DarkColorScheme =
         )
 
 // Load Inter font family
-val InterFontFamily = FontFamily(
-    Font("fonts/Inter-Regular.otf", FontWeight.Normal),
-    Font("fonts/Inter-Medium.otf", FontWeight.Medium),
-    Font("fonts/Inter-SemiBold.otf", FontWeight.SemiBold),
-    Font("fonts/Inter-Bold.otf", FontWeight.Bold)
-)
+val InterFontFamily =
+        FontFamily(
+                Font("fonts/Inter-Regular.otf", FontWeight.Normal),
+                Font("fonts/Inter-Medium.otf", FontWeight.Medium),
+                Font("fonts/Inter-SemiBold.otf", FontWeight.SemiBold),
+                Font("fonts/Inter-Bold.otf", FontWeight.Bold)
+        )
 
 val Typography =
         Typography(
@@ -124,7 +131,7 @@ val Typography =
 
 @Composable
 fun EduDeskTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+        val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
-    MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+        MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
 }

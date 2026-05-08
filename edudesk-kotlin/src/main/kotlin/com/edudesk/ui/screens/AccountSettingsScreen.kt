@@ -268,9 +268,9 @@ private fun TabInfoAkun(currentUser: com.edudesk.models.User?, initials: String,
                 colors = ButtonDefaults.buttonColors(containerColor = AppBlue, contentColor = Color.White),
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
             ) {
-                Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(15.dp))
+                Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(15.dp), tint = Color.White)
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Edit Profil", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                Text("Edit Profil", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
             }
         }
     }
