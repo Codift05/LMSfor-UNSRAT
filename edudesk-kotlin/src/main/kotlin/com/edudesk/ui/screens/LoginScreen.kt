@@ -19,6 +19,7 @@ import com.edudesk.services.SessionManager
 import com.edudesk.ui.navigation.NavController
 import com.edudesk.ui.navigation.Screen
 import com.edudesk.ui.theme.IelsMagenta
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,8 +27,10 @@ fun LoginScreen() {
     var identifier by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
 
     val authService = remember { AuthService() }
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
             modifier = Modifier.fillMaxSize().background(Color.White),
@@ -54,7 +57,8 @@ fun LoginScreen() {
                     onValueChange = { identifier = it },
                     label = { Text("Email atau NIM") },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -65,7 +69,8 @@ fun LoginScreen() {
                     label = { Text("Password") },
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = PasswordVisualTransformation(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
             )
 
             if (error != null) {
@@ -77,12 +82,40 @@ fun LoginScreen() {
 
             Button(
                     onClick = {
-                        val user = authService.login(identifier, password)
-                        if (user != null) {
-                            SessionManager.currentUser = user
-                            NavController.navigateTo(Screen.Home)
-                        } else {
-                            error = "NIM/Email atau Password salah"
+                        if (identifier.isEmpty() || password.isEmpty()) {
+                            error = "Semua field harus diisi"
+                            return@Button
+                        }
+                        
+                        error = null
+                        isLoading = true
+                        
+                        coroutineScope.launch {
+                            try {
+                                // Try Supabase first
+                                val supabaseUser = authService.loginFromSupabaseDatabase(identifier, password)
+                                if (supabaseUser != null) {
+                                    SessionManager.setSupabaseUser(supabaseUser)
+                                    println("✓ Login successful from Supabase: ${supabaseUser.email}")
+                                    NavController.navigateTo(Screen.Home)
+                                } else {
+                                    // Fallback to SQLite
+                                    println("⚠ Supabase login failed, trying SQLite...")
+                                    val localUser = authService.login(identifier, password)
+                                    if (localUser != null) {
+                                        SessionManager.currentUser = localUser
+                                        println("✓ Login successful from SQLite: ${localUser.email}")
+                                        NavController.navigateTo(Screen.Home)
+                                    } else {
+                                        error = "NIM/Email atau Password salah"
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                println("Login error: ${e.message}")
+                                error = "Terjadi kesalahan saat login"
+                            } finally {
+                                isLoading = false
+                            }
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
@@ -90,12 +123,21 @@ fun LoginScreen() {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = IelsMagenta,
                         contentColor = Color.White
-                    )
-            ) { Text("Login", fontWeight = FontWeight.Bold, color = Color.White) }
+                    ),
+                    enabled = !isLoading
+            ) { 
+                if (isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White)
+                } else {
+                    Text("Login", fontWeight = FontWeight.Bold, color = Color.White)
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            TextButton(onClick = {}) { Text("Lupa password?", color = IelsMagenta) }
+            TextButton(onClick = {}, enabled = !isLoading) { 
+                Text("Lupa password?", color = IelsMagenta) 
+            }
         }
     }
 }
