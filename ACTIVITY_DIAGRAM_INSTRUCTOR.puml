@@ -1,0 +1,301 @@
+@startuml Instructor_Workflow
+!theme plain
+title EduDesk - Instructor Class Management & Grading Workflow
+
+skinparam ActivityBackgroundColor #FF6F00
+skinparam ActivityBorderColor #E65100
+skinparam ActivityFontColor #FFFFFF
+skinparam DecisionBackgroundColor #FB8C00
+skinparam DecisionBorderColor #E65100
+skinparam DecisionFontColor #FFFFFF
+
+participant Instructor
+participant "InstructorDashboard\n(UI)" as Dashboard
+participant "CourseService\n(Business Logic)" as CS
+participant "AssignmentService" as AS
+participant "SQLite/Supabase\n(Database)" as DB
+participant "SessionManager\n(Auth)" as Session
+
+activate Dashboard
+
+Dashboard -> Session: 1. Retrieve current instructor
+activate Session
+Session -->> Dashboard: Return Instructor object
+deactivate Session
+
+Dashboard -> CS: 2. getInstructorStats()
+activate CS
+CS -> DB: SELECT COUNT(*) FROM Courses WHERE instructor_id = ?
+activate DB
+DB -->> CS: Return course count (e.g., 37 classes)
+deactivate DB
+
+CS -> DB: SELECT COUNT(*) FROM Enrollments\nJOIN Courses ON Enrollments.course_id = Courses.id\nWHERE Courses.instructor_id = ?
+activate DB
+DB -->> CS: Return student count (e.g., 236 students)
+deactivate DB
+
+CS -> Dashboard: Display dashboard statistics
+deactivate CS
+deactivate DB
+
+Dashboard -> Dashboard: 3. Display InstructorDashboard\n- Statistics: 37 Classes, 236 Students\n- Menu: My Classes | Upload Materials\n        | Grade Submissions | Reports
+
+loop Instructor Activities
+    Instructor -> Dashboard: 4. Choose action
+    
+    alt 📚 Manage My Classes
+        Dashboard -> CS: 5. getInstructorCourses()
+        activate CS
+        CS -> DB: SELECT * FROM Courses\nWHERE instructor_id = ? ORDER BY created_at DESC
+        activate DB
+        DB -->> CS: Return course list
+        deactivate DB
+        
+        CS -> Dashboard: Display course list\n[Course name, code, status, enrollments]
+        deactivate CS
+        
+        loop Class Management Loop
+            Instructor -> Dashboard: 6. Choose action on course
+            
+            alt Create New Course
+                Instructor -> Dashboard: 7. Click "Create Course" button
+                
+                Dashboard -> Dashboard: Display CourseCreationForm\n[Course name, code, description, capacity]
+                
+                Instructor -> Dashboard: 8. Fill in course details
+                
+                Dashboard -> CS: 9. addCourse(courseData)
+                activate CS
+                
+                CS -> DB: BEGIN TRANSACTION
+                activate DB
+                CS -> DB: INSERT INTO Courses\n(name, code, description, instructor_id, capacity, status)
+                
+                DB -->> CS: Return course_id
+                
+                CS -> CS: Cache course in memory
+                DB -> DB: COMMIT TRANSACTION
+                deactivate DB
+                
+                Dashboard -> Dashboard: Add to course list
+                Dashboard -> Instructor: ✅ Course created successful
+                deactivate CS
+                
+            else (2) Edit Course
+                Instructor -> Dashboard: 10. Click "Edit" on course
+                
+                Dashboard -> Dashboard: Display CourseEditForm\n[Pre-filled with current data]
+                
+                Instructor -> Dashboard: 11. Modify fields
+                
+                Dashboard -> CS: 12. updateCourse(courseId, newData)
+                activate CS
+                
+                CS -> DB: BEGIN TRANSACTION
+                activate DB
+                CS -> DB: UPDATE Courses SET name=?, code=?, ...\nWHERE id = ? AND instructor_id = ?
+                
+                alt Update successful
+                    DB -->> CS: Return affected rows
+                    CS -> CS: Update cache
+                else Unauthorized (wrong instructor)
+                    DB -->> CS: Return error
+                    CS -->> Dashboard: Show error: "Unauthorized"
+                end
+                
+                DB -> DB: COMMIT TRANSACTION
+                deactivate DB
+                
+                Dashboard -> Instructor: ✅ Course updated
+                deactivate CS
+                
+            else (3) Delete Course
+                Instructor -> Dashboard: 13. Click "Delete" on course
+                
+                Dashboard -> Dashboard: Show confirmation dialog
+                
+                Instructor -> Dashboard: 14. Confirm delete
+                
+                Dashboard -> CS: 15. deleteCourse(courseId)
+                activate CS
+                
+                CS -> DB: BEGIN TRANSACTION
+                activate DB
+                
+                alt Still has active students?
+                    DB -->> CS: Error\n"Cannot delete: has enrollments"
+                    CS -->> Dashboard: Show error with count
+                else No active enrollments
+                    CS -> DB: DELETE FROM Courses WHERE id = ?
+                    CS -> DB: DELETE FROM Assignments\nWHERE course_id = ?
+                    CS -> DB: DELETE FROM Enrollments\nWHERE course_id = ?
+                    
+                    DB -->> CS: Return success
+                end
+                
+                DB -> DB: COMMIT TRANSACTION
+                deactivate DB
+                
+                Dashboard -> Dashboard: Remove from course list
+                Dashboard -> Instructor: ✅ Course deleted
+                deactivate CS
+                
+            else (4) View Course Details
+                Instructor -> Dashboard: 16. Click course card
+                
+                Dashboard -> CS: 17. getCourseDetails(courseId)
+                activate CS
+                CS -> DB: SELECT * FROM Courses WHERE id = ?
+                activate DB
+                DB -->> CS: Return course object
+                deactivate DB
+                
+                CS -> DB: SELECT COUNT(*) FROM Enrollments\nWHERE course_id = ?
+                activate DB
+                DB -->> CS: Return enrollment count
+                deactivate DB
+                
+                CS -> Dashboard: Display course detail screen\n[All info + student roster]
+                deactivate CS
+            end
+        end
+        
+    else (2) 📤 Upload Learning Materials
+        Instructor -> Dashboard: 18. Click "Upload Materials"
+        
+        Dashboard -> Dashboard: Display material upload form\n[Course selector, file picker]
+        
+        Instructor -> Dashboard: 19. Select course + upload file\n(PDF, Video, Presentation, etc.)
+        
+        Dashboard -> Dashboard: Validate file type & size\n(Max 100MB, allowed: PDF, MP4, PPTX, etc.)
+        
+        Dashboard -> CS: 20. uploadMaterial(courseId, file)
+        activate CS
+        
+        CS -> CS: Generate unique filename\nwith timestamp
+        
+        CS -> DB: BEGIN TRANSACTION
+        activate DB
+        CS -> DB: INSERT INTO Materials\n(course_id, file_name, file_path, upload_date)
+        
+        alt Upload successful
+            DB -->> CS: Return material_id
+            CS -> CS: Store file to disk/cloud
+        else Upload failed
+            DB -->> CS: Error
+            CS -->> Dashboard: Show error message
+        end
+        
+        DB -> DB: COMMIT TRANSACTION
+        deactivate DB
+        
+        Dashboard -> Instructor: ✅ Material uploaded\n[Available to students immediately]
+        deactivate CS
+        
+    else (3) ✅ Grade Student Submissions
+        Instructor -> Dashboard: 21. Click "Grade Submissions"
+        
+        Dashboard -> AS: 22. getSubmissions(instructorId)
+        activate AS
+        
+        AS -> DB: SELECT s.* FROM Submissions s\nJOIN Assignments a ON s.assignment_id = a.id\nJOIN Courses c ON a.course_id = c.id\nWHERE c.instructor_id = ? AND s.status = 'SUBMITTED'\nORDER BY a.deadline ASC
+        activate DB
+        DB -->> AS: Return submission list
+        deactivate DB
+        
+        AS -> Dashboard: Display grading queue\n[Student name, course, assignment, submit date]
+        deactivate AS
+        
+        loop Grading Loop
+            Instructor -> Dashboard: 23. Click on submission
+            
+            Dashboard -> AS: 24. getSubmissionDetails(submissionId)
+            activate AS
+            AS -> DB: SELECT * FROM Submissions WHERE id = ?
+            activate DB
+            DB -->> AS: Return submission object
+            deactivate DB
+            
+            AS -> Dashboard: Display grading screen\n[Student work preview, rubric checklist]
+            deactivate AS
+            
+            Instructor -> Dashboard: 25. Review submission\n[View file/text content]\n[Score against rubric]
+            
+            Instructor -> Dashboard: 26. Enter grade + feedback
+            
+            Dashboard -> AS: 27. gradeSubmission(submissionId, grade, feedback)
+            activate AS
+            
+            AS -> DB: BEGIN TRANSACTION
+            activate DB
+            
+            AS -> DB: UPDATE Submissions\nSET grade = ?, feedback = ?, graded_date = NOW(),\nstatus = 'GRADED'\nWHERE id = ?
+            
+            AS -> DB: UPDATE Assignments SET grade = ?\nWHERE id = (SELECT assignment_id FROM Submissions WHERE id = ?)
+            
+            DB -->> AS: Return success
+            
+            DB -> DB: COMMIT TRANSACTION
+            deactivate DB
+            
+            AS -> AS: Calculate assignment avg grade\nfor all submissions
+            
+            AS -> Dashboard: ✅ Grade recorded
+            deactivate AS
+            
+            Dashboard -> Dashboard: Send notification to student\n[Email/In-app: "Assignment graded"]
+            
+            Instructor -> Dashboard: 28. Grade next submission?\n[Click: Next Student]
+        end
+        
+    else (4) 📊 View Class Reports
+        Instructor -> Dashboard: 29. Click "Reports"
+        
+        Dashboard -> AS: 30. getClassReports(courseId)
+        activate AS
+        
+        AS -> DB: SELECT student_id, assignment_count, avg_grade,\ncompletion_rate FROM ReportView WHERE course_id = ?
+        activate DB
+        DB -->> AS: Return analytics data
+        deactivate DB
+        
+        AS -> Dashboard: Display report charts\n[Grade distribution, completion %, attendance]
+        deactivate AS
+        
+        Instructor -> Dashboard: Export report to CSV/PDF
+    end
+end
+
+Dashboard -> Dashboard: 31. All changes persisted
+Dashboard -> Dashboard: If Supabase enabled → Auto-sync\nelse: SQLite local only
+
+deactivate Dashboard
+
+note right of Instructor, Dashboard
+    **Instructor Workflows:**
+    1. Class Management: Create/Edit/Delete courses
+    2. Material Distribution: Upload learning resources
+    3. Assessment: Grade student submissions
+    4. Reporting: Analyze class performance
+    
+    **Database Operations:**
+    - Courses: CRUD operations (instructor_id as foreign key)
+    - Materials: File metadata stored, files in filesystem
+    - Submissions: Status tracking (SUBMITTED → GRADED)
+    - Grades: Calculated per student per assignment
+    
+    **Security & Validation:**
+    - Instructor can only manage own courses
+    - Check instructor_id on all queries
+    - Validate file types before upload
+    - Prevent course deletion if students enrolled
+    - Grade records are immutable after creation
+    
+    **Notifications:**
+    - Student notified when grade posted
+    - Auto-compose email with feedback
+    - In-app notification tab updated
+end note
+
+@enduml

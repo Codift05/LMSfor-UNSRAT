@@ -1,0 +1,417 @@
+@startuml EduDesk_Master_Activity_Diagram
+!theme plain
+title EduDesk LMS - Master Integration Activity Diagram (All 6 Workflows Combined)
+
+skinparam ActivityBackgroundColor #496E96
+skinparam ActivityBorderColor #2D2F31
+skinparam ActivityFontColor #FFFFFF
+skinparam PartitionBackgroundColor #E2E8EF
+skinparam PartitionBorderColor #2D2F31
+skinparam PartitionFontColor #2D2F31
+skinparam DecisionBackgroundColor #496E96
+skinparam DecisionBorderColor #2D2F31
+skinparam DecisionFontColor #FFFFFF
+skinparam NoteBackgroundColor #FFFACD
+skinparam NoteBorderColor #DAA520
+skinparam NoteFontColor #2D2F31
+
+partition "PHASE 1: SYSTEM INITIALIZATION & SETUP" #E8F4F8 {
+    start
+    :APPLICATION STARTUP\nMain.kt initializes;
+    :Create Window (1280x800)\nJetpack Compose Desktop;
+    :DatabaseSetup.init()\n- Connect to SQLite (edudesk.db)\n- Create schema if needed\n- Seed 4 test users;
+    
+    if (Supabase Configuration\nAvailable?) then (YES)
+        :Initialize Supabase Client\n- Configure REST API endpoint\n- Setup HTTP client (Ktor);
+        :Configure Cloud Sync\nReadiness for hybrid mode;
+    else (NO)
+        :Offline Mode\nSQLite Local Only;
+    endif
+    
+    :System Ready\nNavController initialized;
+    :Route to LoginScreen;
+}
+
+partition "PHASE 2: AUTHENTICATION & SESSION MANAGEMENT" #F0E6FF {
+    :LOGIN SCREEN DISPLAYED\nUser Interface ready;
+    :Accept credentials input\n(Email/NIM + Password);
+    
+    note right
+        Required Test Users:
+        - admin@edudesk.com / admin123
+        - instructor@edudesk.com / instructor123
+        - student@edudesk.com / student123
+        - student2@edudesk.com / student123
+    end note
+    
+    repeat
+        :Extract Email/NIM & Password;
+        :call AuthService.login();
+        :Query SQLite Users Table\nWHERE email OR nim = ?;
+        
+        if (User Record\nFound?) then (YES)
+            :BCrypt Password Verification\nCompare password_hash;
+            
+            if (Password\nCorrect?) then (VALID)
+                :AUTHENTICATION SUCCESS;
+                :call SessionManager.setLocalUser();
+                :Store in Memory:\n- User object\n- Role (STUDENT|INSTRUCTOR|ADMIN)\n- Session token\n- Timestamp;
+                
+                if (Supabase Enabled?) then (YES)
+                    :Sync user data to Supabase\nREST API call;
+                    note right
+                        Sync Operations:
+                        POST /auth/login
+                        Response: JWT token
+                    end note
+                else (NO - Local)
+                    :Continue with SQLite session;
+                endif
+                
+                break
+            else (INVALID)
+                :Error notification\n"Invalid Password";
+                :Remain on LoginScreen\nAllow retry;
+            endif
+        else (NO)
+            :Error notification\n"User Not Found";
+            :Remain on LoginScreen\nAllow retry;
+        endif
+    repeat while (Retry?)
+    
+    :SESSION ESTABLISHED;
+}
+
+partition "PHASE 3: ROLE-BASED ROUTING & DASHBOARD SELECTION" #F5F5F5 {
+    :Check User.role from SessionManager;
+    
+    if (User Role?) then (STUDENT)
+        :Route to HomeScreen;
+        :Display: Enrolled courses grid\n+ Upcoming assignments\n+ Progress indicators;
+    elseif (INSTRUCTOR)
+        :Route to InstructorDashboard;
+        :Display: 37 Classes, 236 Students\n+ Quick actions menu\n+ Analytics cards;
+    else (ADMIN)
+        :Route to AdminDashboard;
+        :Display: System statistics\n+ User management controls\n+ Course approvals queue;
+    endif
+}
+
+partition "PHASE 4A: STUDENT LEARNING PATH" #2196F3 {
+    note left
+        Student Access Level:
+        + View enrolled courses
+        + Browse & enroll new courses
+        + Submit assignments
+        + Track progress
+        - Manage courses
+        - Grade others
+        - System admin
+    end note
+    
+    :STUDENT HOME SCREEN\nDisplay 3 recent courses;
+    
+    split
+        :PATH A: Course Enrollment\n(CourseRegistrationScreen);
+        :Browse course catalog\nSearch + Filter options;
+        
+        repeat
+            :Select course card;
+            :View CourseDetailScreen\n(Syllabus, instructor, duration);
+            
+            if (Enroll This\nCourse?) then (YES)
+                :INSERT into Enrollments table\nUSER-COURSE mapping;
+                :Enrollment confirmed\nAdd to MyLearning;
+            else (NO)
+                :Back to browse;
+            endif
+        repeat while (More courses?)
+        
+    split again
+        :PATH B: Assignment Management\n(AssignmentsScreen);
+        :Display deadline-sorted assignments\nStatus: PENDING|DONE|OVERDUE;
+        
+        repeat
+            :Select assignment;
+            :View details:\n- Description, rubric, deadline\n- Submission status, grade;
+            
+            if (Submit\nWork?) then (YES)
+                :Upload file or enter text;
+                :call AssignmentService.submitAssignment();
+                :INSERT into Submissions table\nWITH timestamp;
+                :UPDATE assignment status DONE;
+                :Submission confirmed;
+            else (VIEW ONLY)
+                :Back to list;
+            endif
+        repeat while (Next assignment?)
+        
+    split again
+        :PATH C: Lesson Learning\n(LessonScreen);
+        :Display lesson modules in sequence;
+        :Watch videos / Read materials;
+        :Mark lesson complete;
+        :Real-time progress percent update;
+        
+    end split
+    
+    :TRACK PROGRESS\n(MyLearningScreen);
+    :Display all enrolled courses\nwith completion percent, grades;
+}
+
+partition "PHASE 4B: INSTRUCTOR MANAGEMENT PATH" #FF6F00 {
+    note left
+        Instructor Access Level:
+        + Create/edit/delete own courses
+        + Upload materials
+        + Grade student submissions
+        + View class analytics
+        - Manage other instructors
+        - System settings
+        - Delete users
+    end note
+    
+    :INSTRUCTOR DASHBOARD\nStatistics: 37 Classes, 236 Students;
+    
+    split
+        :PATH A: Class Management\n(CourseService CRUD);
+        
+        repeat
+            if (Action?) then (Create)
+                :Create New Course\nRoute to CourseCreationForm;
+                :Fill: Name, code, description;
+                :call CourseService.addCourse();
+                :INSERT into Courses table\nstatus = PENDING;
+                :Course created;
+            elseif (Edit)
+                :Edit Course Details;
+                :call CourseService.updateCourse();
+                :UPDATE Courses table;
+                :Changes saved;
+            elseif (Delete)
+                :Delete Course\n(If no active students);
+                :call CourseService.deleteCourse();
+                :DELETE from Courses table;
+                :Removed;
+            else (View)
+                :Display student roster;
+                :Show submission counts;
+            endif
+        repeat while (Manage courses?)
+        
+    split again
+        :PATH B: Material Upload\n(Resource Distribution);
+        :Accepted formats: PDF, Video\nPowerPoint, Documents;
+        
+        repeat
+            :Select course target;
+            :Upload file (max 100MB);
+            :call CourseService.uploadMaterial();
+            :Store metadata in Materials table;
+            :Available to students;
+        repeat while (Upload more?)
+        
+    split again
+        :PATH C: Grading Workflow\n(Assessment);
+        :Display submission queue\nFilter by course/deadline;
+        
+        repeat
+            :Click student submission;
+            :View uploaded work;
+            :Score against rubric;
+            :Add feedback comments;
+            :call AssignmentService.gradeSubmission();
+            :UPDATE Submissions\nstatus = GRADED, grade = ?;
+            :Notify student (email/in-app);
+            :Grade recorded;
+        repeat while (Next student?)
+        
+    split again
+        :PATH D: Class Analytics\n(ReportView);
+        :Display: Grade distribution\nCompletion percent, enrollment trend;
+        :Export to CSV/PDF;
+        
+    end split
+    
+    :ALL CHANGES PERSISTED\nDatabase + optional Supabase sync;
+}
+
+partition "PHASE 4C: ADMIN OVERSIGHT PATH" #7B1FA2 {
+    note left
+        Admin Access Level:
+        + Full system access
+        + User CRUD (create/delete)
+        + Role assignment
+        + Course approvals
+        + System configuration
+        + Audit logs
+        + Reports & analytics
+    end note
+    
+    :ADMIN DASHBOARD\nSystem Overview & Control Center;
+    :Statistics:\n- 1,245 total users\n- 86 active courses\n- 3,421 total enrollments;
+    
+    split
+        :PATH A: User Management\n(Lifecycle Management);
+        :Display user table (paginated)\nFilter by role/status;
+        
+        repeat
+            if (Admin Action?) then (View Profile)
+                :Display user details\n+ enrollment history;
+            elseif (Change Status)
+                :Toggle: ACTIVE to INACTIVE\nSUSPENDED status option;
+                :UPDATE Users.status;
+                :Send status notification;
+            elseif (Reset Password)
+                :Generate temp password\n(12-char random secure);
+                :Hash with BCrypt;
+                :UPDATE Users.password_hash;
+                :Email temp password to user;
+            elseif (Assign Role)
+                :Change role:\nSTUDENT|INSTRUCTOR|ADMIN;
+                :UPDATE Users.role;
+                :Log to AuditLog;
+            elseif (Delete User)
+                :Confirm deletion\n(Permanent action!);
+                :DELETE from Users (cascade);
+                :Log deletion to AuditLog;
+            endif
+        repeat while (Manage more users?)
+        
+    split again
+        :PATH B: Course Approvals\n(Quality Control);
+        :Display PENDING courses queue;
+        
+        repeat
+            :Review course details\nSyllabus + instructor credentials;
+            
+            if (Decision?) then (APPROVE)
+                :UPDATE Courses.status = ACTIVE;
+                :Notify instructor\n(Course is live!);
+                :Course available to students;
+            elseif (REJECT)
+                :Add rejection reason\nImprovement suggestions;
+                :UPDATE Courses.status = REJECTED;
+                :Notify instructor\n(Resubmit required);
+            else (LATER)
+                :Status remains PENDING;
+            endif
+        repeat while (Review more?)
+        
+    split again
+        :PATH C: System Analytics\n(Insights & Reports);
+        :Generate trend analysis\nUser growth, enrollment patterns;
+        :Create dashboard charts;
+        :Export reports (CSV/PDF);
+        
+    split again
+        :PATH D: System Settings\n(Configuration);
+        :Configure: Supabase API keys\nDatabase backup schedules\nEmail settings;
+        :Save configuration;
+        
+    split again
+        :PATH E: Audit Log\n(Compliance & Security);
+        :Display all system actions\n(WHO-WHAT-WHEN-WHERE);
+        :Timestamp, user_id, action\nResource, old_value, new_value;
+        :Search & filter logs;
+        
+    end split
+    
+    :SYSTEM UPDATED\nAll changes logged to AuditLog;
+}
+
+partition "PHASE 5: COMMON FEATURES (All Roles)" #F3E5F5 {
+    parallel
+        :Profile Management\n(ProfileScreen);
+        :View/edit: Name, NIM, Email\nPhone, address, profile picture;
+        :call UserService.updateProfile();
+        :UPDATE Users table;
+    parallel
+        :Account Settings\n(AccountSettingsScreen);
+        :Change password (BCrypt hashed)\nEmail preferences, notifications\nTheme (Light/Dark);
+        :UPDATE UserPreferences;
+    parallel
+        :Messages\n(MessagesScreen);
+        :Send/receive messages\nwith other users;
+        :INSERT/SELECT from Messages table;
+    parallel
+        :Help & Support\n(HelpScreen);
+        :Display FAQs & documentation\nContact support form;
+    parallel
+        :Logout;
+        :call SessionManager.clearSession();
+        :DELETE from Sessions table;
+        :Clear memory state;
+        :Route to LoginScreen;
+    end parallel
+}
+
+partition "PHASE 6: ERROR HANDLING & SECURITY" #FFE6E6 {
+    split
+        :Network Errors;
+        :Database connection failed\nRetry logic (max 3 attempts);
+        :Fallback to offline mode\n(SQLite only);
+    split again
+        :Validation Errors;
+        :Email format invalid\nNIM already exists\nFile type not allowed;
+        :Display field errors\nSuggest corrections;
+    split again
+        :Permission Errors;
+        :Access denied (wrong role)\nUnauthorized resource access\nInsufficient privileges;
+        :Log unauthorized attempt\nto audit trail;
+    split again
+        :Security Issues;
+        :SQL injection prevention\nPassword reset enforcement\nBrute force detection;
+        :Block suspicious IPs\nRate limiting applied;
+    split again
+        :File Upload Issues;
+        :Invalid file size/type\nCorrupted upload\nStorage quota exceeded;
+        :Allow user retry\nor cancel operation;
+    split again
+        :Unexpected Errors;
+        :Log to error tracking\nShow generic message\nDirect to support;
+    end split
+    
+    stop
+}
+
+
+note bottom
+    ========== EDUDESK LMS - COMPLETE SYSTEM FLOW ==========
+    
+    PHASE 1: System Initialization [1-5 seconds]
+    PHASE 2: Authentication & Session [5-10 seconds]
+    PHASE 3: Role-Based Routing [Instant]
+    PHASE 4A: Student Path (Learning Content Access) [Ongoing]
+    PHASE 4B: Instructor Path (Course Management & Grading) [Ongoing]
+    PHASE 4C: Admin Path (System Oversight & Configuration) [Ongoing]
+    PHASE 5: Common Features (Available to All Roles) [On-Demand]
+    PHASE 6: Error Handling & Security Checks (Background) [Continuous]
+    
+    ========== DATABASE INTERACTIONS ==========
+    
+    Phase 2 (Auth): Users table SELECT + password verification (BCrypt)
+    Phase 4A (Student): Courses, Enrollments, Assignments, Submissions, Progress
+    Phase 4B (Instructor): Courses (UPDATE), Materials, Submissions (grading)
+    Phase 4C (Admin): Users (CRUD), Courses (UPDATE status), AuditLog (INSERT)
+    Phase 5: UserPreferences, Messages, Sessions
+    
+    ========== SECURITY LAYERS IMPLEMENTED ==========
+    
+    [DONE] BCrypt Password Hashing (All users)
+    [DONE] Role-Based Access Control (RBAC - UI + Database)
+    [DONE] Session Management (SessionManager + Sessions table)
+    [DONE] Audit Logging (AuditLog table - who/what/when/where)
+    [DONE] Input Validation (Prevent SQL injection)
+    [TODO] Rate Limiting (Recommended for production)
+    [TODO] MFA/2FA (Future enhancement)
+    
+    ========== INTEGRATION POINTS BETWEEN WORKFLOWS ==========
+    
+    Students receive from Instructors: Course materials, grades, feedback
+    Instructors receive from Students: Assignments, submissions, messages
+    Admin receives from All Roles: Activity logs, system metrics, user management
+    All Roles receive from Database: Real-time data synchronization
+end note
+
+@enduml

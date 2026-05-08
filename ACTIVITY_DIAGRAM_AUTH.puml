@@ -1,0 +1,117 @@
+@startuml Authentication_Flow
+!theme plain
+title EduDesk - Authentication & Login Workflow
+
+skinparam ActivityBackgroundColor #496E96
+skinparam ActivityBorderColor #2D2F31
+skinparam ActivityFontColor #FFFFFF
+skinparam DecisionBackgroundColor #F000FF
+skinparam DecisionBorderColor #2D2F31
+skinparam DecisionFontColor #FFFFFF
+
+participant User
+participant "LoginScreen\n(UI)" as UI
+participant "AuthService\n(Business Logic)" as Auth
+participant "DatabaseSetup\n(ORM)" as DB
+participant "SessionManager\n(State)" as Session
+participant "NavController\n(Router)" as Nav
+
+User -> UI: 1. Open Application
+activate UI
+
+UI -> DB: 2. init() DatabaseSetup
+activate DB
+DB -> DB: Connect to SQLite
+DB -> DB: Create schema if needed
+DB -> DB: Seed test users (4 default)
+deactivate DB
+
+UI -> UI: 3. Display LoginScreen\n[Email/NIM + Password fields]
+
+User -> UI: 4. Enter credentials\nEmail/NIM + Password
+
+UI -> Auth: 5. login(nim, password)
+activate Auth
+
+Auth -> DB: 6. Query Users table\nWHERE nim OR email = ?
+activate DB
+DB -> DB: Execute parameterized SQL query
+alt User Found
+    DB -->> Auth: Return User object + password_hash
+    deactivate DB
+    
+    Auth -> Auth: 7. Verify BCrypt hash\nBCrypt.verify(password, hash)
+    alt Password Correct ✅
+        Auth -> Session: 8. setLocalUser(user)
+        activate Session
+        Session -> Session: Store User in memory\nSetup global state
+        
+        alt Supabase Enabled?
+            Session -> Session: Sync to Supabase\nREST API call
+        else No Supabase
+            Session -> Session: Continue offline mode
+        end
+        
+        deactivate Session
+        
+        Auth -->> UI: Return success + user
+    else Password Incorrect ❌
+        Auth -->> UI: Return error\n"Invalid password"
+        deactivate Auth
+        UI -> UI: 9. Show error toast
+        UI -> User: Request credentials again
+        User -> UI: Re-enter credentials
+        UI -> Auth: login(nim, password)
+        activate Auth
+        ' ... retry loop continues
+    end
+else User Not Found
+    DB -->> Auth: Return null/empty
+    deactivate DB
+    Auth -->> UI: Return error\n"User not found"
+    deactivate Auth
+    UI -> UI: 9b. Show error toast
+    UI -> User: Request credentials again
+end
+
+deactivate Auth
+
+UI -> Session: 10. Retrieve current user
+activate Session
+Session -->> UI: Return user object
+deactivate Session
+
+UI -> Nav: 11. Route based on user.role
+activate Nav
+
+alt User is STUDENT
+    Nav -> Nav: Route to HomeScreen
+    Nav -->> UI: Compose StudentUI
+else User is INSTRUCTOR
+    Nav -> Nav: Route to InstructorDashboard
+    Nav -->> UI: Compose InstructorUI
+else User is ADMIN
+    Nav -> Nav: Route to AdminDashboard
+    Nav -->> UI: Compose AdminUI
+end
+
+deactivate Nav
+
+UI -->> User: 12. Display Role-Based Dashboard
+deactivate UI
+
+note right of Auth
+    **Supported Default Test Users:**
+    1. admin@edudesk.com / admin123 → ADMIN role
+    2. instructor@edudesk.com / instructor123 → INSTRUCTOR role
+    3. student@edudesk.com / student123 → STUDENT role
+    4. student2@edudesk.com / student123 → STUDENT role
+    
+    **Security Notes:**
+    - All passwords hashed with BCrypt (cost factor applied)
+    - Session stored in memory (SessionManager)
+    - Optional Supabase sync for cloud backup
+    - Timeout logout after inactivity (configurable)
+end note
+
+@enduml
