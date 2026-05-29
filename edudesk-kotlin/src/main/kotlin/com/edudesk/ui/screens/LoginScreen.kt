@@ -92,23 +92,13 @@ fun LoginScreen() {
                         
                         coroutineScope.launch {
                             try {
-                                // Try Supabase first
-                                val supabaseUser = authService.loginFromSupabaseDatabase(identifier, password)
-                                if (supabaseUser != null) {
-                                    SessionManager.setSupabaseUser(supabaseUser)
-                                    println("✓ Login successful from Supabase: ${supabaseUser.email}")
+                                val user = authService.login(identifier, password)
+                                if (user != null) {
+                                    SessionManager.setLocalUser(user)
+                                    println("✓ Login successful: ${user.email}")
                                     NavController.navigateTo(Screen.Home)
                                 } else {
-                                    // Fallback to SQLite
-                                    println("⚠ Supabase login failed, trying SQLite...")
-                                    val localUser = authService.login(identifier, password)
-                                    if (localUser != null) {
-                                        SessionManager.currentUser = localUser
-                                        println("✓ Login successful from SQLite: ${localUser.email}")
-                                        NavController.navigateTo(Screen.Home)
-                                    } else {
-                                        error = "NIM/Email atau Password salah"
-                                    }
+                                    error = "NIM/Email atau Password salah"
                                 }
                             } catch (e: Exception) {
                                 println("Login error: ${e.message}")
