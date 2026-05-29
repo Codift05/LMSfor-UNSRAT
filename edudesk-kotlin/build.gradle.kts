@@ -24,16 +24,6 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
 
-    
-    // SQLite JDBC
-    implementation("org.xerial:sqlite-jdbc:3.45.1.0")
-    
-    // Exposed ORM
-    implementation("org.jetbrains.exposed:exposed-core:0.48.0")
-    implementation("org.jetbrains.exposed:exposed-dao:0.48.0")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.48.0")
-    implementation("org.jetbrains.exposed:exposed-java-time:0.48.0")
-
     // Bcrypt for password hashing
     implementation("org.mindrot:jbcrypt:0.4")
 

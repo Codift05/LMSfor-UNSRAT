@@ -4,7 +4,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.edudesk.database.DatabaseSetup
 import com.edudesk.ui.navigation.NavController
 import com.edudesk.ui.navigation.Screen
 import com.edudesk.ui.screens.AdminDashboardScreen
@@ -23,9 +22,7 @@ import com.edudesk.ui.screens.LessonScreen
 import com.edudesk.ui.theme.EduDeskTheme
 
 fun main() = application {
-    // Database initialization might take time, in real app show splash
-    DatabaseSetup.init()
-
+    // Database initialization is now handled by the backend server
     Window(
             onCloseRequest = ::exitApplication,
             title = "EduDesk LMS",
