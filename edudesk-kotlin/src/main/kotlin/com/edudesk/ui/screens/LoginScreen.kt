@@ -96,7 +96,11 @@ fun LoginScreen() {
                                 if (user != null) {
                                     SessionManager.setLocalUser(user)
                                     println("✓ Login successful: ${user.email}")
-                                    NavController.navigateTo(Screen.Home)
+                                    when (user.role) {
+                                        "admin" -> NavController.navigateTo(Screen.AdminDashboard)
+                                        "instructor" -> NavController.navigateTo(Screen.InstructorDashboard)
+                                        else -> NavController.navigateTo(Screen.Home)
+                                    }
                                 } else {
                                     error = "NIM/Email atau Password salah"
                                 }

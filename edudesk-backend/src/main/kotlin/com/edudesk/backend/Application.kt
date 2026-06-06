@@ -10,6 +10,9 @@ import io.ktor.server.routing.*
 import io.ktor.server.response.*
 
 import com.edudesk.backend.routes.authRoutes
+import com.edudesk.backend.routes.courseRoutes
+import com.edudesk.backend.routes.assignmentRoutes
+import com.edudesk.backend.routes.userRoutes
 
 fun main() {
     embeddedServer(Netty, port = 8081, host = "0.0.0.0", module = Application::module)
@@ -30,6 +33,9 @@ fun Application.module() {
 
     routing {
         authRoutes()
+        courseRoutes()
+        assignmentRoutes()
+        userRoutes()
         
         get("/") {
             call.respondText("EduDesk Backend API is running")

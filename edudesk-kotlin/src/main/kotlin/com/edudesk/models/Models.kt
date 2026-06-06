@@ -8,7 +8,8 @@ data class User(
     val name: String = "",
     val nim: String = "",
     val email: String = "",
-    val role: String = "student"
+    val role: String = "student",
+    val isActive: Boolean = true
 )
 
 @Serializable
@@ -17,7 +18,8 @@ data class Course(
     val name: String = "",
     val code: String = "",
     val description: String = "",
-    val instructorName: String = ""
+    val instructorName: String = "",
+    val status: String = "pending"
 )
 
 @Serializable

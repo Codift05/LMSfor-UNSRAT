@@ -54,4 +54,34 @@ class CourseService {
             println("Error deleting course: ${e.message}")
         }
     }
+
+    suspend fun getAllCourses(): List<Course> {
+        return try {
+            val response = client.get("$baseUrl/courses")
+            if (response.status == HttpStatusCode.OK) {
+                response.body()
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            println("Error fetching all courses: ${e.message}")
+            emptyList()
+        }
+    }
+
+    @Serializable
+    private data class CourseStatusRequest(val status: String)
+
+    suspend fun updateCourseStatus(courseId: Int, status: String): Boolean {
+        return try {
+            val response = client.put("$baseUrl/courses/$courseId/status") {
+                contentType(ContentType.Application.Json)
+                setBody(CourseStatusRequest(status))
+            }
+            response.status == HttpStatusCode.OK
+        } catch (e: Exception) {
+            println("Error updating course status: ${e.message}")
+            false
+        }
+    }
 }

@@ -18,9 +18,34 @@ import androidx.compose.ui.unit.sp
 import com.edudesk.ui.components.DashboardBanner
 import com.edudesk.ui.components.TopNavigationBar
 
+import androidx.compose.runtime.*
+import com.edudesk.models.Course
+import com.edudesk.models.User
+import com.edudesk.services.CourseService
+import com.edudesk.services.UserService
+import kotlinx.coroutines.launch
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminDashboardScreen() {
+    val coroutineScope = rememberCoroutineScope()
+    val userService = remember { UserService() }
+    val courseService = remember { CourseService() }
+
+    var users by remember { mutableStateOf<List<User>>(emptyList()) }
+    var courses by remember { mutableStateOf<List<Course>>(emptyList()) }
+
+    fun refreshData() {
+        coroutineScope.launch {
+            users = userService.getUsers()
+            courses = courseService.getAllCourses()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        refreshData()
+    }
+
     Scaffold(
         topBar = { TopNavigationBar() }
     ) { padding ->
@@ -38,9 +63,9 @@ fun AdminDashboardScreen() {
             
             // Statistics Cards
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                StatCard("Total Pengguna", "1,245", Modifier.weight(1f))
-                StatCard("Total Kursus Aktif", "86", Modifier.weight(1f))
-                StatCard("Total Sesi Hari Ini", "432", Modifier.weight(1f))
+                StatCard("Total Pengguna", users.size.toString(), Modifier.weight(1f))
+                StatCard("Total Kursus Aktif", courses.count { it.status == "approved" }.toString(), Modifier.weight(1f))
+                StatCard("Total Sesi Hari Ini", (users.size * 2).toString(), Modifier.weight(1f)) // Mock active sessions
             }
             
             Spacer(modifier = Modifier.height(48.dp))
@@ -60,18 +85,30 @@ fun AdminDashboardScreen() {
                         Column(modifier = Modifier.padding(24.dp)) {
                             // Header Tab style
                             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
-                                Text("Mahasiswa Aktif", fontWeight = FontWeight.Bold, color = Color(0xFF6366F1), modifier = Modifier.padding(end = 24.dp))
-                                Text("Dosen", fontWeight = FontWeight.Medium, color = Color.Gray)
+                                Text("Semua Pengguna", fontWeight = FontWeight.Bold, color = Color(0xFF6366F1), modifier = Modifier.padding(end = 24.dp))
                                 Spacer(modifier = Modifier.weight(1f))
                                 Text("Kelola", fontWeight = FontWeight.Medium, color = Color(0xFF8B5CF6))
                             }
                             Divider(color = Color(0xFFE2E8F0))
                             
                             // Rows
-                            UserRow("Budi Santoso", "Mahasiswa", "Aktif", true)
-                            UserRow("Rina Melati", "Mahasiswa", "Aktif", true)
-                            UserRow("Andi Darmawan", "Mahasiswa", "Nonaktif", false)
-                            UserRow("Dr. Eng. Rizal, S.T., M.T.", "Dosen", "Aktif", true)
+                            users.forEach { user ->
+                                UserRow(
+                                    name = user.name,
+                                    role = user.role.capitalize(),
+                                    status = if (user.isActive) "Aktif" else "Nonaktif",
+                                    isActive = user.isActive,
+                                    onToggleStatus = {
+                                        coroutineScope.launch {
+                                            userService.updateUserStatus(user.id, !user.isActive)
+                                            refreshData()
+                                        }
+                                    }
+                                )
+                            }
+                            if (users.isEmpty()) {
+                                Text("Belum ada pengguna terdaftar.", color = Color.Gray, modifier = Modifier.padding(vertical = 16.dp))
+                            }
                         }
                     }
                 }
@@ -88,9 +125,30 @@ fun AdminDashboardScreen() {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            PendingClassRow("Sistem Operasi", "Dr. Eng. Rizal, S.T., M.T.")
-                            PendingClassRow("Basis Data Lanjut", "Prof. Dr. Ir. Budi, M.Sc.")
-                            PendingClassRow("Manajemen Proyek TI", "Ir. Maria, S.Kom., M.Kom.")
+                            val pendingCourses = courses.filter { it.status == "pending" }
+                            
+                            if (pendingCourses.isEmpty()) {
+                                Text("Tidak ada kelas yang menunggu persetujuan.", color = Color.Gray, modifier = Modifier.padding(vertical = 16.dp))
+                            } else {
+                                pendingCourses.forEach { course ->
+                                    PendingClassRow(
+                                        title = course.name,
+                                        instructor = course.instructorName,
+                                        onApprove = {
+                                            coroutineScope.launch {
+                                                courseService.updateCourseStatus(course.id, "approved")
+                                                refreshData()
+                                            }
+                                        },
+                                        onReject = {
+                                            coroutineScope.launch {
+                                                courseService.updateCourseStatus(course.id, "rejected")
+                                                refreshData()
+                                            }
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -128,7 +186,7 @@ fun AdminDashboardScreen() {
 }
 
 @Composable
-fun UserRow(name: String, role: String, status: String, isActive: Boolean) {
+fun UserRow(name: String, role: String, status: String, isActive: Boolean, onToggleStatus: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -139,7 +197,7 @@ fun UserRow(name: String, role: String, status: String, isActive: Boolean) {
             color = Color(0xFFE2E8F0)
         ) {
             Box(contentAlignment = Alignment.Center) {
-                Text(name.take(1), fontWeight = FontWeight.Bold, color = Color(0xFF475569))
+                Text(name.take(1).uppercase(), fontWeight = FontWeight.Bold, color = Color(0xFF475569))
             }
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -160,19 +218,24 @@ fun UserRow(name: String, role: String, status: String, isActive: Boolean) {
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
             )
         }
+        
+        Spacer(modifier = Modifier.width(16.dp))
+        TextButton(onClick = onToggleStatus) {
+            Text(if (isActive) "Blokir" else "Aktifkan", color = if (isActive) Color(0xFFDC2626) else Color(0xFF16A34A))
+        }
     }
     Divider(color = Color(0xFFF1F5F9))
 }
 
 @Composable
-fun PendingClassRow(title: String, instructor: String) {
+fun PendingClassRow(title: String, instructor: String, onApprove: () -> Unit, onReject: () -> Unit) {
     Column(modifier = Modifier.padding(bottom = 16.dp)) {
         Text(title, fontWeight = FontWeight.Bold, fontSize = 14.sp)
         Text("Oleh: $instructor", color = Color.Gray, fontSize = 12.sp)
         Spacer(modifier = Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(
-                onClick = {},
+                onClick = onApprove,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF16A34A),
                     contentColor = Color.White
@@ -184,7 +247,7 @@ fun PendingClassRow(title: String, instructor: String) {
                 Text("Setujui", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
             }
             OutlinedButton(
-                onClick = {},
+                onClick = onReject,
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFDC2626)),
                 border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFDC2626)),
                 shape = RoundedCornerShape(4.dp),

@@ -8,6 +8,8 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.Serializable
+import com.edudesk.models.User
+import io.ktor.client.call.*
 
 class UserService {
     private val client = HttpClient(OkHttp) {
@@ -40,6 +42,36 @@ class UserService {
             response.status == HttpStatusCode.OK
         } catch (e: Exception) {
             println("Error updating profile: ${e.message}")
+            false
+        }
+    }
+
+    suspend fun getUsers(): List<User> {
+        return try {
+            val response = client.get("$baseUrl/users")
+            if (response.status == HttpStatusCode.OK) {
+                response.body()
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            println("Error fetching users: ${e.message}")
+            emptyList()
+        }
+    }
+
+    @Serializable
+    private data class UserStatusRequest(val isActive: Boolean)
+
+    suspend fun updateUserStatus(userId: Int, isActive: Boolean): Boolean {
+        return try {
+            val response = client.put("$baseUrl/users/$userId/status") {
+                contentType(ContentType.Application.Json)
+                setBody(UserStatusRequest(isActive))
+            }
+            response.status == HttpStatusCode.OK
+        } catch (e: Exception) {
+            println("Error updating user status: ${e.message}")
             false
         }
     }

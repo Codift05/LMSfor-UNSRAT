@@ -17,7 +17,7 @@ data class LoginRequest(val nimEmail: String, val pass: String)
 data class RegisterRequest(val email: String, val pass: String, val name: String, val nim: String, val role: String = "student")
 
 @Serializable
-data class UserResponse(val id: Int, val name: String, val nim: String, val email: String, val role: String)
+data class UserResponse(val id: Int, val name: String, val nim: String, val email: String, val role: String, val isActive: Boolean = true)
 
 fun Route.authRoutes() {
     route("/auth") {
@@ -36,7 +36,8 @@ fun Route.authRoutes() {
                     name = user.name,
                     nim = user.nim,
                     email = user.email,
-                    role = user.role
+                    role = user.role,
+                    isActive = user.isActive
                 ))
             } else {
                 call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Invalid credentials"))
@@ -72,7 +73,8 @@ fun Route.authRoutes() {
                 name = newUser.name,
                 nim = newUser.nim,
                 email = newUser.email,
-                role = newUser.role
+                role = newUser.role,
+                isActive = newUser.isActive
             ))
         }
     }
