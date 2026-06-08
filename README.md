@@ -36,36 +36,165 @@ Proyek ini dibangun menggunakan arsitektur *Client-Server* modern:
 
 <details>
 <summary><strong>1. Arsitektur Sistem (Client-Server)</strong></summary>
-<br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ARCHITECTURE_DIAGRAM.puml" alt="Architecture Diagram"/>
+
+```mermaid
+graph TD
+    subgraph Client Tier
+        UI[Native Desktop App UI]
+        SM[Session Manager]
+        HTTP[Ktor HTTP Client]
+        PDF[PDF Engine iText7]
+    end
+
+    subgraph Application Tier
+        API[Ktor REST API Endpoints]
+        Auth[Auth Service]
+        Exam[Exam & Monitoring Service]
+        ORM[JetBrains Exposed ORM]
+    end
+
+    subgraph Data Tier
+        DB[(PostgreSQL Database)]
+    end
+
+    UI --> SM
+    UI --> HTTP
+    HTTP -- "HTTP/JSON" --> API
+    API --> Auth
+    API --> Exam
+    Auth --> ORM
+    Exam --> ORM
+    ORM -- "JDBC" --> DB
+```
 </details>
 
 <details>
 <summary><strong>2. Skema Database (Entity Relationship)</strong></summary>
-<br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/DATABASE_SCHEMA_DIAGRAM.puml" alt="Database Schema"/>
+
+```mermaid
+erDiagram
+    USERS {
+        int id PK
+        string name
+        string nim UK
+        string role
+        boolean isActive
+    }
+    EXAMS {
+        int id PK
+        int instructor_id FK
+        string title
+        int duration_minutes
+        string token UK
+    }
+    QUESTIONS {
+        int id PK
+        int exam_id FK
+        string text
+        string correct_answer
+    }
+    EXAM_SESSIONS {
+        int id PK
+        int user_id FK
+        int exam_id FK
+        string start_time
+        string status
+    }
+    EXAM_RESULTS {
+        int id PK
+        int user_id FK
+        int exam_id FK
+        int score
+        int cheat_count
+    }
+
+    USERS ||--o{ EXAMS : "creates"
+    USERS ||--o{ EXAM_SESSIONS : "has"
+    USERS ||--o{ EXAM_RESULTS : "achieves"
+    EXAMS ||--o{ QUESTIONS : "contains"
+    EXAMS ||--o{ EXAM_SESSIONS : "tracks"
+    EXAMS ||--o{ EXAM_RESULTS : "records"
+```
 </details>
 
 <details>
 <summary><strong>3. Sequence Diagram: Live Monitoring & CBT Flow</strong></summary>
-<br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/CBT_MONITORING_FLOW.puml" alt="Live Monitoring Sequence"/>
+
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant API as Ktor Backend
+    participant DB as PostgreSQL
+    actor Student
+
+    Admin->>API: GET /exams/sessions (Refresh)
+    API->>DB: Query active
+    DB-->>API: Return empty
+    API-->>Admin: Show "No Active Exams"
+
+    Student->>API: POST /exams/start-session {token}
+    API->>DB: INSERT Session (status='active')
+    DB-->>API: Created
+    API-->>Student: Start CBT Engine
+
+    Admin->>API: GET /exams/sessions
+    API->>DB: Query active
+    DB-->>API: Returns Student A (active)
+    API-->>Admin: Display Student A
+```
 </details>
 
 <details>
 <summary><strong>4. Use Case Diagram</strong></summary>
-<br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/USE_CASE_DIAGRAM_ADMIN.puml" alt="Admin Use Case"/>
-<br/><br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/USE_CASE_DIAGRAM_STUDENT.puml" alt="Student Use Case"/>
+
+```mermaid
+flowchart LR
+    Admin([Administrator])
+    Student([Mahasiswa])
+    
+    subgraph IELS CBT
+        Login[Login Portal]
+        Dash[View Analytics / Dashboard]
+        Create[Create Exam & Token]
+        Monitor[Live Monitoring]
+        Rank[View Rankings & Export PDF]
+        CBT[Start CBT Kiosk Mode]
+        Submit[Submit Exam]
+    end
+    
+    Admin --> Login
+    Admin --> Dash
+    Admin --> Create
+    Admin --> Monitor
+    Admin --> Rank
+
+    Student --> Login
+    Student --> Dash
+    Student --> CBT
+    Student --> Submit
+```
 </details>
 
 <details>
-<summary><strong>5. Activity Diagram</strong></summary>
-<br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ACTIVITY_DIAGRAM_ADMIN.puml" alt="Admin Activity"/>
-<br/><br/>
-<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ACTIVITY_DIAGRAM_STUDENT.puml" alt="Student Activity"/>
+<summary><strong>5. Activity Diagram (CBT Engine Flow)</strong></summary>
+
+```mermaid
+flowchart TD
+    Start((Start)) --> Portal[Portal Login / Register]
+    Portal --> Dash[Student Dashboard]
+    Dash --> Token[Input Token Ujian]
+    Token --> Kiosk[Masuk Kiosk Mode]
+    Kiosk --> Jawab[Jawab Soal]
+    
+    Jawab --> Curang{Pindah Aplikasi?}
+    Curang -- Ya --> Warn[Catat Cheat Count / Peringatan]
+    Curang -- Tidak --> Lanjut{Soal Habis?}
+    Warn --> Lanjut
+    
+    Lanjut -- Belum --> Jawab
+    Lanjut -- Sudah --> Submit[Kumpulkan & Hitung Skor]
+    Submit --> Selesai((End))
+```
 </details>
 
 ## Panduan Instalasi & Menjalankan
