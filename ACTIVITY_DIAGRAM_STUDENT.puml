@@ -1,6 +1,6 @@
 @startuml Student_Workflow
 !theme plain
-title EduDesk - Student Learning Workflow (Course → Assignment → Submission)
+title Iels - Student Learning Workflow (Course → Assignment → Submission)
 
 skinparam ActivityBackgroundColor #2196F3
 skinparam ActivityBorderColor #0D47A1

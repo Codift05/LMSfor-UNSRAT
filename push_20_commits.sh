@@ -1,27 +1,27 @@
 #!/bin/bash
 
 # 1
-git add edudesk-backend/build.gradle.kts edudesk-backend/settings.gradle.kts
-git commit -m "chore: Initialize edudesk-backend Ktor project"
+git add iels-backend/build.gradle.kts iels-backend/settings.gradle.kts
+git commit -m "chore: Initialize iels-backend Ktor project"
 
 # 2
-git add edudesk-backend/src/main/kotlin/com/edudesk/backend/Application.kt
+git add iels-backend/src/main/kotlin/com/iels/backend/Application.kt
 git commit -m "feat: Add Ktor Netty application entry point on port 8081"
 
 # 3
-git add edudesk-backend/src/main/kotlin/com/edudesk/backend/models/Users.kt edudesk-backend/src/main/kotlin/com/edudesk/backend/models/Courses.kt
+git add iels-backend/src/main/kotlin/com/iels/backend/models/Users.kt iels-backend/src/main/kotlin/com/iels/backend/models/Courses.kt
 git commit -m "feat: Define Users and Courses database schema"
 
 # 4
-git add edudesk-backend/src/main/kotlin/com/edudesk/backend/models/Enrollments.kt edudesk-backend/src/main/kotlin/com/edudesk/backend/models/Assignments.kt edudesk-backend/src/main/kotlin/com/edudesk/backend/models/Submissions.kt
+git add iels-backend/src/main/kotlin/com/iels/backend/models/Enrollments.kt iels-backend/src/main/kotlin/com/iels/backend/models/Assignments.kt iels-backend/src/main/kotlin/com/iels/backend/models/Submissions.kt
 git commit -m "feat: Define Enrollments, Assignments, and Submissions database schema"
 
 # 5
-git add edudesk-backend/src/main/kotlin/com/edudesk/backend/models/DatabaseFactory.kt
+git add iels-backend/src/main/kotlin/com/iels/backend/models/DatabaseFactory.kt
 git commit -m "feat: Implement DatabaseFactory with Exposed ORM and HikariCP"
 
 # 6
-git add edudesk-backend/src/main/kotlin/com/edudesk/backend/routes/AuthRoutes.kt
+git add iels-backend/src/main/kotlin/com/iels/backend/routes/AuthRoutes.kt
 git commit -m "feat: Implement Auth routes for login and register"
 
 # 7
@@ -41,44 +41,44 @@ git rm -q old-golang-backup/ui/app_tabs.go old-golang-backup/ui/assignment.go ol
 git commit -m "refactor: Remove legacy Go UI and core files"
 
 # 11
-git rm -q edudesk-kotlin/src/main/kotlin/com/edudesk/config/SupabaseClient.kt edudesk-kotlin/src/main/kotlin/com/edudesk/config/SupabaseConfig.kt
+git rm -q iels-kotlin/src/main/kotlin/com/iels/config/SupabaseClient.kt iels-kotlin/src/main/kotlin/com/iels/config/SupabaseConfig.kt
 git commit -m "refactor: Remove Supabase configuration files"
 
 # 12
-git rm -q edudesk-kotlin/src/main/kotlin/com/edudesk/database/DatabaseSeeder.kt edudesk-kotlin/src/main/kotlin/com/edudesk/database/DatabaseSetup.kt
+git rm -q iels-kotlin/src/main/kotlin/com/iels/database/DatabaseSeeder.kt iels-kotlin/src/main/kotlin/com/iels/database/DatabaseSetup.kt
 git commit -m "refactor: Remove SQLite and local database setup"
 
 # 13
-git rm -q edudesk-kotlin/src/main/kotlin/com/edudesk/models/SupabaseModels.kt
+git rm -q iels-kotlin/src/main/kotlin/com/iels/models/SupabaseModels.kt
 git commit -m "refactor: Remove Supabase-specific models"
 
 # 14
-git rm -q edudesk-kotlin/src/main/kotlin/com/edudesk/services/SupabaseAssignmentService.kt edudesk-kotlin/src/main/kotlin/com/edudesk/services/SupabaseCourseService.kt
+git rm -q iels-kotlin/src/main/kotlin/com/iels/services/SupabaseAssignmentService.kt iels-kotlin/src/main/kotlin/com/iels/services/SupabaseCourseService.kt
 git commit -m "refactor: Remove Supabase Assignment and Course services"
 
 # 15
-git rm -q edudesk-kotlin/src/main/kotlin/com/edudesk/services/SupabaseEnrollmentService.kt edudesk-kotlin/src/main/kotlin/com/edudesk/services/SupabaseUserService.kt
+git rm -q iels-kotlin/src/main/kotlin/com/iels/services/SupabaseEnrollmentService.kt iels-kotlin/src/main/kotlin/com/iels/services/SupabaseUserService.kt
 git commit -m "refactor: Remove Supabase Enrollment and User services"
 
 # 16
-git add edudesk-kotlin/src/main/kotlin/com/edudesk/models/Models.kt
+git add iels-kotlin/src/main/kotlin/com/iels/models/Models.kt
 git commit -m "refactor: Simplify Desktop data models for API communication"
 
 # 17
-git add edudesk-kotlin/src/main/kotlin/com/edudesk/services/AuthService.kt
+git add iels-kotlin/src/main/kotlin/com/iels/services/AuthService.kt
 git commit -m "refactor: Migrate AuthService to Ktor HTTP Client"
 
 # 18
-git add edudesk-kotlin/src/main/kotlin/com/edudesk/services/CourseService.kt edudesk-kotlin/src/main/kotlin/com/edudesk/services/AssignmentService.kt edudesk-kotlin/src/main/kotlin/com/edudesk/services/UserService.kt
+git add iels-kotlin/src/main/kotlin/com/iels/services/CourseService.kt iels-kotlin/src/main/kotlin/com/iels/services/AssignmentService.kt iels-kotlin/src/main/kotlin/com/iels/services/UserService.kt
 git commit -m "refactor: Migrate Course, Assignment, and User services to HTTP Client"
 
 # 19
-git add edudesk-kotlin/src/main/kotlin/com/edudesk/ui/screens/LoginScreen.kt edudesk-kotlin/src/main/kotlin/com/edudesk/services/SessionManager.kt
+git add iels-kotlin/src/main/kotlin/com/iels/ui/screens/LoginScreen.kt iels-kotlin/src/main/kotlin/com/iels/services/SessionManager.kt
 git commit -m "refactor: Update LoginScreen and SessionManager to use new Auth system"
 
 # 20
-git add edudesk-kotlin/build.gradle.kts edudesk-kotlin/src/main/kotlin/com/edudesk/Main.kt
-git rm -q edudesk-kotlin/.kotlin/sessions/kotlin-compiler-877654196780616692.salive || true
+git add iels-kotlin/build.gradle.kts iels-kotlin/src/main/kotlin/com/iels/Main.kt
+git rm -q iels-kotlin/.kotlin/sessions/kotlin-compiler-877654196780616692.salive || true
 git commit -m "chore: Clean up unused SQLite and Supabase dependencies"
 
 git push

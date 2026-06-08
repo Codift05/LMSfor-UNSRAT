@@ -1,6 +1,6 @@
 @startuml Admin_Workflow
 !theme plain
-title EduDesk - Admin System Management & Oversight Workflow
+title Iels - Admin System Management & Oversight Workflow
 
 skinparam ActivityBackgroundColor #7B1FA2
 skinparam ActivityBorderColor #4A148C

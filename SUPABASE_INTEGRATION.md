@@ -1,6 +1,6 @@
 # Supabase Integration Guide
 
-This document explains how to integrate Supabase with the EduDesk LMS application.
+This document explains how to integrate Supabase with the Iels LMS application.
 
 ## Setup Instructions
 

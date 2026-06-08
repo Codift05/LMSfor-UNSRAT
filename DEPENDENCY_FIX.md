@@ -74,7 +74,7 @@ val response = httpClient.get(url) { headers(headers) }
 To verify the build works:
 
 ```bash
-cd edudesk-kotlin
+cd iels-kotlin
 
 # Clean and build
 ./gradlew clean build
@@ -108,7 +108,7 @@ All endpoints are secured with API key headers.
 
 1. **Build the project:**
    ```bash
-   cd edudesk-kotlin
+   cd iels-kotlin
    ./gradlew clean build
    ```
 

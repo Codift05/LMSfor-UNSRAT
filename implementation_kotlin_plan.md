@@ -1,6 +1,6 @@
-# EduDesk LMS — Kotlin Compose Desktop Migration Plan
+# Iels LMS — Kotlin Compose Desktop Migration Plan
 
-This plan outlines the migration of the EduDesk LMS desktop application to a modern Kotlin Compose Desktop architecture, drawing heavy UI inspiration from modern learning platforms like Udemy.
+This plan outlines the migration of the Iels LMS desktop application to a modern Kotlin Compose Desktop architecture, drawing heavy UI inspiration from modern learning platforms like Udemy.
 
 ## Proposed Architecture & Stack
 
@@ -13,12 +13,12 @@ This plan outlines the migration of the EduDesk LMS desktop application to a mod
 ## Folder Structure
 
 ```text
-edudesk-kotlin/
+iels-kotlin/
 ├── build.gradle.kts
 ├── src/
 │   ├── main/
 │   │   ├── kotlin/
-│   │   │   ├── com/edudesk/
+│   │   │   ├── com/iels/
 │   │   │   │   ├── Main.kt             
 │   │   │   │   ├── database/           // SQLite setup & Exposed tables
 │   │   │   │   ├── models/             // Data models

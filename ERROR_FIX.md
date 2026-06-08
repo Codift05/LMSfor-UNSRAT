@@ -30,7 +30,7 @@ I've **fixed the issue** by switching from the unavailable Supabase SDK to **Kto
 ## Build Now ✅
 
 ```bash
-cd edudesk-kotlin
+cd iels-kotlin
 ./gradlew clean build
 ```
 

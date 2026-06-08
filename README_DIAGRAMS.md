@@ -1,8 +1,8 @@
-# 📖 EduDesk PlantUML Diagrams - Usage Guide
+# 📖 Iels PlantUML Diagrams - Usage Guide
 
 ## 🎯 Overview
 
-Berikut adalah ke-6 PlantUML diagram activity yang telah dibuat untuk mendokumentasikan EduDesk LMS secara detail:
+Berikut adalah ke-6 PlantUML diagram activity yang telah dibuat untuk mendokumentasikan Iels LMS secara detail:
 
 ---
 
@@ -55,10 +55,10 @@ plantuml ACTIVITY_DIAGRAM_COMPLETE.puml -o output.png
 **Key Info:**
 ```
 Default Test Users:
-1. admin@edudesk.com / admin123 → ADMIN
-2. instructor@edudesk.com / instructor123 → INSTRUCTOR
-3. student@edudesk.com / student123 → STUDENT
-4. student2@edudesk.com / student123 → STUDENT
+1. admin@iels.com / admin123 → ADMIN
+2. instructor@iels.com / instructor123 → INSTRUCTOR
+3. student@iels.com / student123 → STUDENT
+4. student2@iels.com / student123 → STUDENT
 ```
 
 ---
@@ -257,7 +257,7 @@ plantuml -tsvg ACTIVITY_DIAGRAM_COMPLETE.puml
 1. Open ACTIVITY_DIAGRAM_STUDENT.puml
 2. Identify Path 1: Course Enrollment
 3. Test steps:
-   - Login as student@edudesk.com
+   - Login as student@iels.com
    - Navigate to CourseRegistrationScreen
    - Search for course
    - Click enroll
@@ -335,6 +335,6 @@ Additional diagrams to consider:
 ---
 
 **Generated:** 2026-04-15  
-**For:** EduDesk LMS Kotlin Project  
+**For:** Iels LMS Kotlin Project  
 **Status:** Complete ✅
 

@@ -62,7 +62,7 @@ val response = httpClient.get(url) {
 Try building:
 
 ```bash
-cd "/run/media/mip/New Volume/LMS Project/edudesk-kotlin"
+cd "/run/media/mip/New Volume/LMS Project/iels-kotlin"
 ./gradlew clean build
 ```
 
@@ -107,4 +107,4 @@ All services now use proper Ktor HTTP client syntax with inline header setup.
 
 ---
 
-**Next**: Run `./gradlew build` in the edudesk-kotlin directory
+**Next**: Run `./gradlew build` in the iels-kotlin directory

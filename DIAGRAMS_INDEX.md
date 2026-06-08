@@ -1,9 +1,9 @@
-# 📚 EduDesk Complete Diagrams Index - Master Reference
+# 📚 Iels Complete Diagrams Index - Master Reference
 
 **Status:** ✅ COMPLETE DOCUMENTATION  
 **Total Diagrams:** 7 (6 + 1 Master Integration)  
 **Generated:** April 15, 2026  
-**Project:** EduDesk LMS (Kotlin Desktop Application)  
+**Project:** Iels LMS (Kotlin Desktop Application)  
 
 ---
 
@@ -514,7 +514,7 @@ EXPERT (4+ weeks)
 ---
 
 **Generated:** April 15, 2026  
-**Project:** EduDesk LMS  
+**Project:** Iels LMS  
 **Status:** ✅ COMPLETE & PRODUCTION READY  
 **Version:** 2.0 (with Master Integration)  
 
@@ -522,5 +522,5 @@ EXPERT (4+ weeks)
 
 ## 🎯 One-Line Summary
 
-**Master Integration Diagram** menggabungkan 6 sub-diagram sebelumnya ke dalam 1 comprehensive view dengan 6 phases (init → auth → routing → 3 workflows → common → error handling) untuk dokumentasi holistik sistem EduDesk.
+**Master Integration Diagram** menggabungkan 6 sub-diagram sebelumnya ke dalam 1 comprehensive view dengan 6 phases (init → auth → routing → 3 workflows → common → error handling) untuk dokumentasi holistik sistem Iels.
 

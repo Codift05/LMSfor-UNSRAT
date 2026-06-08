@@ -1,14 +1,14 @@
-# 🔍 EduDesk Codebase - Comprehensive Cross-Check Report
+# 🔍 Iels Codebase - Comprehensive Cross-Check Report
 
 **Date:** April 15, 2026  
-**Project:** EduDesk LMS (Kotlin Desktop Application)  
+**Project:** Iels LMS (Kotlin Desktop Application)  
 **Status:** ✅ REVIEWED & DOCUMENTED  
 
 ---
 
 ## 📋 Executive Summary
 
-EduDesk adalah Learning Management System (LMS) desktop berbasis Kotlin dengan arsitektur berlapis yang baik. Sistem mendukung 3 peran utama (Student, Instructor, Admin) dengan fitur-fitur lengkap untuk manajemen kursus, assignment, dan enrollment.
+Iels adalah Learning Management System (LMS) desktop berbasis Kotlin dengan arsitektur berlapis yang baik. Sistem mendukung 3 peran utama (Student, Instructor, Admin) dengan fitur-fitur lengkap untuk manajemen kursus, assignment, dan enrollment.
 
 **Kondisi Codebase:** PRODUKSI-READY dengan beberapa catatan optimasi
 
@@ -338,7 +338,7 @@ Semua diagrams dapat di-render di: https://www.plantuml.com/plantuml/uml/
 
 ## 📝 Summary
 
-**EduDesk** adalah codebase yang SOLID dengan well-thought-out architecture. Sistem siap untuk development & testing dengan populasi user kecil-medium. 
+**Iels** adalah codebase yang SOLID dengan well-thought-out architecture. Sistem siap untuk development & testing dengan populasi user kecil-medium. 
 
 **Untuk production:** Implementasikan Priority 1 & 2 items sebelum launch, terutama:
 - Backend role validation

@@ -1,4 +1,4 @@
-# 🎯 EduDesk Master Integration Activity Diagram - Dokumentasi Profesional
+# 🎯 Iels Master Integration Activity Diagram - Dokumentasi Profesional
 
 **Versi:** 2.0 (Master Integration)  
 **Status:** ✅ PRODUCTION READY  
@@ -9,7 +9,7 @@
 
 ## 📊 Ringkasan Eksekutif
 
-Diagram **ACTIVITY_DIAGRAM_MASTER_INTEGRATION.puml** adalah representasi holistik dari seluruh sistem EduDesk LMS yang mengintegrasikan:
+Diagram **ACTIVITY_DIAGRAM_MASTER_INTEGRATION.puml** adalah representasi holistik dari seluruh sistem Iels LMS yang mengintegrasikan:
 
 - ✅ System initialization dan database setup
 - ✅ Authentication flow dengan BCrypt security
@@ -50,7 +50,7 @@ INSERT INTO Users VALUES (admin, instructor, student, student2)
 ```
 
 **Key Components:**
-- SQLite: `edudesk.db` (primary)
+- SQLite: `iels.db` (primary)
 - Optional Supabase: Cloud backup
 - Test data: Pre-populated for development
 
@@ -109,10 +109,10 @@ if (supabaseEnabled) {
 **Default Test Users:**
 | Email | Password | Role |
 |-------|----------|------|
-| admin@edudesk.com | admin123 | ADMIN |
-| instructor@edudesk.com | instructor123 | INSTRUCTOR |
-| student@edudesk.com | student123 | STUDENT |
-| student2@edudesk.com | student123 | STUDENT |
+| admin@iels.com | admin123 | ADMIN |
+| instructor@iels.com | instructor123 | INSTRUCTOR |
+| student@iels.com | student123 | STUDENT |
+| student2@iels.com | student123 | STUDENT |
 
 ---
 
@@ -855,5 +855,5 @@ A: Yes - all sensitive operations logged (compliance)
 
 ---
 
-**Generated:** 2026-04-15 | **For:** EduDesk LMS Project | **Status:** ✅ PRODUCTION READY
+**Generated:** 2026-04-15 | **For:** Iels LMS Project | **Status:** ✅ PRODUCTION READY
 

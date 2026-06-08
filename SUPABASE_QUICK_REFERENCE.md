@@ -3,12 +3,12 @@
 ## File Structure
 
 ```
-edudesk-kotlin/
+iels-kotlin/
 ├── .env                                    # Environment variables (NEVER commit)
 ├── .env.example                            # Template for environment variables
 ├── build.gradle.kts                        # Updated with Supabase dependencies
 ├── setup.sh / setup.bat                    # Setup scripts
-├── src/main/kotlin/com/edudesk/
+├── src/main/kotlin/com/iels/
 │   ├── config/
 │   │   ├── SupabaseConfig.kt              # Configuration loader
 │   │   └── SupabaseClient.kt              # Client manager

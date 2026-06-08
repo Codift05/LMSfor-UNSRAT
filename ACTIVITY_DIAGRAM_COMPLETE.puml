@@ -1,6 +1,6 @@
-@startuml EduDesk_Activity_Diagram
+@startuml Iels_Activity_Diagram
 !theme plain
-title EduDesk LMS - Comprehensive Activity Diagram
+title Iels LMS - Comprehensive Activity Diagram
 
 skinparam ActivityBackgroundColor #496E96
 skinparam ActivityBorderColor #2D2F31
@@ -13,7 +13,7 @@ partition "System Initialization" {
     :🚀 Application Startup;
     :initialize Main.kt - Create 1280x800 Window;
     :call DatabaseSetup.init();
-    :Connect to SQLite (edudesk.db);
+    :Connect to SQLite (iels.db);
     :Create Database Schema if needed;
     :Seed 4 Default Test Users;
     if (Supabase Configuration Available?) then (Yes)

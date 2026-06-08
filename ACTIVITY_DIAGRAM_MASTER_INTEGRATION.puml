@@ -1,6 +1,6 @@
-@startuml EduDesk_Master_Activity_Diagram
+@startuml Iels_Master_Activity_Diagram
 !theme plain
-title EduDesk LMS - Master Integration Activity Diagram (All 6 Workflows Combined)
+title Iels LMS - Master Integration Activity Diagram (All 6 Workflows Combined)
 
 skinparam ActivityBackgroundColor #496E96
 skinparam ActivityBorderColor #2D2F31
@@ -19,7 +19,7 @@ partition "PHASE 1: SYSTEM INITIALIZATION & SETUP" #E8F4F8 {
     start
     :APPLICATION STARTUP\nMain.kt initializes;
     :Create Window (1280x800)\nJetpack Compose Desktop;
-    :DatabaseSetup.init()\n- Connect to SQLite (edudesk.db)\n- Create schema if needed\n- Seed 4 test users;
+    :DatabaseSetup.init()\n- Connect to SQLite (iels.db)\n- Create schema if needed\n- Seed 4 test users;
     
     if (Supabase Configuration\nAvailable?) then (YES)
         :Initialize Supabase Client\n- Configure REST API endpoint\n- Setup HTTP client (Ktor);
@@ -38,10 +38,10 @@ partition "PHASE 2: AUTHENTICATION & SESSION MANAGEMENT" #F0E6FF {
     
     note right
         Required Test Users:
-        - admin@edudesk.com / admin123
-        - instructor@edudesk.com / instructor123
-        - student@edudesk.com / student123
-        - student2@edudesk.com / student123
+        - admin@iels.com / admin123
+        - instructor@iels.com / instructor123
+        - student@iels.com / student123
+        - student2@iels.com / student123
     end note
     
     repeat
@@ -377,7 +377,7 @@ partition "PHASE 6: ERROR HANDLING & SECURITY" #FFE6E6 {
 
 
 note bottom
-    ========== EDUDESK LMS - COMPLETE SYSTEM FLOW ==========
+    ========== IELS LMS - COMPLETE SYSTEM FLOW ==========
     
     PHASE 1: System Initialization [1-5 seconds]
     PHASE 2: Authentication & Session [5-10 seconds]

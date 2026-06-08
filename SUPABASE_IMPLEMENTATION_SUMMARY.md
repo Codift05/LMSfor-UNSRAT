@@ -112,13 +112,13 @@ Copy SQL from `SUPABASE_INTEGRATION.md` and run in Supabase SQL Editor
 ## 📁 New File Structure
 
 ```
-edudesk-kotlin/
+iels-kotlin/
 ├── .env                                    # ← Add your credentials here
 ├── .env.example                            # ← Template
 ├── .gitignore                              # ← Updated to ignore .env
 ├── build.gradle.kts                        # ← Updated with dependencies
 ├── setup.sh / setup.bat                    # ← Run this first
-├── src/main/kotlin/com/edudesk/
+├── src/main/kotlin/com/iels/
 │   ├── config/
 │   │   ├── SupabaseConfig.kt              # ← NEW
 │   │   └── SupabaseClient.kt              # ← NEW

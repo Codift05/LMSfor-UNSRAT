@@ -1,6 +1,6 @@
 @startuml Authentication_Flow
 !theme plain
-title EduDesk - Authentication & Login Workflow
+title Iels - Authentication & Login Workflow
 
 skinparam ActivityBackgroundColor #496E96
 skinparam ActivityBorderColor #2D2F31
@@ -102,10 +102,10 @@ deactivate UI
 
 note right of Auth
     **Supported Default Test Users:**
-    1. admin@edudesk.com / admin123 → ADMIN role
-    2. instructor@edudesk.com / instructor123 → INSTRUCTOR role
-    3. student@edudesk.com / student123 → STUDENT role
-    4. student2@edudesk.com / student123 → STUDENT role
+    1. admin@iels.com / admin123 → ADMIN role
+    2. instructor@iels.com / instructor123 → INSTRUCTOR role
+    3. student@iels.com / student123 → STUDENT role
+    4. student2@iels.com / student123 → STUDENT role
     
     **Security Notes:**
     - All passwords hashed with BCrypt (cost factor applied)

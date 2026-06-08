@@ -1,8 +1,8 @@
 # 🎉 Supabase Integration - Complete!
 
-## Welcome to Your New Cloud-Connected EduDesk LMS
+## Welcome to Your New Cloud-Connected Iels LMS
 
-Your EduDesk Learning Management System has been successfully integrated with **Supabase** - a powerful, open-source Firebase alternative with built-in PostgreSQL database, authentication, and real-time capabilities.
+Your Iels Learning Management System has been successfully integrated with **Supabase** - a powerful, open-source Firebase alternative with built-in PostgreSQL database, authentication, and real-time capabilities.
 
 ---
 
@@ -42,7 +42,7 @@ Your Computer ↔ Supabase Cloud
 
 ### 2. **Update .env** (1 min)
    ```bash
-   cd edudesk-kotlin
+   cd iels-kotlin
    nano .env  # or your favorite editor
    ```
    Paste your credentials:
@@ -323,12 +323,12 @@ Everything is in place. You now have:
 ## 📝 File Locations
 
 ```
-edudesk-kotlin/
+iels-kotlin/
 ├── .env                              ← Add credentials here
 ├── .env.example                      ← Template
 ├── setup.sh / setup.bat              ← Run first
 ├── build.gradle.kts                  ← Updated with dependencies
-└── src/main/kotlin/com/edudesk/
+└── src/main/kotlin/com/iels/
     ├── config/                       ← Supabase config
     ├── services/                     ← Supabase* services
     ├── models/SupabaseModels.kt      ← Data classes
@@ -360,7 +360,7 @@ Documents/
 
 ## 🚀 Ready to Transform Your App
 
-Your EduDesk LMS is now:
+Your Iels LMS is now:
 - ☁️ Cloud-enabled with Supabase
 - 📱 Ready for scaling
 - 🔒 Security-hardened

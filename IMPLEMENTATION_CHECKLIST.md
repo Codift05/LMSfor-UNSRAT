@@ -96,7 +96,7 @@
 
 ## 🚀 Ready to Use
 
-All components are implemented and documented. The EduDesk LMS is now ready to integrate with Supabase!
+All components are implemented and documented. The Iels LMS is now ready to integrate with Supabase!
 
 ## 📋 Next Steps for Users
 

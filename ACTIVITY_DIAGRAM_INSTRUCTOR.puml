@@ -1,6 +1,6 @@
 @startuml Instructor_Workflow
 !theme plain
-title EduDesk - Instructor Class Management & Grading Workflow
+title Iels - Instructor Class Management & Grading Workflow
 
 skinparam ActivityBackgroundColor #FF6F00
 skinparam ActivityBorderColor #E65100

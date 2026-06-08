@@ -1,11 +1,11 @@
-# EduDesk LMS — UNSRAT Edition
+# Iels LMS — UNSRAT Edition
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-4285F4?style=for-the-badge&logo=android&logoColor=white)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Exposed](https://img.shields.io/badge/Exposed_ORM-7F52FF?style=for-the-badge&logo=jetbrains&logoColor=white)](https://github.com/JetBrains/Exposed)
 
-EduDesk LMS is a native desktop Learning Management System specifically designed for the UNSRAT (Sam Ratulangi University) academic community. This application provides a modern, high-performance interface for students and educators to manage courses, assignments, and academic tracking with an offline-first approach.
+Iels LMS is a native desktop Learning Management System specifically designed for the UNSRAT (Sam Ratulangi University) academic community. This application provides a modern, high-performance interface for students and educators to manage courses, assignments, and academic tracking with an offline-first approach.
 
 The project has undergone a significant architectural migration from Golang (Fyne framework) to Kotlin (Compose Multiplatform) to deliver a superior native user experience inspired by modern learning platforms like Udemy.
 
@@ -29,9 +29,9 @@ The project has undergone a significant architectural migration from Golang (Fyn
 
 The repository is organized as follows:
 
-- `edudesk-kotlin/`: The current production-ready Kotlin codebase using Compose Multiplatform.
+- `iels-kotlin/`: The current production-ready Kotlin codebase using Compose Multiplatform.
 - `old-golang-backup/`: Archived source code from the previous Go/Fyne implementation for reference.
-- `edudesk.db`: The local SQLite database file containing structured academic data.
+- `iels.db`: The local SQLite database file containing structured academic data.
 
 ## Getting Started
 
@@ -45,15 +45,15 @@ The repository is organized as follows:
 To run the application locally for development:
 
 1. Clone the repository to your local machine.
-2. Open the `edudesk-kotlin` folder in IntelliJ IDEA.
+2. Open the `iels-kotlin` folder in IntelliJ IDEA.
 3. Allow Gradle to synchronize and download necessary dependencies.
-4. Locate `src/main/kotlin/com/edudesk/Main.kt`.
+4. Locate `src/main/kotlin/com/iels/Main.kt`.
 5. Run the `main()` function.
 
 Alternatively, use the Gradle wrapper from the terminal:
 
 ```bash
-cd edudesk-kotlin
+cd iels-kotlin
 ./gradlew run
 ```
 

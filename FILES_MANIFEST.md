@@ -18,7 +18,7 @@
 
 ---
 
-#### 2. `src/main/kotlin/com/edudesk/database/DatabaseSetup.kt`
+#### 2. `src/main/kotlin/com/iels/database/DatabaseSetup.kt`
 **Changes:**
 - Added Supabase initialization logic
 - Added auto-detection of Supabase configuration
@@ -30,7 +30,7 @@
 
 ---
 
-#### 3. `src/main/kotlin/com/edudesk/services/AuthService.kt`
+#### 3. `src/main/kotlin/com/iels/services/AuthService.kt`
 **Changes:**
 - Kept existing `login()` method for SQLite
 - Added `loginWithSupabase()` async method
@@ -42,7 +42,7 @@
 
 ---
 
-#### 4. `src/main/kotlin/com/edudesk/services/SessionManager.kt`
+#### 4. `src/main/kotlin/com/iels/services/SessionManager.kt`
 **Changes:**
 - Added `currentSupabaseUser` property
 - Added session state properties (isLoggedIn, isLoading, errorMessage)
@@ -67,19 +67,19 @@
    - Safe to commit to repository
 
 #### Config Directory (2)
-3. **`src/main/kotlin/com/edudesk/config/SupabaseConfig.kt`**
+3. **`src/main/kotlin/com/iels/config/SupabaseConfig.kt`**
    - Loads environment variables from .env
    - Validates configuration
    - Provides isConfigured() method
 
-4. **`src/main/kotlin/com/edudesk/config/SupabaseClient.kt`**
+4. **`src/main/kotlin/com/iels/config/SupabaseClient.kt`**
    - Manages Supabase client singleton
    - Creates client with anon key
    - Provides auth and database accessors
    - Implements disconnect() for cleanup
 
 #### Models (1)
-5. **`src/main/kotlin/com/edudesk/models/SupabaseModels.kt`**
+5. **`src/main/kotlin/com/iels/models/SupabaseModels.kt`**
    - SupabaseUser data class
    - SupabaseCourse data class
    - SupabaseAssignment data class
@@ -87,29 +87,29 @@
    - All with @Serializable annotations
 
 #### Services (4)
-6. **`src/main/kotlin/com/edudesk/services/SupabaseUserService.kt`**
+6. **`src/main/kotlin/com/iels/services/SupabaseUserService.kt`**
    - getUserById(), getUserByEmail(), getAllUsers()
    - getUsersByRole(), updateUser(), deleteUser()
    - Full CRUD operations with error handling
 
-7. **`src/main/kotlin/com/edudesk/services/SupabaseCourseService.kt`**
+7. **`src/main/kotlin/com/iels/services/SupabaseCourseService.kt`**
    - getCourseById(), getAllCourses(), getCoursesByInstructor()
    - createCourse(), updateCourse(), deleteCourse()
    - Full course management
 
-8. **`src/main/kotlin/com/edudesk/services/SupabaseAssignmentService.kt`**
+8. **`src/main/kotlin/com/iels/services/SupabaseAssignmentService.kt`**
    - getAssignmentById(), getAssignmentsByCourse(), getAllAssignments()
    - createAssignment(), updateAssignment(), deleteAssignment()
    - Complete assignment lifecycle management
 
-9. **`src/main/kotlin/com/edudesk/services/SupabaseEnrollmentService.kt`**
+9. **`src/main/kotlin/com/iels/services/SupabaseEnrollmentService.kt`**
    - getEnrollmentsByUser(), getEnrollmentsByCourse()
    - enrollUserInCourse(), unenrollUserFromCourse()
    - updateEnrollmentStatus()
    - Enrollment management
 
 #### Examples (1)
-10. **`src/main/kotlin/com/edudesk/examples/SupabaseExamples.kt`**
+10. **`src/main/kotlin/com/iels/examples/SupabaseExamples.kt`**
     - LoginScreenExample()
     - UserProfileExample()
     - CourseListExample()

@@ -1,6 +1,6 @@
 @startuml Database_Architecture
 !theme plain
-title EduDesk - Database Schema & Data Flow Architecture
+title Iels - Database Schema & Data Flow Architecture
 
 skinparam backgroundColor #E2E8EF
 skinparam classBackgroundColor #FFFFFF

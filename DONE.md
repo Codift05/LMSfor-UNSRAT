@@ -2,7 +2,7 @@
 
 ## Implementation Summary
 
-I have successfully implemented full Supabase integration into your EduDesk LMS Kotlin project. Here's what was done:
+I have successfully implemented full Supabase integration into your Iels LMS Kotlin project. Here's what was done:
 
 ---
 
@@ -47,15 +47,15 @@ Setup scripts for Windows and Unix to automate initialization.
    - Added 9 new dependencies (Supabase, Coroutines, Serialization, etc.)
    - Added Kotlin serialization plugin
 
-2. **src/main/kotlin/com/edudesk/database/DatabaseSetup.kt**
+2. **src/main/kotlin/com/iels/database/DatabaseSetup.kt**
    - Added Supabase detection
    - Added fallback logic to SQLite
 
-3. **src/main/kotlin/com/edudesk/services/AuthService.kt**
+3. **src/main/kotlin/com/iels/services/AuthService.kt**
    - Added 3 new Supabase auth methods
    - Kept existing SQLite auth
 
-4. **src/main/kotlin/com/edudesk/services/SessionManager.kt**
+4. **src/main/kotlin/com/iels/services/SessionManager.kt**
    - Added cloud user support
    - Added state management (loading, error, etc.)
 
@@ -105,7 +105,7 @@ Setup scripts for Windows and Unix to automate initialization.
 
 ### Step 2: Configure .env (1 min)
 ```bash
-cd edudesk-kotlin
+cd iels-kotlin
 # Edit .env and paste your credentials:
 # SUPABASE_URL=...
 # SUPABASE_ANON_KEY=...

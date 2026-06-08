@@ -15,7 +15,7 @@ out/
 Thumbs.db
 
 # Database (Temporary or User specific if necessary, but keep the core one if it's a template)
-# edudesk.db # Only un-comment if you don't want the database shared in git
+# iels.db # Only un-comment if you don't want the database shared in git
 
 # Misc
 .vscode/
