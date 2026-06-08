@@ -1,0 +1,46 @@
+@startuml CBT_Monitoring_Flow
+!theme plain
+title IELS CBT - Live Monitoring Sequence
+
+skinparam linetype ortho
+skinparam backgroundColor #F8FAFC
+skinparam sequence {
+    ParticipantBackgroundColor #FFFFFF
+    ParticipantBorderColor #3B82F6
+    LifeLineBorderColor #94A3B8
+    ArrowColor #0F172A
+}
+
+actor "Student Client" as student
+participant "Backend API\n(Ktor)" as backend
+database "PostgreSQL\n(ExamSessions)" as db
+actor "Admin Dashboard" as admin
+
+admin -> backend: GET /exams/sessions\n(Periodic Refresh)
+backend -> db: Query active sessions
+db --> backend: Return Empty List
+backend --> admin: Display "No Active Exams"
+
+student -> backend: POST /exams/start-session\n{token: "XYZ123"}
+backend -> db: INSERT INTO ExamSessions\n(status='active')
+db --> backend: Session Created
+backend --> student: Start CBT Engine (Fullscreen)
+
+admin -> backend: GET /exams/sessions\n(Periodic Refresh)
+backend -> db: Query active sessions
+db --> backend: Returns Student A (active)
+backend --> admin: Display Student A in Table
+
+student -> student: Completes Questions
+student -> backend: POST /exams/submit\n{answers, cheat_count}
+backend -> db: UPDATE ExamSessions\n(status='finished')
+backend -> db: INSERT INTO ExamResults
+db --> backend: Success
+backend --> student: Show Final Score
+
+admin -> backend: GET /exams/sessions\n(Periodic Refresh)
+backend -> db: Query active sessions
+db --> backend: Return Empty List (or finished)
+backend --> admin: Table updates automatically
+
+@enduml

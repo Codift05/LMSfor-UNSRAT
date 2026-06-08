@@ -1,0 +1,51 @@
+@startuml Activity_Student
+!theme plain
+title IELS CBT - Student Workflow
+
+skinparam linetype ortho
+skinparam backgroundColor #F8FAFC
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #10B981
+  DiamondBackgroundColor #E2E8F0
+  DiamondBorderColor #10B981
+}
+
+start
+:Student opens Client App;
+:Select "Login Portal" or "CBT Siswa";
+if (Is Student Registered?) then (yes)
+  :Login with NIM and Password;
+else (no)
+  :Register new Student Account;
+  :Login;
+endif
+:View Student Dashboard (Home);
+:Enter Secure Exam Token;
+if (Is Token Valid?) then (yes)
+  :System creates ExamSession (Active);
+  :Enter Kiosk/Fullscreen Mode;
+  :Display Exam Questions;
+  
+  repeat
+    :Answer Question;
+    if (Student switches app?) then (yes)
+      :Increment Cheat Count (Focus Loss);
+      :Show Warning Dialog;
+    else (no)
+    endif
+  repeat while (More Questions & Time Remaining?) is (yes)
+  
+  :Submit Exam;
+  :Calculate Final Score;
+  :Save ExamResult to Database;
+  :Update ExamSession (Finished);
+  :Exit Kiosk Mode;
+  :View Grade Summary;
+else (no)
+  :Show "Token Invalid" Error;
+endif
+
+:Logout;
+stop
+@enduml

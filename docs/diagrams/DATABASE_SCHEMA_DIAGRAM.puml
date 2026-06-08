@@ -1,0 +1,99 @@
+@startuml Database_Architecture
+!theme plain
+title IELS CBT - Database Schema & Data Flow Architecture
+
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 60
+skinparam backgroundColor #F8FAFC
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #3B82F6
+skinparam classArrowColor #0F172A
+skinparam classHeaderBackgroundColor #E2E8F0
+skinparam activityBackgroundColor #3B82F6
+
+package "PostgreSQL Database" {
+    
+    entity "Users" as users {
+        **PK** id : Integer
+        --
+        name : String (NOT NULL)
+        nim : String (UNIQUE)
+        email : String (UNIQUE)
+        password : String (bcrypt)
+        role : String ("student", "admin")
+        isActive : Boolean (default true)
+    }
+    
+    entity "Exams" as exams {
+        **PK** id : Integer
+        --
+        **FK** instructor_id : Integer → users.id
+        title : String
+        duration_minutes : Integer
+        token : String (UNIQUE)
+        isActive : Boolean (default true)
+    }
+    
+    entity "Questions" as questions {
+        **PK** id : Integer
+        --
+        **FK** exam_id : Integer → exams.id
+        text : Text
+        option_a : String
+        option_b : String
+        option_c : String
+        option_d : String
+        correct_answer : String ('A', 'B', 'C', 'D')
+    }
+    
+    entity "ExamSessions" as sessions {
+        **PK** id : Integer
+        --
+        **FK** user_id : Integer → users.id
+        **FK** exam_id : Integer → exams.id
+        start_time : String (Timestamp)
+        status : String ("active", "finished")
+    }
+    
+    entity "ExamResults" as results {
+        **PK** id : Integer
+        --
+        **FK** user_id : Integer → users.id
+        **FK** exam_id : Integer → exams.id
+        score : Integer (0-100)
+        cheat_count : Integer (Focus losses)
+        submitted_at : String (Timestamp)
+    }
+}
+
+' Relationships
+users ||--o{ exams : "instructor_id"
+users ||--o{ sessions : "user_id"
+users ||--o{ results : "user_id"
+
+exams ||--o{ questions : "exam_id"
+exams ||--o{ sessions : "exam_id"
+exams ||--o{ results : "exam_id"
+
+note right of users
+    **Roles:**
+    - **student**: Takes exams, has sessions, submits results.
+    - **admin**: Creates exams, views monitoring, exports PDF.
+end note
+
+note bottom of sessions
+    **Live Monitoring Flow:**
+    1. Student enters token → Creates/Updates Session (active)
+    2. Admin checks Dashboard → Views Active Sessions
+    3. Student submits exam → Session status updated to 'finished'
+end note
+
+note bottom of results
+    **Ranking Flow:**
+    - Results queried by Admin.
+    - Sorted by 'score' DESC for leaderboard.
+    - Exported to PDF via iText7.
+end note
+
+@enduml

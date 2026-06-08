@@ -1,0 +1,49 @@
+@startuml Activity_Auth
+!theme plain
+title IELS CBT - Authentication Flow
+
+skinparam linetype ortho
+skinparam backgroundColor #F8FAFC
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #6366F1
+  DiamondBackgroundColor #E2E8F0
+  DiamondBorderColor #6366F1
+}
+
+start
+:User opens application;
+if (Has stored JWT token?) then (yes)
+  :Validate Token;
+  if (Token is valid?) then (yes)
+    :Auto-login;
+  else (no)
+    :Show Login Screen;
+  endif
+else (no)
+  :Show Login Screen;
+endif
+
+if (User Action) then (Login)
+  :Enter NIM and Password;
+  :Verify credentials (bcrypt);
+  if (Valid?) then (yes)
+    :Generate JWT Token;
+    :Store in SessionManager;
+    if (Role == admin) then (yes)
+      :Navigate to Admin Dashboard;
+    else (no)
+      :Navigate to Student Dashboard;
+    endif
+  else (no)
+    :Show "Invalid Credentials";
+  endif
+else (Register)
+  :Enter Name, NIM, Password;
+  :Hash password (bcrypt);
+  :Save new User (role=student);
+  :Navigate to Login Screen;
+endif
+
+stop
+@enduml

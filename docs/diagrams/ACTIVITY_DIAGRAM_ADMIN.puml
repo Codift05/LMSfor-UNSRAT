@@ -1,0 +1,40 @@
+@startuml Activity_Admin
+!theme plain
+title IELS CBT - Admin Workflow
+
+skinparam linetype ortho
+skinparam backgroundColor #F8FAFC
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #3B82F6
+  DiamondBackgroundColor #E2E8F0
+  DiamondBorderColor #3B82F6
+}
+
+start
+:Admin logs in;
+:View Admin Overview Dashboard;
+fork
+  :Navigate to "Pembuat Ujian";
+  :Create new Exam with Title & Duration;
+  :Generate Secure Token;
+  :Add Multiple Choice Questions;
+  :Save Exam to Database;
+fork again
+  :Navigate to "Monitoring";
+  :View Active Exam Sessions;
+  :Monitor Real-time Connected Students;
+fork again
+  :Navigate to "Hasil Ujian";
+  :View Student Rankings;
+  :Check Cheat / Focus Loss Counts;
+  :Click "Export to PDF";
+  :System generates Corporate PDF via iText7;
+  :Admin downloads PDF File;
+fork again
+  :Navigate to "Kelola Pengguna";
+  :Add or Remove Student Accounts;
+end fork
+:Logout;
+stop
+@enduml
