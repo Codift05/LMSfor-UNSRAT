@@ -32,6 +32,42 @@ Proyek ini dibangun menggunakan arsitektur *Client-Server* modern:
 *   <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/shield-halved.svg" width="16" height="16"/> **Secure Token Access**: Akses ujian diamankan menggunakan sistem token otentikasi.
 *   <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/expand.svg" width="16" height="16"/> **Kiosk Mode**: Antarmuka ujian mendukung mode layar penuh (*Fullscreen*) untuk meminimalisir gangguan selama pengerjaan.
 
+## Visualisasi & Arsitektur Sistem
+
+<details>
+<summary><strong>1. Arsitektur Sistem (Client-Server)</strong></summary>
+<br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ARCHITECTURE_DIAGRAM.puml" alt="Architecture Diagram"/>
+</details>
+
+<details>
+<summary><strong>2. Skema Database (Entity Relationship)</strong></summary>
+<br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/DATABASE_SCHEMA_DIAGRAM.puml" alt="Database Schema"/>
+</details>
+
+<details>
+<summary><strong>3. Sequence Diagram: Live Monitoring & CBT Flow</strong></summary>
+<br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/CBT_MONITORING_FLOW.puml" alt="Live Monitoring Sequence"/>
+</details>
+
+<details>
+<summary><strong>4. Use Case Diagram</strong></summary>
+<br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/USE_CASE_DIAGRAM_ADMIN.puml" alt="Admin Use Case"/>
+<br/><br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/USE_CASE_DIAGRAM_STUDENT.puml" alt="Student Use Case"/>
+</details>
+
+<details>
+<summary><strong>5. Activity Diagram</strong></summary>
+<br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ACTIVITY_DIAGRAM_ADMIN.puml" alt="Admin Activity"/>
+<br/><br/>
+<img src="https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Codift05/LMSfor-UNSRAT/main/docs/diagrams/ACTIVITY_DIAGRAM_STUDENT.puml" alt="Student Activity"/>
+</details>
+
 ## Panduan Instalasi & Menjalankan
 
 ### Persyaratan Sistem
