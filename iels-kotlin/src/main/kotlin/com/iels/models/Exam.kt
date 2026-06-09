@@ -17,6 +17,7 @@ data class Question(
 data class Exam(
     val id: Int? = null,
     val title: String,
+    val category: String = "Umum",
     val durationMinutes: Int,
     val token: String,
     val instructorId: Int,

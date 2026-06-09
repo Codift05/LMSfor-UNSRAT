@@ -59,9 +59,10 @@ object PdfParser {
                             currentSection = "D"
                             optionD = line.substring(2).trim()
                         }
-                        line.startsWith("Kunci:", ignoreCase = true) -> {
+                        line.startsWith("Kunci:", ignoreCase = true) || line.startsWith("Jawaban:", ignoreCase = true) -> {
                             currentSection = "Kunci"
-                            correctAnswer = line.substring(6).trim().uppercase().take(1)
+                            val prefixLength = if (line.startsWith("Kunci:", ignoreCase = true)) 6 else 8
+                            correctAnswer = line.substring(prefixLength).trim().uppercase().take(1)
                         }
                         else -> {
                             when (currentSection) {

@@ -78,6 +78,16 @@ class ExamService {
         }
     }
 
+    suspend fun deleteExam(examId: Int): Boolean {
+        return try {
+            val response = client.delete("$baseUrl/$examId")
+            response.status == HttpStatusCode.OK
+        } catch (e: Exception) {
+            println("Error deleting exam: ${e.message}")
+            false
+        }
+    }
+
     suspend fun submitExam(submission: ExamSubmission): ExamResult? {
         return try {
             val response = client.post("$baseUrl/submit") {
