@@ -62,6 +62,7 @@ fun AdminDashboardScreen() {
     
     // Exam State
     var title by remember { mutableStateOf("") }
+    var category by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var duration by remember { mutableStateOf("60") }
     var token by remember { mutableStateOf("") }
@@ -123,13 +124,50 @@ fun AdminDashboardScreen() {
                     Text("Simpan Konsep", fontWeight = FontWeight.SemiBold)
                 }
 
+                var errorMessage by remember { mutableStateOf<String?>(null) }
+                var showSuccessDialog by remember { mutableStateOf(false) }
+
+                if (errorMessage != null) {
+                    AlertDialog(
+                        onDismissRequest = { errorMessage = null },
+                        title = { Text("Peringatan", fontWeight = FontWeight.Bold, color = Color(0xFFEF4444)) },
+                        text = { Text(errorMessage!!) },
+                        confirmButton = {
+                            TextButton(onClick = { errorMessage = null }) { Text("OK", color = Color(0xFF496E96)) }
+                        }
+                    )
+                }
+
+                if (showSuccessDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showSuccessDialog = false },
+                        title = { Text("Sukses", fontWeight = FontWeight.Bold, color = Color(0xFF10B981)) },
+                        text = { Text("Ujian berhasil diterbitkan dan siap dikerjakan oleh siswa!") },
+                        confirmButton = {
+                            TextButton(onClick = { showSuccessDialog = false }) { Text("OK", color = Color(0xFF496E96)) }
+                        }
+                    )
+                }
+
                 Button(
                     onClick = {
-                        if (title.isBlank() || token.isBlank() || questions.isEmpty()) return@Button
+                        if (title.isBlank() || token.isBlank() || questions.isEmpty()) {
+                            errorMessage = "Harap isi Judul Ujian, Token Akses, dan minimal 1 Pertanyaan!"
+                            return@Button
+                        }
+                        
+                        // Check if any question has empty correct answer
+                        val hasEmptyAnswer = questions.any { it.correctAnswer.isBlank() }
+                        if (hasEmptyAnswer) {
+                            errorMessage = "Ada pertanyaan yang belum memiliki Kunci Jawaban. Silakan pilih jawaban yang benar!"
+                            return@Button
+                        }
+
                         isPublishing = true
                         coroutineScope.launch {
                             val newExam = Exam(
                                 title = title,
+                                category = category.ifBlank { "Umum" },
                                 durationMinutes = duration.toIntOrNull() ?: 60,
                                 token = token,
                                 instructorId = SessionManager.currentUser?.id ?: 1,
@@ -137,9 +175,14 @@ fun AdminDashboardScreen() {
                             )
                             if (examService.createExam(newExam)) {
                                 title = ""
+                                category = ""
+                                description = ""
                                 duration = "60"
                                 token = ""
                                 questions = emptyList()
+                                showSuccessDialog = true
+                            } else {
+                                errorMessage = "Gagal menerbitkan ujian. Pastikan backend menyala atau coba lagi."
                             }
                             isPublishing = false
                         }
@@ -181,6 +224,12 @@ fun AdminDashboardScreen() {
                         Text("JUDUL UJIAN", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFF94A3B8), letterSpacing = 1.sp)
                         Spacer(modifier = Modifier.height(8.dp))
                         BuilderTextField(value = title, onValueChange = { title = it }, placeholder = "mis. Ujian Tengah Semester")
+                        
+                        Spacer(modifier = Modifier.height(20.dp))
+                        
+                        Text("KATEGORI / MATA KULIAH", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFF94A3B8), letterSpacing = 1.sp)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        BuilderTextField(value = category, onValueChange = { category = it }, placeholder = "mis. Pemrograman Web")
                         
                         Spacer(modifier = Modifier.height(20.dp))
                         

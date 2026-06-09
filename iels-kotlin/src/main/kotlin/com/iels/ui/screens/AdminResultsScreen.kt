@@ -31,13 +31,17 @@ fun AdminResultsScreen() {
     val pdfService = remember { PdfExportService() }
     
     var results by remember { mutableStateOf<List<ExamResultDetailDto>>(emptyList()) }
+    var exams by remember { mutableStateOf<List<com.iels.models.Exam>>(emptyList()) }
+    var selectedExamId by remember { mutableStateOf<Int?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var showSuccessMessage by remember { mutableStateOf(false) }
+    var isDropdownExpanded by remember { mutableStateOf(false) }
 
     fun refreshData() {
         isLoading = true
         coroutineScope.launch {
             results = examService.getResults()
+            exams = examService.getExams()
             isLoading = false
         }
     }
@@ -110,7 +114,44 @@ fun AdminResultsScreen() {
                     }
                 }
 
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // FILTER SECTION
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Filter Berdasarkan Ujian:", fontWeight = FontWeight.Bold, color = Color(0xFF64748B), fontSize = 14.sp)
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Box {
+                        val selectedExamName = if (selectedExamId == null) "Semua Ujian" else exams.find { it.id == selectedExamId }?.title ?: "Unknown"
+                        OutlinedButton(
+                            onClick = { isDropdownExpanded = true },
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF0F172A)),
+                            border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text(selectedExamName, fontWeight = FontWeight.SemiBold)
+                        }
+                        DropdownMenu(
+                            expanded = isDropdownExpanded,
+                            onDismissRequest = { isDropdownExpanded = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Semua Ujian", fontWeight = FontWeight.SemiBold) },
+                                onClick = { selectedExamId = null; isDropdownExpanded = false }
+                            )
+                            exams.forEach { exam ->
+                                DropdownMenuItem(
+                                    text = { Text(exam.title.takeIf { it.isNotBlank() } ?: "(Tanpa Judul)") },
+                                    onClick = { selectedExamId = exam.id; isDropdownExpanded = false }
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -139,8 +180,13 @@ fun AdminResultsScreen() {
                             Divider(color = Color(0xFFF1F5F9))
                             Spacer(modifier = Modifier.height(16.dp))
                             
-                            results.forEachIndexed { index, result ->
-                                Row(
+                            val filteredResults = if (selectedExamId == null) results else results.filter { it.examId == selectedExamId }
+                            
+                            if (filteredResults.isEmpty()) {
+                                Text("Tidak ada hasil ujian untuk filter ini.", fontSize = 14.sp, color = Color(0xFF94A3B8), modifier = Modifier.padding(vertical = 16.dp))
+                            } else {
+                                filteredResults.forEachIndexed { index, result ->
+                                    Row(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
@@ -175,6 +221,7 @@ fun AdminResultsScreen() {
                                     Text("${result.score}", fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = scoreColor, modifier = Modifier.weight(1f))
                                 }
                                 Divider(color = Color(0xFFF1F5F9))
+                            }
                             }
                         }
                     }

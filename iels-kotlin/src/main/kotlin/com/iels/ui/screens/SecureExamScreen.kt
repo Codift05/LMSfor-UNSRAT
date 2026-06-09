@@ -18,6 +18,7 @@ import com.iels.services.ExamService
 import com.iels.services.SessionManager
 import com.iels.ui.navigation.NavController
 import com.iels.ui.navigation.Screen
+import androidx.compose.ui.platform.LocalWindowInfo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,6 +36,8 @@ fun SecureExamScreen() {
     var isSubmitted by remember { mutableStateOf(false) }
     var finalScore by remember { mutableStateOf<Int?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    
+    var showCheatWarning by remember { mutableStateOf(false) }
 
     val token = NavController.activeExamToken
 
@@ -64,15 +67,21 @@ fun SecureExamScreen() {
         }
     }
 
-    // Dummy Focus Tracking (In real production Desktop App, we use Window Event Listeners)
-    // For this prototype, we'll simulate focus tracking logic.
-    DisposableEffect(Unit) {
-        // Here we would attach a java.awt.event.WindowFocusListener to the current window
-        // window.addWindowFocusListener(object : WindowAdapter() {
-        //     override fun windowLostFocus(e: WindowEvent?) { cheatCount++ }
-        // })
-        onDispose {
-            // cleanup
+    // Real Focus Tracking (Anti-Cheat)
+    val isWindowFocused = LocalWindowInfo.current.isWindowFocused
+    LaunchedEffect(isWindowFocused) {
+        // If window loses focus (e.g. they pressed Windows Key, Alt-Tab, or clicked outside)
+        if (!isWindowFocused && exam != null && !isSubmitted && timeLeftSeconds > 0) {
+            cheatCount++
+            if (cheatCount >= 5) {
+                // Auto submit immediately
+                submitExam(exam, answers, cheatCount, examService) { score ->
+                    finalScore = score
+                    isSubmitted = true
+                }
+            } else {
+                showCheatWarning = true
+            }
         }
     }
 
@@ -250,6 +259,22 @@ fun SecureExamScreen() {
                     }
                 }
             }
+        }
+
+        if (showCheatWarning) {
+            AlertDialog(
+                onDismissRequest = { /* Force them to click Mengerti */ },
+                title = { Text("Peringatan Kecurangan!", fontWeight = FontWeight.Bold, color = Color(0xFFDC2626)) },
+                text = { Text("Anda terdeteksi keluar dari layar ujian atau membuka aplikasi lain.\nIni adalah pelanggaran ke-$cheatCount dari maksimal 5 kali.\n\nJika Anda melakukan pelanggaran hingga 5 kali, ujian Anda akan otomatis dikumpulkan dengan nilai apa adanya.") },
+                confirmButton = {
+                    Button(
+                        onClick = { showCheatWarning = false },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDC2626), contentColor = Color.White)
+                    ) {
+                        Text("Saya Mengerti")
+                    }
+                }
+            )
         }
     }
 }

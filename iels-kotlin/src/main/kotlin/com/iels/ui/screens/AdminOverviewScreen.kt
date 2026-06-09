@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +22,8 @@ import com.iels.models.Exam
 import com.iels.models.AdminStatsDto
 import com.iels.services.ExamService
 import com.iels.ui.components.AdminLayout
+import com.iels.ui.navigation.NavController
+import com.iels.ui.navigation.Screen
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
@@ -37,6 +40,7 @@ fun AdminOverviewScreen() {
     val examService = remember { ExamService() }
     var exams by remember { mutableStateOf<List<Exam>>(emptyList()) }
     var stats by remember { mutableStateOf<AdminStatsDto?>(null) }
+    var examToDelete by remember { mutableStateOf<Exam?>(null) }
 
     fun refreshData() {
         coroutineScope.launch {
@@ -192,6 +196,10 @@ fun AdminOverviewScreen() {
                                         Spacer(modifier = Modifier.height(8.dp))
                                         
                                         Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Surface(color = Color(0xFFF1F5F9), shape = RoundedCornerShape(6.dp)) {
+                                                Text(exam.category, color = Color(0xFF334155), fontWeight = FontWeight.SemiBold, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+                                            }
+                                            Spacer(modifier = Modifier.width(12.dp))
                                             if (exam.token.isNotBlank()) {
                                                 Surface(color = Color(0xFFE0E7FF), shape = RoundedCornerShape(6.dp)) {
                                                     Text(exam.token, color = Color(0xFF4338CA), fontWeight = FontWeight.Bold, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
@@ -204,12 +212,25 @@ fun AdminOverviewScreen() {
                                         }
                                     }
                                     
-                                    Button(
-                                        onClick = { /* TBD: View Results / Analytics */ },
-                                        shape = RoundedCornerShape(100),
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF496E96), contentColor = Color.White)
-                                    ) {
-                                        Text("Lihat Hasil", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
+                                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                        OutlinedButton(
+                                            onClick = { examToDelete = exam },
+                                            shape = RoundedCornerShape(100),
+                                            border = BorderStroke(1.dp, Color(0xFFEF4444)),
+                                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFEF4444))
+                                        ) {
+                                            Icon(Icons.Default.Delete, contentDescription = "Hapus Ujian", modifier = Modifier.size(16.dp))
+                                            Spacer(modifier = Modifier.width(6.dp))
+                                            Text("Hapus", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                                        }
+
+                                        Button(
+                                            onClick = { NavController.navigateTo(com.iels.ui.navigation.Screen.AdminResults) },
+                                            shape = RoundedCornerShape(100),
+                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF496E96), contentColor = Color.White)
+                                        ) {
+                                            Text("Lihat Hasil", fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = Color.White)
+                                        }
                                     }
                                 }
                             }
@@ -217,6 +238,35 @@ fun AdminOverviewScreen() {
                     }
                 }
             }
+        }
+
+        if (examToDelete != null) {
+            AlertDialog(
+                onDismissRequest = { examToDelete = null },
+                title = { Text("Konfirmasi Hapus", fontWeight = FontWeight.Bold) },
+                text = { Text("Apakah Anda yakin ingin menghapus ujian '${examToDelete?.title}'? Data hasil ujian juga akan disembunyikan.") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            coroutineScope.launch {
+                                val id = examToDelete?.id ?: return@launch
+                                if (examService.deleteExam(id)) {
+                                    refreshData()
+                                }
+                                examToDelete = null
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEF4444), contentColor = Color.White)
+                    ) {
+                        Text("Ya, Hapus")
+                    }
+                },
+                dismissButton = {
+                    OutlinedButton(onClick = { examToDelete = null }) {
+                        Text("Batal")
+                    }
+                }
+            )
         }
     }
 }
