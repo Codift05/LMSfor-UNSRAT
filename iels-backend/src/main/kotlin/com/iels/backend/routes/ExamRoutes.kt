@@ -24,6 +24,7 @@ data class QuestionDto(
 data class ExamDto(
     val id: Int? = null,
     val title: String,
+    val category: String = "Umum",
     val durationMinutes: Int,
     val token: String,
     val instructorId: Int,
@@ -104,10 +105,11 @@ fun Route.examRoutes() {
         // Get all active exams
         get {
             val exams = DatabaseFactory.dbQuery {
-                Exam.all().map { exam ->
+                Exam.find { Exams.isActive eq true }.map { exam ->
                     ExamDto(
                         id = exam.id.value,
                         title = exam.title,
+                        category = exam.category,
                         durationMinutes = exam.durationMinutes,
                         token = exam.token,
                         instructorId = exam.instructor.id.value
@@ -119,30 +121,62 @@ fun Route.examRoutes() {
         
         // Create an exam
         post {
-            val request = call.receive<ExamDto>()
-            val newExam = DatabaseFactory.dbQuery {
-                val instructor = User.findById(request.instructorId) ?: throw Exception("Instructor not found")
-                val exam = Exam.new {
-                    title = request.title
-                    durationMinutes = request.durationMinutes
-                    token = request.token
-                    this.instructor = instructor
-                }
-                
-                request.questions.forEach { q ->
-                    Question.new {
-                        this.exam = exam
-                        text = q.text
-                        optionA = q.optionA
-                        optionB = q.optionB
-                        optionC = q.optionC
-                        optionD = q.optionD
-                        correctAnswer = q.correctAnswer
+            try {
+                val request = call.receive<ExamDto>()
+                val newExam = DatabaseFactory.dbQuery {
+                    val instructor = User.findById(request.instructorId) ?: throw Exception("Instructor not found")
+                    
+                    // Handle duplicate tokens safely
+                    if (request.token.isNotBlank()) {
+                        val existingExam = Exam.find { Exams.token eq request.token }.firstOrNull()
+                        if (existingExam != null) {
+                            if (existingExam.isActive) {
+                                throw Exception("Token sudah digunakan oleh ujian aktif lainnya")
+                            } else {
+                                // Rename the token of the deleted exam to free it up
+                                existingExam.token = "${existingExam.token}_deleted_${System.currentTimeMillis()}"
+                            }
+                        }
                     }
+
+                    val exam = Exam.new {
+                        title = request.title
+                        category = request.category
+                        durationMinutes = request.durationMinutes
+                        token = request.token
+                        this.instructor = instructor
+                        isActive = true
+                    }
+                    
+                    request.questions.forEach { q ->
+                        Question.new {
+                            this.exam = exam
+                            text = q.text
+                            optionA = q.optionA
+                            optionB = q.optionB
+                            optionC = q.optionC
+                            optionD = q.optionD
+                            correctAnswer = q.correctAnswer
+                        }
+                    }
+                    exam
                 }
-                exam
+                call.respond(HttpStatusCode.Created, mapOf("id" to newExam.id.value))
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, mapOf("error" to (e.message ?: "Gagal membuat ujian")))
             }
-            call.respond(HttpStatusCode.Created, mapOf("id" to newExam.id.value))
+        }
+
+        // Soft delete an exam
+        delete("/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull() ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            DatabaseFactory.dbQuery {
+                val exam = Exam.findById(id)
+                if (exam != null) {
+                    exam.isActive = false
+                }
+            }
+            call.respond(HttpStatusCode.OK, mapOf("status" to "deleted"))
         }
 
         // Get an exam by token (for students to start)
@@ -165,6 +199,7 @@ fun Route.examRoutes() {
                     ExamDto(
                         id = e.id.value,
                         title = e.title,
+                        category = e.category,
                         durationMinutes = e.durationMinutes,
                         token = e.token,
                         instructorId = e.instructor.id.value,
@@ -226,7 +261,7 @@ fun Route.examRoutes() {
         // Get all exam results (for ranking)
         get("/results") {
             val results = DatabaseFactory.dbQuery {
-                ExamResult.all().map { r ->
+                ExamResult.all().filter { it.exam.isActive }.map { r ->
                     ExamResultDetailDto(
                         id = r.id.value,
                         userId = r.user.id.value,
