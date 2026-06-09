@@ -1,0 +1,45 @@
+@startuml UseCase_Admin
+!theme plain
+title IELS CBT - Admin Use Case Diagram
+
+left to right direction
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam backgroundColor #F8FAFC
+skinparam usecase {
+    BackgroundColor #FFFFFF
+    BorderColor #3B82F6
+}
+skinparam actor {
+    BackgroundColor #E2E8F0
+    BorderColor #0F172A
+}
+
+actor "Administrator" as admin
+
+rectangle "IELS CBT - Admin Module" {
+    usecase "Login Portal" as UC_Login
+    usecase "View Dashboard Analytics" as UC_Dashboard
+    usecase "Create New Exam" as UC_CreateExam
+    usecase "Generate Exam Token" as UC_GenToken
+    usecase "Live Exam Monitoring" as UC_Monitor
+    usecase "Detect Student Focus Loss" as UC_DetectCheat
+    usecase "View Exam Results" as UC_ViewResults
+    usecase "Automated Student Ranking" as UC_Rankings
+    usecase "Export Corporate PDF" as UC_ExportPDF
+    usecase "Manage User Accounts" as UC_ManageUsers
+}
+
+admin --> UC_Login
+admin --> UC_Dashboard
+admin --> UC_CreateExam
+admin --> UC_Monitor
+admin --> UC_ViewResults
+admin --> UC_ManageUsers
+
+UC_CreateExam ..> UC_GenToken : <<include>>
+UC_Monitor ..> UC_DetectCheat : <<include>>
+UC_ViewResults ..> UC_Rankings : <<include>>
+UC_ViewResults <.. UC_ExportPDF : <<extend>>
+
+@enduml

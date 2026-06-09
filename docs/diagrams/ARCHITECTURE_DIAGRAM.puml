@@ -1,0 +1,68 @@
+@startuml Architecture_Diagram
+!theme plain
+title IELS CBT - System Architecture
+
+skinparam linetype ortho
+skinparam componentStyle uml2
+skinparam backgroundColor #F8FAFC
+skinparam node {
+    BackgroundColor #FFFFFF
+    BorderColor #3B82F6
+}
+skinparam component {
+    BackgroundColor #EFF6FF
+    BorderColor #1E40AF
+}
+skinparam database {
+    BackgroundColor #F0FDF4
+    BorderColor #166534
+}
+
+node "Client Tier (Student & Admin PCs)" {
+    component "IELS Native Desktop App\n(Compose Multiplatform)" as desktopApp {
+        port "UI Components" as ui
+        port "Session Manager" as session
+        port "Ktor HTTP Client" as httpClient
+        port "PDF Engine (iText7)" as itext
+    }
+}
+
+node "Application Tier (Server)" {
+    component "IELS Backend Server\n(Ktor / Netty)" as backendApp {
+        port "REST API Endpoints" as api
+        port "Auth Service (JWT & Bcrypt)" as authService
+        port "Exam & Monitoring Service" as examService
+        port "JetBrains Exposed ORM" as orm
+    }
+}
+
+database "Data Tier" {
+    component "PostgreSQL Database\n(Docker Container)" as db {
+        artifact "Users Table"
+        artifact "Exams Table"
+        artifact "ExamSessions Table"
+        artifact "ExamResults Table"
+    }
+}
+
+' Connections
+desktopApp -(0- api : "HTTP/JSON (Port 8081)"
+httpClient --> api
+api --> authService
+api --> examService
+authService --> orm
+examService --> orm
+orm -(0- db : "JDBC Connection"
+
+note right of desktopApp
+    Built with Kotlin & Jetpack Compose.
+    Runs natively on Windows/Mac/Linux.
+end note
+
+note right of backendApp
+    High-performance async server handling
+    concurrent exam submissions and 
+    real-time monitoring requests.
+end note
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml UseCase_Student
+!theme plain
+title IELS CBT - Student Use Case Diagram
+
+left to right direction
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam backgroundColor #F8FAFC
+skinparam usecase {
+    BackgroundColor #FFFFFF
+    BorderColor #10B981
+}
+skinparam actor {
+    BackgroundColor #E2E8F0
+    BorderColor #0F172A
+}
+
+actor "Student" as student
+
+rectangle "IELS CBT - Student Module" {
+    usecase "Register Account" as UC_Register
+    usecase "Login Portal" as UC_Login
+    usecase "Enter Exam Token" as UC_EnterToken
+    usecase "Start CBT Engine (Kiosk Mode)" as UC_StartExam
+    usecase "Answer Multiple Choice Questions" as UC_Answer
+    usecase "Trigger Focus Loss Warning" as UC_Warning
+    usecase "Submit Exam" as UC_Submit
+    usecase "View Final Score" as UC_ViewScore
+}
+
+student --> UC_Register
+student --> UC_Login
+student --> UC_EnterToken
+
+UC_EnterToken ..> UC_StartExam : <<include>>
+UC_StartExam ..> UC_Answer : <<include>>
+UC_Answer <.. UC_Warning : <<extend>>
+UC_StartExam ..> UC_Submit : <<include>>
+UC_Submit ..> UC_ViewScore : <<include>>
+
+@enduml
