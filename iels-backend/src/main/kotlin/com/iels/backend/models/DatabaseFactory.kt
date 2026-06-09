@@ -10,10 +10,16 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
 object DatabaseFactory {
-    fun init() {
+    fun init(
+        jdbcUrlOverride: String? = null,
+        usernameOverride: String? = null,
+        passwordOverride: String? = null
+    ) {
         val driverClassName = "org.postgresql.Driver"
-        val jdbcURL = "jdbc:postgresql://localhost:5432/iels" // Should be env var in production
-        val database = Database.connect(hikari(jdbcURL, driverClassName))
+        val jdbcURL = jdbcUrlOverride ?: "jdbc:postgresql://localhost:5432/iels"
+        val user = usernameOverride ?: "postgres"
+        val pass = passwordOverride ?: "password123"
+        val database = Database.connect(hikari(jdbcURL, driverClassName, user, pass))
 
         transaction(database) {
             SchemaUtils.createMissingTablesAndColumns(
@@ -48,12 +54,12 @@ object DatabaseFactory {
         }
     }
 
-    private fun hikari(url: String, driver: String): HikariDataSource {
+    private fun hikari(url: String, driver: String, user: String, pass: String): HikariDataSource {
         val config = HikariConfig()
         config.driverClassName = driver
         config.jdbcUrl = url
-        config.username = "postgres"
-        config.password = "password123"
+        config.username = user
+        config.password = pass
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"

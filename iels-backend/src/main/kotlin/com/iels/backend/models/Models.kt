@@ -29,6 +29,7 @@ class User(id: EntityID<Int>) : IntEntity(id) {
 // Exams Table (New)
 object Exams : IntIdTable("exams") {
     val title = varchar("title", 255)
+    val category = varchar("category", 100).default("Umum")
     val durationMinutes = integer("duration_minutes")
     val token = varchar("token", 50).uniqueIndex()
     val instructorId = reference("instructor_id", Users)
@@ -38,6 +39,7 @@ object Exams : IntIdTable("exams") {
 class Exam(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<Exam>(Exams)
     var title by Exams.title
+    var category by Exams.category
     var durationMinutes by Exams.durationMinutes
     var token by Exams.token
     var instructor by User referencedOn Exams.instructorId
